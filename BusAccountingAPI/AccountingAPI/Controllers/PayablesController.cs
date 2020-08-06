@@ -11,10 +11,10 @@ namespace AccountingAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Payables : ControllerBase
+    public class PayablesController : ControllerBase
     {
         private readonly AccountingAPIDbContext _context;
-        public Payables(AccountingAPIDbContext context)
+        public PayablesController(AccountingAPIDbContext context)
         {
             _context = context;
         }
@@ -56,7 +56,7 @@ namespace AccountingAPI.Controllers
             }
         }
 
-        //Update payables api/payables/{id}
+        //Update payables api/payables
         [HttpPut]
         public async Task<ActionResult> UpdatePayable (AccountsPayable updatedPayable)
         {
