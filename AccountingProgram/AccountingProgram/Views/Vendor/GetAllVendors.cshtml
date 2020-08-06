@@ -1,0 +1,29 @@
+﻿@using AccountingProgram.Models;
+
+@model List<Vendor>
+
+<table style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Vendor ID
+            </th>
+            <th>
+                Vendor Name
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ 
+            foreach(Vendor v in Model )
+            {
+                <tr>
+                    <td><a href="/Vendor/IndividualVendor?id=@v.VenId">@v.VenId</a> </td>
+                    <td>@v.Name</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<br />
+<button onclick="location.href='/Vendor/VendorIndex'">Return to Vendor Menu</button>

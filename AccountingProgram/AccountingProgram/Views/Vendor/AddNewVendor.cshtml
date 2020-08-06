@@ -1,0 +1,18 @@
+﻿@using AccountingProgram.Models;
+
+@model Vendor
+
+<h1 style="text-align:center">Add a New Vendor</h1>
+<br />
+<br />
+<h3>Use the following form to add a new vendor:</h3>
+<form action="/Vendor/AddNewVendor" method="post">
+    <label for="Name">Enter Vendor Name</label><br />
+    <input type="text" id="Name" name="Name" /><br />
+    <label for="Address">Enter Vendor Address in one line (Street address, city, state, zip)</label><br />
+    <input type="text" id="Address" name="Address" /><br />
+    <input type="submit" value="Add Vendor" />
+
+</form>
+<br />
+<button onclick="location.href='/Vendor/VendorIndex'">Return to Vendor Menu</button>

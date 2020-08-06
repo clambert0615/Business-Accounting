@@ -1,0 +1,18 @@
+﻿@using AccountingProgram.Models;
+
+@model Vendor
+
+<h1 style="text-align:center">Update Vendor</h1>
+<br />
+<br />
+<h3>Use the form to update the vendor's information:</h3>
+<form action="/Vendor/UpdateVendor" method="post">
+    <input type="hidden" name="VenID" id="VenId" value="@Model.VenId"/>
+    <label for="Name">Update Vendor's Name</label><br />
+    <input type="text" id="Name" name="Name" value="@Model.Name" /><br />
+    <label for="Address">Update Vendor's Address</label><br />
+    <input type="text" id="Address" name="Address" value="@Model.Address" /><br />
+    <input type="submit" value="Update Vendor" />
+</form>
+<br />
+<button onclick="location.href='/Vendor/VendorIndex'">Return to Vendor Menu</button>

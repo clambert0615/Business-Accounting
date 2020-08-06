@@ -1,0 +1,12 @@
+﻿@using AccountingProgram.Models;
+
+@model Vendor
+
+<h1>@Model.Name      @Model.VenId </h1>
+<h3>@Model.Address</h3>
+<br />
+<button onclick="location.href='/Vendor/UpdateVendor?id=@Model.VenId'">Update Vendor</button>
+<br />
+<button onclick="location.href='/Vendor/DeleteVendor?id=@Model.VenId'" onsubmit="return confirm('Are you sure you want to delete?');">Delete Vendor</button>
+<br />
+<button onclick="location.href='/Vendor/VendorIndex'">Return to Vendor Menu</button>
