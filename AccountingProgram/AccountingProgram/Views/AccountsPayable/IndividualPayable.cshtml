@@ -1,0 +1,26 @@
+﻿@using AccountingProgram.Models
+
+@model AccPayInvExp
+
+<h1 style="text-align:center">Payable Information</h1>
+<br />
+<h3>Payable Id: @Model.Payable.PayableId</h3>
+<br />
+<h3>Vendor: @Model.Payable.VendorName</h3>
+<br />
+<h3>Due Date: @Model.Payable.DueDate.ToShortDateString()</h3>
+<br />
+<h3>Amount Due: @Model.Payable.AmountDue</h3>
+<br />
+<h3>Payment Amount: @Model.Payable.PaymentAmount</h3>
+<br />
+<h3>Payment Date: @Model.Payable.PaymentDate.ToShortDateString()</h3>
+<br />
+<h3>Balance Due: @Model.Payable.Balance</h3>
+
+<form action="/AccountsPayable/MakePayment?id=@Model.Payable.PayableId" method="">
+    Make a Payment:
+    <input type="number" id="amount" name="amount" />
+    <input type="submit" value="Submit Payment" />
+
+</form>

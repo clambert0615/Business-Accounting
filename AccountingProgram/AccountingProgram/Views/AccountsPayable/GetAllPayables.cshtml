@@ -1,0 +1,35 @@
+﻿@using AccountingProgram.Models;
+
+@model AccPayInvExp
+
+    <table style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    Payable ID
+                </th>
+                <th>
+                    Vendor Name
+                </th>
+                <th>
+                    Payment Due Date
+                </th>
+                <th>
+                    Balance
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var pay in Model.PayableList)
+                {
+                    <tr>
+                        <td><a href="/AccountsPayable/IndividualPayable?id=@pay.PayableId">@pay.PayableId</a> </td>
+                        <td>@pay.VendorName</td>
+                        <td>@pay.DueDate.ToShortDateString()</td>
+                        <td>@pay.Balance</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>

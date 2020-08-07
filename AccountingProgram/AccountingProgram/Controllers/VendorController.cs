@@ -10,7 +10,12 @@ namespace AccountingProgram.Controllers
 {
     public class VendorController : Controller
     {
-        private readonly AccountingDAL ad = new AccountingDAL();
+        private readonly AccountingAPIDbContext _context;
+
+        public VendorController(AccountingAPIDbContext context)
+        {
+            _context = context;
+        }
 
         public IActionResult VendorIndex(int option)
         {
@@ -39,34 +44,44 @@ namespace AccountingProgram.Controllers
                 return View();
             }
         }
-        public async Task<IActionResult> GetAllVendors()
+        public IActionResult GetAllVendors()
         {
-            List<Vendor> vendorList = await ad.GetVendors();
+            List<Vendor> vendorList = _context.Vendor.ToList();
             return View(vendorList);
         }
         public IActionResult GetVendor()
         {
             return View();
         }
-        public async Task<IActionResult> IndividualVendor(int id)
+        public IActionResult IndividualVendor(int id)
         {
-            Vendor foundVendor = await ad.GetVendor(id);
+            Vendor foundVendor = _context.Vendor.Find(id);
             return View(foundVendor);
         }
-        public async Task<IActionResult> AddNewVendor(Vendor vendor)
+        [HttpGet]
+        public IActionResult AddNewVendor()
         {
-            await ad.AddVendor(vendor);
             return View();
-            //return RedirectToAction("GetAllVendors");
+        }
+        [HttpPost]
+        public IActionResult AddNewVendor(Vendor vendor)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Vendor.Add(vendor);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("VendorIndex", new { id = vendor.VenId });
+
         }
         public IActionResult GetVendorToUpdate()
         {
             return View();
         }
         [HttpGet]
-        public async Task<IActionResult> UpdateVendor(int id)
+        public IActionResult UpdateVendor(int id)
         {
-            Vendor foundVendor = await ad.GetVendor(id);
+            Vendor foundVendor = _context.Vendor.Find(id);
             if (foundVendor == null)
             {
                 return RedirectToAction("ErrorPage");
@@ -77,34 +92,38 @@ namespace AccountingProgram.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> UpdateVendor(Vendor updatedVendor)
+        public IActionResult UpdateVendor(Vendor updatedVendor)
         {
-            Vendor oldVendor = await ad.GetVendor(updatedVendor.VenId);
-             oldVendor.Name = updatedVendor.Name;
+            Vendor oldVendor = _context.Vendor.Find(updatedVendor.VenId);
+            oldVendor.Name = updatedVendor.Name;
             oldVendor.Address = updatedVendor.Address;
-            ad.UpdateVendor(oldVendor);
+            _context.Entry(oldVendor).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.Update(oldVendor);
+            _context.SaveChanges();
             return RedirectToAction("GetAllVendors");
         }
         public IActionResult GetVendorToDelete()
         {
             return View();
         }
-       
-        public async Task<IActionResult> DeleteVendor(int id)
+
+        public IActionResult DeleteVendor(int id)
         {
-            bool isSuccessful = await ad.DeleteVendor(id);
-            if (isSuccessful)
+            Vendor found = _context.Vendor.Find(id);
+            if (found != null)
             {
-                return RedirectToAction("GetAllVendors");
+                _context.Vendor.Remove(found);
+                _context.SaveChanges();
+                return RedirectToAction("VendorIndex");
             }
             else
             {
                 return RedirectToAction("ErrorPage");
             }
         }
-        
 
 
-        
+
+
     }
 }

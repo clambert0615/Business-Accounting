@@ -1,17 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace AccountingProgram.Models
 {
-    public class AccountsPayable
+    public partial class AccountsPayable
     {
         public int PayableId { get; set; }
-        public string Payee { get; set; }
-        public DateTime? DueDate { get; set; }
-        public DateTime? PaymentDate { get; set; }
+        public string VendorName { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime DueDate { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime PaymentDate { get; set; }
+        public decimal AmountDue { get; set; }
         public decimal? PaymentAmount { get; set; }
         public decimal? Balance { get; set; }
+
+        List<AccountsPayable> Payables { get; set; }
     }
 }

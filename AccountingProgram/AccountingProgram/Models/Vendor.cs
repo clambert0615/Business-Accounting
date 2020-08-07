@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AccountingProgram.Models
 {
-    public class Vendor
+    public partial class Vendor
     {
         public int VenId { get; set; }
         public string Name { get; set; }

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace AccountingAPI.Models
+namespace AccountingProgram.Models
 {
     public partial class AccountingAPIDbContext : DbContext
     {
@@ -44,6 +44,7 @@ namespace AccountingAPI.Models
                 entity.Property(e => e.Balance).HasColumnType("decimal(10, 2)");
 
                 entity.Property(e => e.DueDate).HasColumnType("date");
+                entity.Property(e => e.AmountDue).HasColumnType("decimal(10,2");
 
                 entity.Property(e => e.PaymentAmount).HasColumnType("decimal(10, 2)");
 
