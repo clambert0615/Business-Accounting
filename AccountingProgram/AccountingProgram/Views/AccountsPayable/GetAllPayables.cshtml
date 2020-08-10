@@ -12,6 +12,9 @@
                     Vendor Name
                 </th>
                 <th>
+                    Total Amount Due
+                </th>
+                <th>
                     Payment Due Date
                 </th>
                 <th>
@@ -26,10 +29,17 @@
                     <tr>
                         <td><a href="/AccountsPayable/IndividualPayable?id=@pay.PayableId">@pay.PayableId</a> </td>
                         <td>@pay.VendorName</td>
+                        <td>@pay.AmountDue</td>
                         <td>@pay.DueDate.ToShortDateString()</td>
-                        <td>@pay.Balance</td>
+                       
+                        <td>
+                          
+                                     @pay.Balance
+                              
+                        </td>
                     </tr>
                 }
             }
         </tbody>
     </table>
+    <button onclick="location.href='/AccountsPayable/AddPayable'">Add New Accounts Payable</button>

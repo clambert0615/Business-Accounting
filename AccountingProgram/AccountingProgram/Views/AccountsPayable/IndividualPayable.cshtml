@@ -8,19 +8,31 @@
 <br />
 <h3>Vendor: @Model.Payable.VendorName</h3>
 <br />
-<h3>Due Date: @Model.Payable.DueDate.ToShortDateString()</h3>
-<br />
 <h3>Amount Due: @Model.Payable.AmountDue</h3>
 <br />
-<h3>Payment Amount: @Model.Payable.PaymentAmount</h3>
+<h4>Due Date: @Model.Payable.DueDate.ToShortDateString()</h4>
+
 <br />
-<h3>Payment Date: @Model.Payable.PaymentDate.ToShortDateString()</h3>
+
+@foreach (var p in Model.PaymentList)
+{
+    <h4>Payment Date: @p.PayDate.ToShortDateString()</h4>
+    <h4>Payment Amount: @p.Amount</h4>
+}
+
 <br />
+
+
+
 <h3>Balance Due: @Model.Payable.Balance</h3>
 
-<form action="/AccountsPayable/MakePayment?id=@Model.Payable.PayableId" method="">
+
+<br />
+<form action="/AccountsPayable/MakePayment?id=@Model.Payable.PayableId" method="post">
     Make a Payment:
     <input type="number" id="amount" name="amount" />
     <input type="submit" value="Submit Payment" />
 
 </form>
+<br />
+<button onclick="location.href='/AccountsPayable/UpdatePayable?id=@Model.Payable.PayableId'">Update This Payable</button>

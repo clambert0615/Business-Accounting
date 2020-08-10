@@ -3,7 +3,12 @@
 @model Vendor
 
 <h1>@Model.Name      @Model.VenId </h1>
-<h3>@Model.Address</h3>
+<p>@Model.Address</p>
+<p>@Model.City</p>
+<p>@Model.State</p>
+<p>@Model.Zip</p>
+<p>@Model.Phone</p>
+<p>@Model.Email</p>
 <br />
 <button onclick="location.href='/Vendor/UpdateVendor?id=@Model.VenId'">Update Vendor</button>
 <br />

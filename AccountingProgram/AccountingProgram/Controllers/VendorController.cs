@@ -97,6 +97,11 @@ namespace AccountingProgram.Controllers
             Vendor oldVendor = _context.Vendor.Find(updatedVendor.VenId);
             oldVendor.Name = updatedVendor.Name;
             oldVendor.Address = updatedVendor.Address;
+            oldVendor.City = updatedVendor.City;
+            oldVendor.State = updatedVendor.State;
+            oldVendor.Zip = updatedVendor.Zip;
+            oldVendor.Phone = updatedVendor.Phone;
+            oldVendor.Email = updatedVendor.Email;
             _context.Entry(oldVendor).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             _context.Update(oldVendor);
             _context.SaveChanges();

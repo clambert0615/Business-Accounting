@@ -1,0 +1,27 @@
+﻿@using AccountingProgram.Models
+
+@model AccPayInvExp
+
+<table style="width:100%">
+    <thead>
+        <tr>
+            <th>Item Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @foreach(var i in Model.InventoryList)
+            {
+                <td>@i.Item</td>
+                <td>@i.Quantity</td>
+                <td>@i.Price</td>
+            }
+        </tr>
+    </tbody>
+</table>
+<br />
+<button onclick="location.href='/Inventory/AddInventory'">Add New Inventory Item</button>
+

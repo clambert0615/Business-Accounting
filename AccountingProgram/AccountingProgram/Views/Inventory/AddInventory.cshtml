@@ -1,0 +1,17 @@
+﻿<h1 style="text-align:center">Add Inventory Item</h1>
+<br />
+<form action="/Inventory/AddInventory" method="post">
+    <label for="Item">Item</label><br />
+    <input type="text" id="Item" name="Item" /><br />
+    <label for="Description">Description</label><br />
+    <input type="text" id="Description" name="Description" /><br />
+    <label for="Quantity">Quantity</label><br />
+    <input type="number" id="Quantity" name="Quantity" /><br />
+    <label for="Price">Price</label><br />
+    <input type="number" id="Price" name="Price" step=".01" /><br />
+    <label for="BackOrdered">Back Ordered Amount</label><br />
+    <input type="number" id="BackOrdered" name="BackOrdered" /><br />
+    <label for="Received">Received</label><br />
+    <input type="number" id="Received" name="Received" /><br />
+    <input type="submit" value="Add Item" />
+</form>

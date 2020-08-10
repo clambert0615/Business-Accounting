@@ -1,0 +1,22 @@
+﻿@using AccountingProgram.Models
+
+@model AccountsPayable
+
+<h1 style="text-align:center">Update Payable</h1>
+<br />
+<form action="/AccountsPayable/UpdatePayable" method="post">
+    <input type="hidden" name="PayableId" id="PayableId" value="@Model.PayableId" /> 
+    <label for="VendorName">Vendor Name</label><br />
+    <input type="text" id="VendorName" name="VendorName" value="@Model.VendorName"/><br />
+    <label for="VenId">Vendor Id</label><br />
+    <input type="number" id="VenId" name="VenId" value="@Model.VenId"/><br />
+    <label for="DueDate">Due Date</label><br />
+    <input type="date" id="DueDate" name="DueDate" value="@Model.DueDate"/><br />
+    <label for="AmountDue"> Total Amount Due</label><br />
+    <input type="number" id="AmountDue" name="AmountDue" step=".01" value="@Model.AmountDue"/><br />
+    <label for="Balance">Balance Due</label><br />
+    <input type="number" id="Balance" name="Balance" step=".01" value="@Model.Balance"/><br />
+    <input type="submit" value="Update Payable" />
+
+
+</form>
