@@ -8,6 +8,7 @@ namespace AccountingProgram.Models
         public Cash()
         {
             Payments = new HashSet<Payments>();
+            SalesNavigation = new HashSet<Sales>();
             Wages = new HashSet<Wages>();
         }
 
@@ -15,8 +16,11 @@ namespace AccountingProgram.Models
         public DateTime? TransDate { get; set; }
         public decimal? Deposit { get; set; }
         public decimal? Withdrawl { get; set; }
+        public int? SalesId { get; set; }
 
+        public virtual Sales Sales { get; set; }
         public virtual ICollection<Payments> Payments { get; set; }
+        public virtual ICollection<Sales> SalesNavigation { get; set; }
         public virtual ICollection<Wages> Wages { get; set; }
     }
 }

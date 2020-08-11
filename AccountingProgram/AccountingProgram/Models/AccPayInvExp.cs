@@ -14,5 +14,6 @@ namespace AccountingProgram.Models
         public Inventory Item { get; set; }
         public List<Inventory> InventoryList { get; set; }
        public Expenses Expense { get; set; }
+        public List<Expenses> ExpenseList { get; set; }
     }
 }

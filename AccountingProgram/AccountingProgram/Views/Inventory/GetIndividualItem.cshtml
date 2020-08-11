@@ -1,0 +1,13 @@
+﻿@model AccountingProgram.Models.Inventory
+
+<h1 style="text-align:center">Item Details</h1>
+<br />
+<h3>Item: @Model.Item   &nbsp; &nbsp; &nbsp; Id: @Model.InvId</h3> 
+<h5>Description: @Model.Description</h5>
+<h5>Price: @Model.Price</h5>
+<h5>Quantity: @Model.Quantity</h5>
+<h5>Received: @Model.Received</h5>
+<h5>Back Ordered: @Model.BackOrdered</h5>
+
+<button onclick="location.href='/Inventory/UpdateInventory?id=@Model.InvId'">Update Item</button>
+<button onclick="location.href='/Inventory/DeleteInventory?id=@Model.InvId'">Delete Item</button>

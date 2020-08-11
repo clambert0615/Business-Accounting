@@ -1,0 +1,21 @@
+﻿@model AccountingProgram.Models.Inventory
+
+<h1 style="text-align:center"> Update Item</h1>
+<br />
+<form action="/Inventory/UpdateInventory" method="post">
+    <input type="hidden" id="InvId" name="invId" value="@Model.InvId" />
+    <label for="Item">Item</label><br />
+    <input type="text" id="Item" name="Item" value="@Model.Item"/><br />
+    <label for="Description">Description</label><br />
+    <input type="text" id="Description" name="Description" value="@Model.Description" /><br />
+    <label for="Quantity">Quantity</label><br />
+    <input type="number" id="Quantity" name="Quantity" value="@Model.Quantity"/><br />
+    <label for="Price">Price</label><br />
+    <input type="number" id="Price" name="Price" step=".01" value="@Model.Price" /><br />
+    <label for="BackOrdered">Back Ordered Amount</label><br />
+    <input type="number" id="BackOrdered" name="BackOrdered" value="@Model.BackOrdered"/><br />
+    <label for="Received">Received</label><br />
+    <input type="number" id="Received" name="Received" value="@Model.Received"/><br />
+    <input type="submit" value="Update Item" />
+
+</form>

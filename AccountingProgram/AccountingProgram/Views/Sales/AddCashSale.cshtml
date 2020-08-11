@@ -1,0 +1,52 @@
+﻿<h1 style="text-align:center">Add New Sale</h1>
+<br />
+<form action="/Sales/AddSale" method="post">
+    <div>
+        <label for="TransDate">Transaction Date</label><br />
+        <input type="date" id="TransDate" name="TransDate" /><br />
+        <label for="Amount">Total Amount</label><br />
+        <input type="number" id="Amount" name="Amount" step=".01" /><br />
+        <label for="CashAmount">Cash Amount</label><br />
+        <input type="number" id="CashAmount" name="CashAmount" step=".01" /><br />
+       
+    </div>
+    <div>
+        <button type="button" id="AddButton">Add Inventory Item Sold</button> 
+        <table style="width:100%">
+            <thead>
+                <tr>
+                    <td>Inv Id</td>
+                    <td>Description</td>
+                    <td>Quantity</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <button>Submit</button>
+    </div>
+
+</form>
+
+<input type="hidden" id="totalItems" value="0" />
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#AddButton").click(function () {
+            tc = parseInt($("#totalItems").val());
+            tc = tc + 1;
+            $("#totalItems").val(tc)
+
+            $("tbody").append('<tr><td><input type="number" name="[' + (tc - 1) + '].InvId" /></td><td><input type="text" name="[' + (tc - 1) + '].Description" /></td><td><input type="number" name="[' + (tc - 1) + '].Quantity" /></td></tr>')
+        });
+
+        $("tbody").on("click", "span", function () {
+            tc = parseInt($("#totalItems").val());
+            tc = tc - 1;
+            $("#totalItems").val(tc)
+
+            $(this).parents("tr").remove();
+        });
+    });
+</script>

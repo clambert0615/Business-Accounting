@@ -1,0 +1,25 @@
+﻿<h1 style="text-align:center">Expenses</h1>
+<br />
+<form action="/Expense/AddExpense" method="post">
+    <label for="description"> Expense Type</label><br />
+    <select id="description" name="description">
+        <option value="Advertising">Advertising</option>
+        <option value="Cost of Goods Sold">Cost of Goods Sold</option>
+        <option value="Depreciation">Depreciation</option>
+        <option value="Employee Benefits">Employee Benefits</option>
+        <option value="Insurance">Insurance</option>
+        <option value="Meals / Entertainment">Meals / Entertainment</option>
+        <option value="Rent / Lease">Rent / Lease</option>
+        <option value="Supplies">Supplies</option>
+        <option value="Travel">Travel</option>
+        <option value="Utilities">Utilities</option>
+        <option value="Vehicle">Vehicle</option>
+        <option value="Wages">Wages</option>
+
+    </select><br />
+    <label for="paymentDate">Payment Date</label><br />
+    <input type="date" id="paymentDate" name="paymentDate" /><br />
+    <label for="amount">Amount to Debit from Cash</label><br />
+    <input type="number" id="amount" name="amount" step=".01" /><br />
+    <input type="submit" value="Submit Expense" />
+</form>

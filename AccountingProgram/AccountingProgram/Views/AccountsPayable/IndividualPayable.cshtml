@@ -30,7 +30,7 @@
 <br />
 <form action="/AccountsPayable/MakePayment?id=@Model.Payable.PayableId" method="post">
     Make a Payment:
-    <input type="number" id="amount" name="amount" />
+    <input type="number" id="amount" name="amount" step=".01"/>
     <input type="submit" value="Submit Payment" />
 
 </form>

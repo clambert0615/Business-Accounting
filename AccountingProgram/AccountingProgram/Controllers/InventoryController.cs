@@ -21,6 +21,11 @@ namespace AccountingProgram.Controllers
             apie.InventoryList = inventoryList;
             return View(apie);
         }
+        public IActionResult GetIndividualItem(int id)
+        {
+            Inventory found = _context.Inventory.Find(id);
+            return View(found);
+        }
         [HttpGet]
         public IActionResult AddInventory()
         {
@@ -35,6 +40,48 @@ namespace AccountingProgram.Controllers
                 _context.SaveChanges();
             }
             return RedirectToAction("InventoryIndex", new { id = inventory.InvId });
+        }
+        [HttpGet]
+        public IActionResult UpdateInventory(int id)
+        {
+            Inventory foundItem = _context.Inventory.Find(id);
+            if (foundItem == null)
+            {
+                return RedirectToAction("ErrorPage");
+            }
+            else
+            {
+                return View(foundItem);
+            }
+        }
+        [HttpPost]
+        public IActionResult UpdateInventory(Inventory updatedItem)
+        {
+            Inventory oldItem = _context.Inventory.Find(updatedItem.InvId);
+            oldItem.Item = updatedItem.Item;
+            oldItem.Description = updatedItem.Description;
+            oldItem.Price = updatedItem.Price;
+            oldItem.Quantity = updatedItem.Quantity;
+            oldItem.Received = updatedItem.Received;
+            oldItem.BackOrdered = updatedItem.BackOrdered;
+            _context.Entry(oldItem).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.Update(oldItem);
+            _context.SaveChanges();
+            return RedirectToAction("InventoryIndex");
+        }
+        public IActionResult DeleteInventory(int id)
+        {
+            Inventory found = _context.Inventory.Find(id);
+            if (found != null)
+            {
+                _context.Inventory.Remove(found);
+                _context.SaveChanges();
+                return RedirectToAction("InventoryIndex");
+            }
+            else
+            {
+                return RedirectToAction("ErrorPage");
+            }
         }
     }
 }

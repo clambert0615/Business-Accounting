@@ -5,6 +5,7 @@
 <table style="width:100%">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Item Name</th>
             <th>Quantity</th>
             <th>Price</th>
@@ -12,14 +13,19 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            @foreach(var i in Model.InventoryList)
+        @{
+
+            foreach (var i in Model.InventoryList)
             {
-                <td>@i.Item</td>
-                <td>@i.Quantity</td>
-                <td>@i.Price</td>
+                <tr>
+                    <td><a href="/Inventory/GetIndividualItem?id=@i.InvId">@i.InvId</td>
+                    <td>@i.Item</td>
+                    <td>@i.Quantity</td>
+                    <td>@i.Price</td>
+                </tr>
             }
-        </tr>
+
+         }
     </tbody>
 </table>
 <br />

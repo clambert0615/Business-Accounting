@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
 namespace AccountingProgram.Models
 {
@@ -11,10 +10,9 @@ namespace AccountingProgram.Models
         {
         }
 
-        public AccountingAPIDbContext(DbContextOptions<AccountingAPIDbContext> options, IConfiguration configuration)
+        public AccountingAPIDbContext(DbContextOptions<AccountingAPIDbContext> options)
             : base(options)
         {
-            Configuration = configuration;
         }
 
         public virtual DbSet<AccountsPayable> AccountsPayable { get; set; }
@@ -28,14 +26,13 @@ namespace AccountingProgram.Models
         public virtual DbSet<Sales> Sales { get; set; }
         public virtual DbSet<Vendor> Vendor { get; set; }
         public virtual DbSet<Wages> Wages { get; set; }
-        public IConfiguration Configuration { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")); 
+                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=AccountingAPIDb;Trusted_Connection=True;");
             }
         }
 
@@ -75,7 +72,11 @@ namespace AccountingProgram.Models
 
             modelBuilder.Entity<AccountsReceivable>(entity =>
             {
+                entity.Property(e => e.AccRecAmount).HasColumnType("decimal(10, 2)");
+
                 entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.CashAmount).HasColumnType("decimal(10, 2)");
 
                 entity.Property(e => e.CustomerName).HasMaxLength(200);
 
@@ -105,6 +106,11 @@ namespace AccountingProgram.Models
                 entity.Property(e => e.TransDate).HasColumnType("date");
 
                 entity.Property(e => e.Withdrawl).HasColumnType("decimal(10, 2)");
+
+                entity.HasOne(d => d.Sales)
+                    .WithMany(p => p.Cash)
+                    .HasForeignKey(d => d.SalesId)
+                    .HasConstraintName("FK__Cash__SalesId__70DDC3D8");
             });
 
             modelBuilder.Entity<Employee>(entity =>
@@ -181,9 +187,28 @@ namespace AccountingProgram.Models
 
             modelBuilder.Entity<Sales>(entity =>
             {
+                entity.Property(e => e.AccRecAmount).HasColumnType("decimal(10, 2)");
+
                 entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
 
+                entity.Property(e => e.CashAmount).HasColumnType("decimal(10, 2)");
+
                 entity.Property(e => e.TransDate).HasColumnType("date");
+
+                entity.HasOne(d => d.AccRec)
+                    .WithMany(p => p.Sales)
+                    .HasForeignKey(d => d.AccRecId)
+                    .HasConstraintName("FK__Sales__AccRecId__6EF57B66");
+
+                entity.HasOne(d => d.CashNavigation)
+                    .WithMany(p => p.SalesNavigation)
+                    .HasForeignKey(d => d.CashId)
+                    .HasConstraintName("FK__Sales__CashId__6FE99F9F");
+
+                entity.HasOne(d => d.Inv)
+                    .WithMany(p => p.Sales)
+                    .HasForeignKey(d => d.InvId)
+                    .HasConstraintName("FK__Sales__InvId__6E01572D");
             });
 
             modelBuilder.Entity<Vendor>(entity =>

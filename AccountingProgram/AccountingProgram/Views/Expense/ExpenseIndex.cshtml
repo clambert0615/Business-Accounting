@@ -1,0 +1,30 @@
+﻿@model AccountingProgram.Models.AccPayInvExp
+
+<h1 style="text-align:center">Expenses</h1>
+<br />
+<table style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Description</th>
+            <th>Amount</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @{
+            foreach (var e in Model.ExpenseList)
+            {
+            <tr>
+                <td><a href="/Expense/IndividualExpense?id=@e.ExpId">@e.ExpId</a></td>
+                <td>@e.Description</td>
+                <td>@e.Amount</td>
+            </tr>
+                }
+            }
+    </tbody>
+
+</table>
+<br />
+
+<button onclick="location.href='/Expense/AddExpense'">Add New Expense</button>

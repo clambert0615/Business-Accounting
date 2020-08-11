@@ -45,6 +45,7 @@ namespace AccountingProgram.Controllers
             payable.PaymentDate = DateTime.Today;
             Cash c = new Cash();
             c.Withdrawl = amount;
+            c.TransDate = DateTime.Today;
             _context.Cash.Add(c);
             _context.SaveChanges();
             Payments p = new Payments();
