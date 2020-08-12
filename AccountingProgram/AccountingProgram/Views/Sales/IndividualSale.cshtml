@@ -1,0 +1,21 @@
+﻿@using AccountingProgram.Models
+
+@model Sales
+
+<h1 style="text-align:center">Sale Details</h1>
+
+<h3>Sales Id: @Model.SalesId</h3>
+<h3>Sales Date: @Model.TransDate</h3>
+<h3>Subtotal: @Model.Subtotal</h3>
+<h3>Sales Tax: @Model.SalesTax</h3>
+<h3>Total Amount: @Model.Amount</h3>
+@if (Model.CashAmount != null)
+{
+    <h3>Cash Amount Received: @Model.CashAmount</h3>
+}
+@if (Model.AccRecId != null)
+{
+    <h3>Accounts Receivable Id/Information: @Model.AccRecId</h3>
+}
+<br />
+<button onclick="location.href='/Sales/SalesIndex'">Return to Sales Menu</button>

@@ -1,0 +1,34 @@
+﻿@using AccountingProgram.Models
+
+@model List<Cash>
+<h1 style="text-align:center">Cash Transactions</h1>
+<br />
+<button onclick="location.href='/Cash/AddCash'">Add Cash Transaction</button>
+<br />
+<table style="width:100%">
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>Transaction Date</td>
+            <td>Deposit</td>
+            <td>Withdrawl</td>
+            <td>Balance</td>
+        </tr>
+    </thead>
+    <tbody>
+         
+        @{ 
+            foreach(var c in Model)
+            { 
+                <tr>
+                    <td><a href="/Cash/IndividualCash?id=@c.Id">@c.Id</a></td>
+                    <td>@c.TransDate.ToShortDateString()</td>
+                    <td>@c.Deposit</td>
+                    <td>@c.Withdrawl</td>
+                    <td>@c.Balance</td>
+                </tr>
+            }
+        }
+    </tbody>
+
+</table>

@@ -60,18 +60,28 @@ namespace AccountingProgram.Controllers
 
             return RedirectToAction("GetAllPayables");
         }
+
+        //This is used for inventory only.  Fixed assets are done in the fixed assests controller
         [HttpGet]
         public IActionResult AddPayable()
         {
+          //This is for a purchase order for inventory
             return View();
         }
         [HttpPost]
-        public IActionResult AddPayable(AccountsPayable payable)
+        public IActionResult AddPayable(AccountsPayable payable, List<Inventory> inventoryList)
         {
             if (ModelState.IsValid)
             {
                 _context.AccountsPayable.Add(payable);
                 _context.SaveChanges();
+            }
+
+            foreach (var item in inventoryList)
+            {
+                _context.Inventory.Add(item); 
+                _context.SaveChanges();
+
             }
             return RedirectToAction("GetAllPayables", new { id = payable.PayableId });
         }

@@ -1,10 +1,33 @@
-﻿@model AccountingProgram.Models.Sales
+﻿@using AccountingProgram.Models
+@model List<Sales>
 
-<table style="text-align:center">
+<h1 style="text-align:center">Sales List</h1>
+
+<table style="width:100%">
     <thead>
         <tr>
             <td>Sale Id</td>
-            <td></td>
+            <td>Sale Date</td>
+            <td>SubTotal</td>
+            <td>Sales Tax</td>
+            <td>Total</td>
         </tr>
     </thead>
+    <tbody>
+        @{ 
+            foreach(var s in Model)
+            {
+                <tr>
+                    <td><a href="/Sales/IndividualSale?id=@s.SalesId">@s.SalesId</a></td>
+                    <td>@s.TransDate.ToShortDateString()</td>
+                    <td>@s.Subtotal</td>
+                    <td>@s.SalesTax</td>
+                    <td>@s.Amount</td>
+                </tr>
+
+            }
+        }
+    </tbody>
 </table>
+<button onclick="location.href='/Sales/AddCashSale'">Add Cash Sale</button>
+<button onclick="location.href='/Sales/AddInvoice'">Add Invoice/Accounts Receivable</button>

@@ -3,8 +3,8 @@
 <form action="/Expense/AddExpense" method="post">
     <label for="description"> Expense Type</label><br />
     <select id="description" name="description">
+        <option value="---">------</option>
         <option value="Advertising">Advertising</option>
-        <option value="Cost of Goods Sold">Cost of Goods Sold</option>
         <option value="Depreciation">Depreciation</option>
         <option value="Employee Benefits">Employee Benefits</option>
         <option value="Insurance">Insurance</option>
@@ -15,6 +15,7 @@
         <option value="Utilities">Utilities</option>
         <option value="Vehicle">Vehicle</option>
         <option value="Wages">Wages</option>
+        <option value="Other">Other</option>
 
     </select><br />
     <label for="paymentDate">Payment Date</label><br />
@@ -23,3 +24,5 @@
     <input type="number" id="amount" name="amount" step=".01" /><br />
     <input type="submit" value="Submit Expense" />
 </form>
+<br />
+<button onclick="location.href='/Expense/ExpenseIndex'">Return to Expense Menu</button>

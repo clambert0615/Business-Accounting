@@ -7,6 +7,7 @@ namespace AccountingProgram.Models
     {
         public Inventory()
         {
+            Invoice = new HashSet<Invoice>();
             Sales = new HashSet<Sales>();
         }
 
@@ -19,6 +20,7 @@ namespace AccountingProgram.Models
         public int? Received { get; set; }
         public string Message { get; set; }
 
+        public virtual ICollection<Invoice> Invoice { get; set; }
         public virtual ICollection<Sales> Sales { get; set; }
     }
 }

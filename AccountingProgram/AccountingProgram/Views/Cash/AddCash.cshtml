@@ -1,0 +1,13 @@
+﻿<h1 style="text-align:center">Add Cash Tranaction</h1>
+<br />
+<form action="/Cash/AddCash" method="post">
+    <label for="TransDate">Transaction Date</label><br />
+    <input type="date" id="TransDate" name="TransDate" /><br />
+    <label for="Deposit">Deposit</label><br />
+    <input type="number" id="Deposit" name="Deposit" step=".01" /><br />
+    <label for="Withdrawl">Withdrawl</label><br />
+    <input type="number" id="Withdrawl" name="Withdrawl" step=".01" /><br />
+    <input type="submit" value="Submit" />
+</form>
+<br />
+<button onclick="location.href='/Cash/CashIndex'">Return to Cash Menu</button>

@@ -1,0 +1,22 @@
+﻿@using AccountingProgram.Models
+
+@model Cash
+
+<h1 style="text-align:center">Cash Transaction Details</h1>
+<br />
+<h3>Cash Id: @Model.Id</h3>
+<h3>Transaction Date: @Model.TransDate.ToShortDateString()</h3>
+@if (Model.Deposit != null)
+{
+<h3>Deposit: $@Model.Deposit</h3>
+}
+@if(Model.Withdrawl != null)
+{
+    <h3>Withdrawl: $@Model.Withdrawl</h3>
+}
+@if(Model.SalesId != null)
+{
+    <h3>Sales Id: <a href="/Sales/IndividualSale?id=@Model.SalesId">@Model.SalesId</a> </h3>
+}
+<br />
+<button onclick="location.href='/Cash/CashIndex'">Return to Cash Menu</button>

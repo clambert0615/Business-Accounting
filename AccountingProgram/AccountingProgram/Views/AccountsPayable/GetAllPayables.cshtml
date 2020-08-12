@@ -33,13 +33,19 @@
                         <td>@pay.DueDate.ToShortDateString()</td>
                        
                         <td>
-                          
+                          @if (pay.Balance != null)
+                          {
                                      @pay.Balance
-                              
+                          }
+                          @if (pay.Balance == null)
+                          {
+                              @pay.AmountDue
+                          }
+
                         </td>
                     </tr>
                 }
             }
         </tbody>
     </table>
-    <button onclick="location.href='/AccountsPayable/AddPayable'">Add New Accounts Payable</button>
+    <button onclick="location.href='/AccountsPayable/AddPayable'">Add New Purchase Order</button>

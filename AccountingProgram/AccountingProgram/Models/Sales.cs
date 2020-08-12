@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AccountingProgram.Models
 {
@@ -11,6 +12,9 @@ namespace AccountingProgram.Models
         }
 
         public int SalesId { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+
         public DateTime TransDate { get; set; }
         public decimal? Amount { get; set; }
         public int? InvId { get; set; }
@@ -18,6 +22,8 @@ namespace AccountingProgram.Models
         public int? CashId { get; set; }
         public decimal? CashAmount { get; set; }
         public decimal? AccRecAmount { get; set; }
+        public decimal? SalesTax { get; set; }
+        public decimal? Subtotal { get; set; }
 
         public virtual AccountsReceivable AccRec { get; set; }
         public virtual Cash CashNavigation { get; set; }

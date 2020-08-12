@@ -21,10 +21,14 @@
 }
 
 <br />
-
-
-
+@if (Model.Payable.Balance != null)
+{
 <h3>Balance Due: @Model.Payable.Balance</h3>
+}
+else
+{
+    <h3>Balance Due: @Model.Payable.AmountDue</h3>
+}
 
 
 <br />
@@ -36,3 +40,4 @@
 </form>
 <br />
 <button onclick="location.href='/AccountsPayable/UpdatePayable?id=@Model.Payable.PayableId'">Update This Payable</button>
+<button onclick="location.href='/AccountsPayable/GetAllPayables'">Return to Accounts Payable Menu</button>

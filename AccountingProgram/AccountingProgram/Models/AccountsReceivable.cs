@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AccountingProgram.Models
 {
@@ -12,11 +13,19 @@ namespace AccountingProgram.Models
 
         public int Id { get; set; }
         public string CustomerName { get; set; }
-        public DateTime? DueDate { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+
+        public DateTime DueDate { get; set; }
         public decimal? Amount { get; set; }
         public decimal? CashAmount { get; set; }
         public decimal? AccRecAmount { get; set; }
+        public int? InvoiceId { get; set; }
+        public int? CustomerId { get; set; }
+        public decimal? Balance { get; set; }
 
+        public virtual Customers Customer { get; set; }
+        public virtual Invoice Invoice { get; set; }
         public virtual ICollection<Sales> Sales { get; set; }
     }
 }
