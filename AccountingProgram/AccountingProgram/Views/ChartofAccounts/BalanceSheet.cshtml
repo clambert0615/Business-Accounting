@@ -1,0 +1,32 @@
+﻿@using AccountingProgram.Models
+@model BalanceSheet
+
+<h1 style="text-align:center">Balance Sheet</h1>
+<br />
+<h3>ASSETS</h3>
+<h4>Current Assets</h4>
+<p>Cash and Cash Equivalents:  @Model.Cash.Balance</p>
+<p>Accounts Receivable:  @Model.Receivable.Balance</p>
+<p>Inventory: @Model.Inventory.Price</p>
+<p>Total current assets:  @(Model.Cash.Balance + Model.Receivable.Balance + Model.Inventory.Price)</p>
+<br />
+<br />
+<h4>Property and Equipment</h4>
+<br />
+<br />
+<h4>Other Assets</h4>
+<br />
+<br />
+<h4>Total Assets:  @(Model.Cash.Balance + Model.Receivable.Balance + Model.Inventory.Price)</h4>
+<br />
+<br />
+<h3>LIABILITIES AND SHAREHOLDER'S EQUITY</h3>
+<h4>Current Liabilities</h4>
+<p>Accounts Payable: @Model.Payable.Balance</p>
+<p>Total Current Liabilities: @Model.Payable.Balance</p>
+<br />
+<br />
+<h4>Shareholder's Equity</h4>
+<br />
+<br />
+<h4>Total liabilities and shareholder's equity: @Model.Payable.Balance</h4>

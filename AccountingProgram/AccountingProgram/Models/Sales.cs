@@ -9,6 +9,7 @@ namespace AccountingProgram.Models
         public Sales()
         {
             Cash = new HashSet<Cash>();
+            SalesInventory = new HashSet<SalesInventory>();
         }
 
         public int SalesId { get; set; }
@@ -24,10 +25,13 @@ namespace AccountingProgram.Models
         public decimal? AccRecAmount { get; set; }
         public decimal? SalesTax { get; set; }
         public decimal? Subtotal { get; set; }
+        public int? InvoiceId { get; set; }
 
         public virtual AccountsReceivable AccRec { get; set; }
         public virtual Cash CashNavigation { get; set; }
         public virtual Inventory Inv { get; set; }
+        public virtual Invoice Invoice { get; set; }
         public virtual ICollection<Cash> Cash { get; set; }
+        public virtual ICollection<SalesInventory> SalesInventory { get; set; }
     }
 }

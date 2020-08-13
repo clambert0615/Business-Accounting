@@ -8,6 +8,7 @@
         <tr>
             <td>Sale Id</td>
             <td>Sale Date</td>
+            <td>Invoice Id</td>
             <td>SubTotal</td>
             <td>Sales Tax</td>
             <td>Total</td>
@@ -20,6 +21,7 @@
                 <tr>
                     <td><a href="/Sales/IndividualSale?id=@s.SalesId">@s.SalesId</a></td>
                     <td>@s.TransDate.ToShortDateString()</td>
+                    <td>@s.InvoiceId</td>
                     <td>@s.Subtotal</td>
                     <td>@s.SalesTax</td>
                     <td>@s.Amount</td>

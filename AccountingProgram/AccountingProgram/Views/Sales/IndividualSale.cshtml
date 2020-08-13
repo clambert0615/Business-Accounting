@@ -5,7 +5,7 @@
 <h1 style="text-align:center">Sale Details</h1>
 
 <h3>Sales Id: @Model.SalesId</h3>
-<h3>Sales Date: @Model.TransDate</h3>
+<h3>Sales Date: @Model.TransDate.ToShortDateString()</h3>
 <h3>Subtotal: @Model.Subtotal</h3>
 <h3>Sales Tax: @Model.SalesTax</h3>
 <h3>Total Amount: @Model.Amount</h3>
@@ -17,5 +17,12 @@
 {
     <h3>Accounts Receivable Id/Information: @Model.AccRecId</h3>
 }
+@if (Model.InvoiceId != null)
+{
+    <h3>Click on Invoice Id to Update Invoice:</h3>
+    <h3>Invoice Id:<a href="/Sales/UpdateInvoice?id=@Model.InvoiceId">@Model.InvoiceId</a></h3>
+}
+    
+
 <br />
 <button onclick="location.href='/Sales/SalesIndex'">Return to Sales Menu</button>

@@ -16,7 +16,7 @@ namespace AccountingProgram.Models
         {
             Configuration = configuration;
         }
-        public IConfiguration Configuration { get; private set; }
+
         public virtual DbSet<AccountsPayable> AccountsPayable { get; set; }
         public virtual DbSet<AccountsReceivable> AccountsReceivable { get; set; }
         public virtual DbSet<Assets> Assets { get; set; }
@@ -26,10 +26,13 @@ namespace AccountingProgram.Models
         public virtual DbSet<Expenses> Expenses { get; set; }
         public virtual DbSet<Inventory> Inventory { get; set; }
         public virtual DbSet<Invoice> Invoice { get; set; }
+        public virtual DbSet<InvoiceInventory> InvoiceInventory { get; set; }
         public virtual DbSet<Payments> Payments { get; set; }
         public virtual DbSet<Sales> Sales { get; set; }
+        public virtual DbSet<SalesInventory> SalesInventory { get; set; }
         public virtual DbSet<Vendor> Vendor { get; set; }
         public virtual DbSet<Wages> Wages { get; set; }
+        public IConfiguration Configuration { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -229,6 +232,22 @@ namespace AccountingProgram.Models
                     .HasConstraintName("FK__Invoice__Invento__02FC7413");
             });
 
+            modelBuilder.Entity<InvoiceInventory>(entity =>
+            {
+                entity.HasKey(e => e.InvInvId)
+                    .HasName("PK__InvoiceI__B775B945BF94B12D");
+
+                entity.HasOne(d => d.Inventory)
+                    .WithMany(p => p.InvoiceInventory)
+                    .HasForeignKey(d => d.InventoryId)
+                    .HasConstraintName("FK__InvoiceIn__Inven__3C34F16F");
+
+                entity.HasOne(d => d.Invoice)
+                    .WithMany(p => p.InvoiceInventory)
+                    .HasForeignKey(d => d.InvoiceId)
+                    .HasConstraintName("FK__InvoiceIn__Invoi__3D2915A8");
+            });
+
             modelBuilder.Entity<Payments>(entity =>
             {
                 entity.HasKey(e => e.PaymentId)
@@ -277,6 +296,24 @@ namespace AccountingProgram.Models
                     .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.InvId)
                     .HasConstraintName("FK__Sales__InvId__6E01572D");
+
+                entity.HasOne(d => d.Invoice)
+                    .WithMany(p => p.Sales)
+                    .HasForeignKey(d => d.InvoiceId)
+                    .HasConstraintName("FK__Sales__InvoiceId__2739D489");
+            });
+
+            modelBuilder.Entity<SalesInventory>(entity =>
+            {
+                entity.HasOne(d => d.Inventory)
+                    .WithMany(p => p.SalesInventory)
+                    .HasForeignKey(d => d.InventoryId)
+                    .HasConstraintName("FK__SalesInve__Inven__40F9A68C");
+
+                entity.HasOne(d => d.Sales)
+                    .WithMany(p => p.SalesInventory)
+                    .HasForeignKey(d => d.SalesId)
+                    .HasConstraintName("FK__SalesInve__Sales__40058253");
             });
 
             modelBuilder.Entity<Vendor>(entity =>

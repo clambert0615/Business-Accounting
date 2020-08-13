@@ -32,17 +32,8 @@
                         <td>@pay.AmountDue</td>
                         <td>@pay.DueDate.ToShortDateString()</td>
                        
-                        <td>
-                          @if (pay.Balance != null)
-                          {
-                                     @pay.Balance
-                          }
-                          @if (pay.Balance == null)
-                          {
-                              @pay.AmountDue
-                          }
+                        <td>@pay.Balance </td>                    
 
-                        </td>
                     </tr>
                 }
             }
