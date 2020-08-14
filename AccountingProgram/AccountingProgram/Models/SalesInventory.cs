@@ -8,6 +8,7 @@ namespace AccountingProgram.Models
         public int SalesInventoryId { get; set; }
         public int? SalesId { get; set; }
         public int? InventoryId { get; set; }
+        public int? InventoryQty { get; set; }
 
         public virtual Inventory Inventory { get; set; }
         public virtual Sales Sales { get; set; }

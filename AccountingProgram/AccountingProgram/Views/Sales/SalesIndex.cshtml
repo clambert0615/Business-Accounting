@@ -2,6 +2,10 @@
 @model List<Sales>
 
 <h1 style="text-align:center">Sales List</h1>
+<button onclick="location.href='/Sales/AddCashSale'">Add Cash Sale</button>
+<button onclick="location.href='/Sales/AddInvoice'">Add Invoice/Accounts Receivable</button>
+<button onclick="location.href='/Sales/CashSalesReturnId'">Cash Sales Return / Update</button>
+
 
 <table style="width:100%">
     <thead>
@@ -15,8 +19,8 @@
         </tr>
     </thead>
     <tbody>
-        @{ 
-            foreach(var s in Model)
+        @{
+            foreach (var s in Model)
             {
                 <tr>
                     <td><a href="/Sales/IndividualSale?id=@s.SalesId">@s.SalesId</a></td>
@@ -31,5 +35,3 @@
         }
     </tbody>
 </table>
-<button onclick="location.href='/Sales/AddCashSale'">Add Cash Sale</button>
-<button onclick="location.href='/Sales/AddInvoice'">Add Invoice/Accounts Receivable</button>

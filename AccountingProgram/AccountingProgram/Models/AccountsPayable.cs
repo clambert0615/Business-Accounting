@@ -26,8 +26,12 @@ namespace AccountingProgram.Models
         public decimal? AmountDue { get; set; }
         public int? VenId { get; set; }
         public int? PaymentsId { get; set; }
+        public int? InvoiceId { get; set; }
+        public int? SalesId { get; set; }
 
+        public virtual Invoice Invoice { get; set; }
         public virtual Payments Payments { get; set; }
+        public virtual Sales Sales { get; set; }
         public virtual Vendor Ven { get; set; }
         public virtual ICollection<Payments> PaymentsNavigation { get; set; }
     }

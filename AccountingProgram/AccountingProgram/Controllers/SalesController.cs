@@ -46,7 +46,15 @@ namespace AccountingProgram.Controllers
         public IActionResult AddCashSale(Sales sale, List<InvGrid> list)
         {
             if (ModelState.IsValid)
+
             {
+                sale.SalesInventory = new List<SalesInventory>();
+                foreach (var item in list)
+                {
+                    sale.SalesInventory.Add(new SalesInventory { InventoryId = item.InvId, SalesId = sale.SalesId, InventoryQty = item.Quantity });
+
+                }
+            
                 _context.Sales.Add(sale);
                 _context.SaveChanges();
                 Cash c = new Cash();
@@ -98,6 +106,7 @@ namespace AccountingProgram.Controllers
                 _context.Invoice.Add(invoice);
                 _context.SaveChanges();
                 AccountsReceivable ar = new AccountsReceivable();
+                ar.InvoiceId = invoice.InvoiceId;
                 ar.CustomerName = invoice.CustomerName;
                 ar.DueDate = invoice.DueDate;
                 ar.Amount = invoice.AmountDue;
@@ -116,6 +125,7 @@ namespace AccountingProgram.Controllers
                 AccountsPayable ap = new AccountsPayable();
                 ap.VenId = 15;
                 ap.VendorName = "State of Michigan (Sales Tax)";
+                ap.InvoiceId = invoice.InvoiceId;
                 ap.DueDate = new DateTime(2021, 01, 01);
                 ap.AmountDue = sale.SalesTax;
                 _context.AccountsPayable.Add(ap);
@@ -141,9 +151,33 @@ namespace AccountingProgram.Controllers
             return View(found);
         }
         [HttpPost]
-        public IActionResult UpdateInvoice(Invoice updatedInvoice)
+        public IActionResult UpdateInvoice(Invoice updatedInvoice,  List<InvGrid> updatedInventory)
         {
+           
             Invoice old = _context.Invoice.First(x => x.InvoiceId == updatedInvoice.InvoiceId);
+            old.InvoiceInventory = _context.InvoiceInventory.Where(x => x.InvoiceId == old.InvoiceId).ToList();
+
+            AccountsReceivable oldar = _context.AccountsReceivable.First(x => x.InvoiceId == updatedInvoice.InvoiceId);
+            oldar.CustomerName = updatedInvoice.CustomerName;
+            oldar.DueDate = updatedInvoice.DueDate;
+            oldar.Amount = updatedInvoice.AmountDue;
+            _context.Entry(oldar).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.Update(oldar);
+            _context.SaveChanges();
+
+            foreach (var item in old.InvoiceInventory)
+            {
+                Inventory found = _context.Inventory.Find(item.InventoryId);
+                found.Quantity += item.InventoryQty;
+            }
+            old.InvoiceInventory.Clear();
+            foreach (var item in updatedInventory)
+            {
+                updatedInvoice.InvoiceInventory.Add(new InvoiceInventory { InventoryId = item.InvId, InvoiceId = updatedInvoice.InvoiceId, InventoryQty = item.Quantity });
+                Inventory update = _context.Inventory.First(x => x.InvId == item.InvId);
+                update.Quantity -= item.Quantity;
+            }
+            old.InvoiceInventory = updatedInvoice.InvoiceInventory;
             old.InvDate = updatedInvoice.InvDate;
             old.DueDate = updatedInvoice.DueDate;
             old.CustomerName = updatedInvoice.CustomerName;
@@ -158,14 +192,7 @@ namespace AccountingProgram.Controllers
             _context.Update(old);
             _context.SaveChanges();
 
-            AccountsReceivable oldar = _context.AccountsReceivable.First(x => (x.CustomerName == old.CustomerName) && (x.Amount == old.AmountDue));
-            oldar.CustomerName = updatedInvoice.CustomerName;
-            oldar.DueDate = updatedInvoice.DueDate;
-            oldar.Amount = updatedInvoice.AmountDue;
-            _context.Entry(oldar).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            _context.Update(oldar);
-            _context.SaveChanges();
-
+       
             Sales oldSale = _context.Sales.First(x => x.InvoiceId == old.InvoiceId);
             oldSale.TransDate = updatedInvoice.InvDate;
             oldSale.Subtotal = updatedInvoice.Subtotal;
@@ -175,10 +202,59 @@ namespace AccountingProgram.Controllers
             _context.Update(oldSale);
             _context.SaveChanges();
 
-            //AccountsPayable oldap = _context.AccountsPayable.First(x =>
+
+             AccountsPayable oldap = _context.AccountsPayable.First(x => x.InvoiceId == old.InvoiceId);
+            oldap.AmountDue = updatedInvoice.SalesTax;
+            _context.Entry(oldap).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.Update(oldap);
+            _context.SaveChanges();
 
             return RedirectToAction("SalesIndex");
 
+        }
+        
+        public IActionResult CashSalesReturnId()
+        {
+            return View();
+        }
+        
+        public IActionResult CashSalesReturn(int SalesId)
+        {
+            Sales found = _context.Sales.Find(SalesId);
+            found.SalesInventory = _context.SalesInventory.Where(x => x.SalesId == found.SalesId).ToList();
+            return View(found);
+        }
+        
+        public IActionResult CashSalesReturnUpdate(Sales updatedSale, List<InvGrid> updatedInventory)
+        {
+            Sales old = _context.Sales.First(x => x.SalesId == updatedSale.SalesId);
+            old.SalesInventory = _context.SalesInventory.Where(x => x.SalesId == old.SalesId).ToList();
+            foreach (var item in old.SalesInventory)
+            {
+                Inventory found = _context.Inventory.Find(item.InventoryId);
+                found.Quantity += item.InventoryQty;
+            }
+            old.SalesInventory.Clear();
+            foreach (var item in updatedInventory)
+            {
+                updatedSale.SalesInventory.Add(new SalesInventory { InventoryId = item.InvId, SalesId = updatedSale.SalesId, InventoryQty = item.Quantity });
+                Inventory update = _context.Inventory.First(x => x.InvId == item.InvId);
+                update.Quantity -= item.Quantity;
+            }
+            old.SalesInventory = updatedSale.SalesInventory;
+            old.TransDate = updatedSale.TransDate;
+            old.Subtotal = updatedSale.Subtotal;
+            old.SalesTax = updatedSale.SalesTax;
+            old.Amount = updatedSale.Amount;
+            old.CashAmount = updatedSale.CashAmount;
+            _context.Entry(old).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.Update(old);
+            _context.SaveChanges();
+
+
+            //update accounts payable for sales tax
+
+            return RedirectToAction("SalesIndex");
         }
     }
 }

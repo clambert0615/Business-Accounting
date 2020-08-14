@@ -8,6 +8,8 @@ namespace AccountingProgram.Models
     {
         public Sales()
         {
+            AccountsPayable = new HashSet<AccountsPayable>();
+            Arreceipts = new HashSet<Arreceipts>();
             Cash = new HashSet<Cash>();
             SalesInventory = new HashSet<SalesInventory>();
         }
@@ -31,6 +33,8 @@ namespace AccountingProgram.Models
         public virtual Cash CashNavigation { get; set; }
         public virtual Inventory Inv { get; set; }
         public virtual Invoice Invoice { get; set; }
+        public virtual ICollection<AccountsPayable> AccountsPayable { get; set; }
+        public virtual ICollection<Arreceipts> Arreceipts { get; set; }
         public virtual ICollection<Cash> Cash { get; set; }
         public virtual ICollection<SalesInventory> SalesInventory { get; set; }
     }

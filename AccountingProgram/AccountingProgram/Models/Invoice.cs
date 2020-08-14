@@ -8,6 +8,7 @@ namespace AccountingProgram.Models
     {
         public Invoice()
         {
+            AccountsPayable = new HashSet<AccountsPayable>();
             AccountsReceivable = new HashSet<AccountsReceivable>();
             InvoiceInventory = new HashSet<InvoiceInventory>();
             Sales = new HashSet<Sales>();
@@ -33,6 +34,7 @@ namespace AccountingProgram.Models
         public int? InventoryId { get; set; }
 
         public virtual Inventory Inventory { get; set; }
+        public virtual ICollection<AccountsPayable> AccountsPayable { get; set; }
         public virtual ICollection<AccountsReceivable> AccountsReceivable { get; set; }
         public virtual ICollection<InvoiceInventory> InvoiceInventory { get; set; }
         public virtual ICollection<Sales> Sales { get; set; }

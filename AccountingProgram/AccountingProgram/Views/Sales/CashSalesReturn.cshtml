@@ -1,44 +1,32 @@
 ﻿@using AccountingProgram.Models
 
-@model Invoice
+@model Sales
 
-<h1 style="text-align:center">Update Invoice</h1>
-<br />
-<form action="/Sales/UpdateInvoice" method="post">
+<form action="/Sales/CashSalesReturnUpdate" method="post">
     <div>
-        <label for="InvoiceId">Invoice Id</label>
-        <input type="number" id="InvoiceId" name="InvoiceId" value="@Model.InvoiceId" readonly><br />
-        <label for="InvDate">Invoice Date</label><br />
-        <input type="date" id="InvDate" name="InvDate" value="@Model.InvDate.ToShortDateString()" /><br />
-        <label for="DueDate">Due Date</label><br />
-        <input type="date" id="DueDate" name="DueDate" value="@Model.DueDate.ToShortDateString()" /><br />
-        <label for="CustomerName">Customer Name</label><br />
-        <input type="text" id="CustomerName" name="CustomerName" value="@Model.CustomerName"><br />
-        <label for="StreetAddress">Street Address</label><br />
-        <input type="text" id="StreetAddress" name="StreetAddress" value="@Model.StreetAddress" /><br />
-        <label for="City">City</label><br />
-        <input type="text" id="City" name="City" value="@Model.City" /><br />
-        <label for="State">State</label><br />
-        <input type="text" id="State" name="State" value="@Model.State" /><br />
-        <label for="Zip">Zip Code</label><br />
-        <input type="number" id="Zip" name="Zip" value="@Model.Zip" /><br />
-        <label for="Subtotal">Subtotal</label><br />
-        <input type="number" id="Subtotal" name="Subtotal" step=".01" value="@Model.Subtotal" /><br />
+        <input type="hidden" id="SalesId" name="SalesId" value="@Model.SalesId" />
+        <label for="TransDate">Transaction Date</label><br />
+        <input type="date" id="TransDate" name="TransDate" value="@Model.TransDate" /><br />
+        <label for="SubTotal">SubTotal Amount</label><br />
+        <input type="number" id="SubTotal" name="SubTotal" step=".01" value="@Model.Subtotal" /><br />
         <label for="SalesTax">Sales Tax</label><br />
-        <input type="text" id="SalesTax" name="SalesTax" step=".01" value="@Model.SalesTax" /><br />
-        <label for="AmountDue">Amount Due</label> <br />
-        <input type="number" id="AmountDue" name="AmountDue" step=".01" value="@Model.AmountDue" /><br />
+        <input type="number" id="SalesTax" name="SalesTax" step=".01" value="@Model.SalesTax" /><br />
+        <label for="Amount">Total Amount</label><br />
+        <input type="number" id="Amount" name="Amount" step=".01" value="@Model.Amount" /><br />
+        <label for="CashAmount">Cash Amount</label><br />
+        <input type="number" id="CashAmount" name="CashAmount" step=".01" value="@Model.CashAmount" /><br />
 
         <h3>
             Re-enter / update the inventory associated with this invoice.  If nothing changed, you must still re-enter the
             inventory and quantity amount.
         </h3>
-        @foreach (var item in Model.InvoiceInventory)
+        @foreach (var item in Model.SalesInventory)
         {
             <p>Inventory Id: @item.InventoryId &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quantity: @item.InventoryQty </p>
         }
 
     </div>
+
     <div>
         <button type="button" id="AddButton">Add Inventory Item Sold</button>
         <table style="width:100%">
@@ -54,10 +42,11 @@
         </table>
         <button>Submit</button>
     </div>
+
 </form>
+
 <input type="hidden" id="totalItems" value="0" />
 <button onclick="location.href='/Sales/SalesIndex'">Return to Sales Menu</button>
-
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script>
@@ -79,4 +68,4 @@
         });
     });
 </script>
-
+ 

@@ -8,6 +8,7 @@ namespace AccountingProgram.Models
     {
         public AccountsReceivable()
         {
+            Arreceipts = new HashSet<Arreceipts>();
             Sales = new HashSet<Sales>();
         }
 
@@ -26,6 +27,7 @@ namespace AccountingProgram.Models
 
         public virtual Customers Customer { get; set; }
         public virtual Invoice Invoice { get; set; }
+        public virtual ICollection<Arreceipts> Arreceipts { get; set; }
         public virtual ICollection<Sales> Sales { get; set; }
     }
 }

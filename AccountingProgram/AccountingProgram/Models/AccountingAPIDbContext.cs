@@ -17,8 +17,10 @@ namespace AccountingProgram.Models
             Configuration = configuration;
         }
 
+
         public virtual DbSet<AccountsPayable> AccountsPayable { get; set; }
         public virtual DbSet<AccountsReceivable> AccountsReceivable { get; set; }
+        public virtual DbSet<Arreceipts> Arreceipts { get; set; }
         public virtual DbSet<Assets> Assets { get; set; }
         public virtual DbSet<Cash> Cash { get; set; }
         public virtual DbSet<Customers> Customers { get; set; }
@@ -33,6 +35,7 @@ namespace AccountingProgram.Models
         public virtual DbSet<Vendor> Vendor { get; set; }
         public virtual DbSet<Wages> Wages { get; set; }
         public IConfiguration Configuration { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -66,10 +69,20 @@ namespace AccountingProgram.Models
                     .HasColumnName("Vendor Name")
                     .HasMaxLength(100);
 
+                entity.HasOne(d => d.Invoice)
+                    .WithMany(p => p.AccountsPayable)
+                    .HasForeignKey(d => d.InvoiceId)
+                    .HasConstraintName("FK__AccountsP__Invoi__4D5F7D71");
+
                 entity.HasOne(d => d.Payments)
                     .WithMany(p => p.AccountsPayable)
                     .HasForeignKey(d => d.PaymentsId)
                     .HasConstraintName("FK__AccountsP__Payme__5FB337D6");
+
+                entity.HasOne(d => d.Sales)
+                    .WithMany(p => p.AccountsPayable)
+                    .HasForeignKey(d => d.SalesId)
+                    .HasConstraintName("FK__AccountsP__Sales__607251E5");
 
                 entity.HasOne(d => d.Ven)
                     .WithMany(p => p.AccountsPayable)
@@ -100,6 +113,35 @@ namespace AccountingProgram.Models
                     .WithMany(p => p.AccountsReceivable)
                     .HasForeignKey(d => d.InvoiceId)
                     .HasConstraintName("FK__AccountsR__Invoi__151B244E");
+            });
+
+            modelBuilder.Entity<Arreceipts>(entity =>
+            {
+                entity.HasKey(e => e.ArreciptsId)
+                    .HasName("PK__ARReceip__DA86A3E632B7ECD9");
+
+                entity.ToTable("ARReceipts");
+
+                entity.Property(e => e.ArreciptsId).HasColumnName("ARReciptsId");
+
+                entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.ReceiptDate).HasColumnType("date");
+
+                entity.HasOne(d => d.AccountsRec)
+                    .WithMany(p => p.Arreceipts)
+                    .HasForeignKey(d => d.AccountsRecId)
+                    .HasConstraintName("FK__ARReceipt__Accou__73852659");
+
+                entity.HasOne(d => d.Cash)
+                    .WithMany(p => p.Arreceipts)
+                    .HasForeignKey(d => d.CashId)
+                    .HasConstraintName("FK__ARReceipt__CashI__6442E2C9");
+
+                entity.HasOne(d => d.Sales)
+                    .WithMany(p => p.Arreceipts)
+                    .HasForeignKey(d => d.SalesId)
+                    .HasConstraintName("FK__ARReceipt__Sales__634EBE90");
             });
 
             modelBuilder.Entity<Assets>(entity =>

@@ -1,0 +1,27 @@
+﻿@using AccountingProgram.Models
+
+@model List<AccountsReceivable>
+
+<h1 style="text-align:center">Accounts Receivable</h1>
+<br />
+<table style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Due Date</th>
+            <th>Total Amount</th>
+            <th>Balance</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var ar in Model)
+        {
+            <tr> 
+                <td><a href="/AccountsReceivable/IndividualReceivable?id=@ar.Id">@ar.Id</a></td>
+                <td>@ar.DueDate.ToShortDateString()</td>
+                <td>@ar.Amount</td>
+                <td>@ar.Balance</td>
+            </tr>
+        }
+    </tbody>
+</table>

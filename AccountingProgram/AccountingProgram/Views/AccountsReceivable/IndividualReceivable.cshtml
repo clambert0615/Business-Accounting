@@ -1,0 +1,27 @@
+﻿@using AccountingProgram.Models
+
+@model AccRecReiptsView
+
+<h1 style="text-align:center">Accounts Receivable Details</h1>
+
+<h3>Accounts Receivable ID: @Model.AR.Id</h3>
+<br />
+<h3>Amount Due: @Model.AR.Amount</h3>
+<br />
+<h3>Due Date: @Model.AR.DueDate</h3>
+<br />
+
+@foreach (var r in Model.Recipts)
+{
+    <h4>Receipt Date: @r.ReceiptDate.ToShortDateString()</h4>
+    <h4>Receipt Amount: @r.Amount</h4>
+}
+<br />
+<h3>Balance: @Model.AR.Balance</h3>
+<br />
+<form action="/AccountsReceivable/GetReceipt?id=@Model.AR.Id" method="post">
+    Record a Recipt:
+    <input type="number" id="amount" name="amount" step=".01" />
+    <input type="submit" value="Submit Receipt" />
+
+</form>
