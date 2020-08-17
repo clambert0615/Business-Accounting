@@ -8,6 +8,7 @@ namespace AccountingProgram.Models
     {
         public AccountsPayable()
         {
+            PayableInventory = new HashSet<PayableInventory>();
             PaymentsNavigation = new HashSet<Payments>();
         }
 
@@ -17,9 +18,6 @@ namespace AccountingProgram.Models
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
 
         public DateTime DueDate { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-
         public DateTime PaymentDate { get; set; }
         public decimal? PaymentAmount { get; set; } = 0;
         public decimal? Balance { get; set; }
@@ -33,6 +31,7 @@ namespace AccountingProgram.Models
         public virtual Payments Payments { get; set; }
         public virtual Sales Sales { get; set; }
         public virtual Vendor Ven { get; set; }
+        public virtual ICollection<PayableInventory> PayableInventory { get; set; }
         public virtual ICollection<Payments> PaymentsNavigation { get; set; }
     }
 }

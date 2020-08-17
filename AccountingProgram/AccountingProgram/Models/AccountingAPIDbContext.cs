@@ -12,11 +12,12 @@ namespace AccountingProgram.Models
         }
 
         public AccountingAPIDbContext(DbContextOptions<AccountingAPIDbContext> options, IConfiguration configuration)
-            : base(options)
+             : base(options)
         {
             Configuration = configuration;
         }
 
+        public IConfiguration Configuration { get; set; }
 
         public virtual DbSet<AccountsPayable> AccountsPayable { get; set; }
         public virtual DbSet<AccountsReceivable> AccountsReceivable { get; set; }
@@ -29,13 +30,12 @@ namespace AccountingProgram.Models
         public virtual DbSet<Inventory> Inventory { get; set; }
         public virtual DbSet<Invoice> Invoice { get; set; }
         public virtual DbSet<InvoiceInventory> InvoiceInventory { get; set; }
+        public virtual DbSet<PayableInventory> PayableInventory { get; set; }
         public virtual DbSet<Payments> Payments { get; set; }
         public virtual DbSet<Sales> Sales { get; set; }
         public virtual DbSet<SalesInventory> SalesInventory { get; set; }
         public virtual DbSet<Vendor> Vendor { get; set; }
         public virtual DbSet<Wages> Wages { get; set; }
-        public IConfiguration Configuration { get; set; }
-
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -288,6 +288,24 @@ namespace AccountingProgram.Models
                     .WithMany(p => p.InvoiceInventory)
                     .HasForeignKey(d => d.InvoiceId)
                     .HasConstraintName("FK__InvoiceIn__Invoi__3D2915A8");
+            });
+
+            modelBuilder.Entity<PayableInventory>(entity =>
+            {
+                entity.HasKey(e => e.PayInvId)
+                    .HasName("PK__PayableI__6DE6E75FCEFAADAA");
+
+                entity.Property(e => e.InvPrice).HasColumnType("decimal(10, 2)");
+
+                entity.HasOne(d => d.Inventory)
+                    .WithMany(p => p.PayableInventory)
+                    .HasForeignKey(d => d.InventoryId)
+                    .HasConstraintName("FK__PayableIn__Inven__09746778");
+
+                entity.HasOne(d => d.Payable)
+                    .WithMany(p => p.PayableInventory)
+                    .HasForeignKey(d => d.PayableId)
+                    .HasConstraintName("FK__PayableIn__Payab__0880433F");
             });
 
             modelBuilder.Entity<Payments>(entity =>

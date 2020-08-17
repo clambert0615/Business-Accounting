@@ -15,7 +15,7 @@
 }
 @if (Model.AccRecId != null)
 {
-    <h3>Accounts Receivable Id/Information: @Model.AccRecId</h3>
+    <h3>Accounts Receivable Id/Information:<a href="/AccountsReceivable/IndividualReceivable?id=@Model.AccRecId">@Model.AccRecId</a></h3>
 }
 @if (Model.InvoiceId != null)
 {

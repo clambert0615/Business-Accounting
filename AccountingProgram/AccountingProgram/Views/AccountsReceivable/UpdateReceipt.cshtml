@@ -1,0 +1,13 @@
+﻿@using AccountingProgram.Models
+
+@model Arreceipts
+
+    <form action="/AccountsReceivable/UpdateReceipt" method="post">
+        <input type="hidden" id="ArreciptsId" name="ArreciptsId" value="@Model.ArreciptsId" />
+        <label for="ReceiptDate">Receipt Date</label><br />
+        <input type="date" id="ReceiptDate" name="ReceiptDate" value="@Model.ReceiptDate.ToString("yyyy-MM-dd")" /><br />
+        <lable for="amount">Amount</lable><br />
+        <input type="number" id="amount" name="amount" step=".01" value="@Model.Amount" /><br />
+        <input type="submit" value="Update Receipt" />
+
+    </form>

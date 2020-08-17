@@ -6,7 +6,7 @@
     <div>
         <input type="hidden" id="SalesId" name="SalesId" value="@Model.SalesId" />
         <label for="TransDate">Transaction Date</label><br />
-        <input type="date" id="TransDate" name="TransDate" value="@Model.TransDate" /><br />
+        <input type="date" id="TransDate" name="TransDate" value="@Model.TransDate.ToString("yyyy-MM-dd")" /><br />
         <label for="SubTotal">SubTotal Amount</label><br />
         <input type="number" id="SubTotal" name="SubTotal" step=".01" value="@Model.Subtotal" /><br />
         <label for="SalesTax">Sales Tax</label><br />

@@ -5,20 +5,73 @@
 <h1 style="text-align:center">Update Payable</h1>
 <br />
 <form action="/AccountsPayable/UpdatePayable" method="post">
-    <input type="hidden" name="PayableId" id="PayableId" value="@Model.PayableId" /> 
-    <label for="VendorName">Vendor Name</label><br />
-    <input type="text" id="VendorName" name="VendorName" value="@Model.VendorName"/><br />
-    <label for="VenId">Vendor Id</label><br />
-    <input type="number" id="VenId" name="VenId" value="@Model.VenId"/><br />
-    <label for="DueDate">Due Date</label><br />
-    <input type="date" id="DueDate" name="DueDate" value="@Model.DueDate"/><br />
-    <label for="AmountDue"> Total Amount Due</label><br />
-    <input type="number" id="AmountDue" name="AmountDue" step=".01" value="@Model.AmountDue"/><br />
-    <label for="Balance">Balance Due</label><br />
-    <input type="number" id="Balance" name="Balance" step=".01" value="@Model.Balance"/><br />
-    <input type="submit" value="Update Payable" />
+    <div>
+        <input type="hidden" name="PayableId" id="PayableId" value="@Model.PayableId" />
+        <label for="VendorName">Vendor Name</label><br />
+        <input type="text" id="VendorName" name="VendorName" value="@Model.VendorName" /><br />
+        <label for="VenId">Vendor Id</label><br />
+        <input type="number" id="VenId" name="VenId" value="@Model.VenId" /><br />
+        <label for="DueDate">Due Date</label><br />
+        <input type="date" id="DueDate" name="DueDate" value="@Model.DueDate.ToString("yyyy-MM-dd")" /><br />
+        <label for="AmountDue"> Total Amount Due</label><br />
+        <input type="number" id="AmountDue" name="AmountDue" step=".01" value="@Model.AmountDue" /><br />
+        <label for="Balance">Balance Due</label><br />
+        <input type="number" id="Balance" name="Balance" step=".01" value="@Model.Balance" /><br />
+        
 
+        <h3>
+            Re-enter / update the inventory associated with this payable.  If nothing changed, you must still re-enter the
+            inventory information.
+        </h3>
+        @foreach (var i in Model.PayableInventory)
+        {
+            <h5>Inv Id: @i.InventoryId &nbsp; Quantity: @i.InvQuantity &nbsp; Price: @i.InvPrice &nbsp; Received: @i.InvReceived &nbsp; BackOrdered: @i.InvBackOrdered </h5>
+        }
+    </div>
+    <div>
+        <button type="button" id="AddButton">Add Updated Inventory Item</button>
+        <table style="width:100%">
+            <thead>
+                <tr>
+                    <td>Inventory Id</td>
+                    <td>Price</td>
+                    <td>Quantity</td>
+                    <td>BackOrdered</td>
+                    <td>Received</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <button>Submit</button>
+    </div>
 
 </form>
 <br />
+
+<input type="hidden" id="totalItems" value="0" />
 <button onclick="location.href='/AccountsPayable/GetAllPayables'">Return to Accounts Payable Menu</button>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#AddButton").click(function () {
+            tc = parseInt($("#totalItems").val());
+            tc = tc + 1;
+            $("#totalItems").val(tc)
+
+            $("tbody").append('<tr><td><input type="number" name="[' + (tc - 1) + '].InvId" /></td><td><input type="number" name="[' + (tc - 1) + '].Price" /></td><td><input type="number" name="[' + (tc - 1) + '].Quantity" /></td><td><input type="number" name="[' + (tc - 1) + '].BackOrdered" /></td><td><input type="number" name="[' + (tc - 1) + '].Received" /></td></tr>')
+        });
+
+        $("tbody").on("click", "span", function () {
+            tc = parseInt($("#totalItems").val());
+            tc = tc - 1;
+            $("#totalItems").val(tc)
+
+            $(this).parents("tr").remove();
+        });
+    });
+</script>
+
+

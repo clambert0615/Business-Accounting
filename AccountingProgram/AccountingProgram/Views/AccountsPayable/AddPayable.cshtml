@@ -20,6 +20,7 @@
         <table style="width:100%">
             <thead>
                 <tr>
+                    <td>Inventory Id</td>
                     <td>Item</td>
                     <td>Description</td>
                     <td>Price</td>
@@ -47,7 +48,7 @@
             tc = tc + 1;
             $("#totalItems").val(tc)
 
-            $("tbody").append('<tr><td><input type="text" name="[' + (tc - 1) + '].Item" /></td><td><input type="text" name="[' + (tc - 1) + '].Description" /></td><td><input type="number" name="[' + (tc - 1) + '].Price" /></td><td><input type="number" name="[' + (tc - 1) + '].Quantity" /></td><td><input type="number" name="[' + (tc - 1) + '].BackOrdered" /></td><td><input type="number" name="[' + (tc - 1) + '].Received" /></td></tr>')
+            $("tbody").append('<tr><td><input type="number" name="[' + (tc - 1) + '].InvId" /></td><td><input type="text" name="[' + (tc - 1) + '].Item" /></td><td><input type="text" name="[' + (tc - 1) + '].Description" /></td><td><input type="number" name="[' + (tc - 1) + '].Price" /></td><td><input type="number" name="[' + (tc - 1) + '].Quantity" /></td><td><input type="number" name="[' + (tc - 1) + '].BackOrdered" /></td><td><input type="number" name="[' + (tc - 1) + '].Received" /></td></tr>')
         });
 
         $("tbody").on("click", "span", function () {

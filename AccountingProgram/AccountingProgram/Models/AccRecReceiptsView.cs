@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace AccountingProgram.Models
 {
-    public class AccRecReiptsView
+    public class AccRecReceiptsView
     {
         public AccountsReceivable AR {get; set;}
-        public List<Arreceipts> Recipts { get; set; }
+        public List<Arreceipts> Receipts { get; set; }
     }
 }

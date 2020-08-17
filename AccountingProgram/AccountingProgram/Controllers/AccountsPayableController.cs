@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using AccountingProgram.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace AccountingProgram.Controllers
 {
@@ -71,24 +72,46 @@ namespace AccountingProgram.Controllers
         [HttpPost]
         public IActionResult AddPayable(AccountsPayable payable, List<Inventory> inventoryList)
         {
+            foreach (var item in inventoryList)
+            {
+                if (item.InvId == 0)
+                {
+                    _context.Inventory.Add(item);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    Inventory found = _context.Inventory.Find(item.InvId);
+                    found.Quantity += item.Quantity;
+                    found.Received += item.Received;
+                    found.BackOrdered += item.BackOrdered;
+                    _context.Entry(found).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    _context.Update(found);
+                    _context.SaveChanges();
+                }
+            }
+                payable.PayableInventory = new List<PayableInventory>();
+                
             if (ModelState.IsValid)
             {
+                foreach(var item in inventoryList)
+                {
+                    payable.PayableInventory.Add(new PayableInventory {InventoryId = item.InvId, PayableId = payable.PayableId, InvQuantity = item.Quantity, InvPrice = item.Price, InvBackOrdered = item.BackOrdered, InvReceived = item.Received });
+
+                }
+
                 _context.AccountsPayable.Add(payable);
                 _context.SaveChanges();
             }
 
-            foreach (var item in inventoryList)
-            {
-                _context.Inventory.Add(item); 
-                _context.SaveChanges();
-
-            }
+           
             return RedirectToAction("GetAllPayables", new { id = payable.PayableId });
         }
         [HttpGet]
         public IActionResult UpdatePayable(int id)
         {
             AccountsPayable foundPayable = _context.AccountsPayable.Find(id);
+            foundPayable.PayableInventory = _context.PayableInventory.Where(x => x.PayableId == foundPayable.PayableId).ToList();
             if (foundPayable == null)
             {
                 return RedirectToAction("ErrorPage");
@@ -101,9 +124,31 @@ namespace AccountingProgram.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdatePayable(AccountsPayable updatedPayable)
+        public IActionResult UpdatePayable(AccountsPayable updatedPayable, List<Inventory> updatedInventory) 
         {
             AccountsPayable oldPayable = _context.AccountsPayable.Find(updatedPayable.PayableId);
+            oldPayable.PayableInventory = _context.PayableInventory.Where(x => x.PayableId == oldPayable.PayableId).ToList();
+
+            foreach(var item in oldPayable.PayableInventory)
+            {
+                Inventory found = _context.Inventory.Find(item.InventoryId);
+                found.Quantity -= item.InvQuantity;
+                found.Received -= item.InvReceived;
+                found.BackOrdered -= item.InvBackOrdered;
+            }
+            oldPayable.PayableInventory.Clear();
+            foreach(var item in updatedInventory)
+            {
+                updatedPayable.PayableInventory.Add(new PayableInventory { InventoryId = item.InvId, PayableId = updatedPayable.PayableId, InvQuantity = item.Quantity, InvPrice = item.Price, InvBackOrdered = item.BackOrdered, InvReceived = item.Received });
+                Inventory found = _context.Inventory.First(x => x.InvId == item.InvId);
+                found.Quantity += item.Quantity;
+                found.Received += item.Received;
+                found.BackOrdered = item.BackOrdered;
+                _context.Entry(found).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                _context.Update(found);
+                _context.SaveChanges();
+            }
+            oldPayable.PayableInventory = updatedPayable.PayableInventory;
             oldPayable.VenId = updatedPayable.VenId;
             oldPayable.VendorName = updatedPayable.VendorName;
             oldPayable.DueDate = updatedPayable.DueDate;

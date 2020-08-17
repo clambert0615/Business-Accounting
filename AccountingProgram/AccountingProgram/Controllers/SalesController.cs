@@ -251,10 +251,13 @@ namespace AccountingProgram.Controllers
             _context.Update(old);
             _context.SaveChanges();
 
-
-            //update accounts payable for sales tax
+            AccountsPayable oldap = _context.AccountsPayable.First(x => x.SalesId == updatedSale.SalesId);
+            oldap.AmountDue = updatedSale.SalesTax;
+            _context.Entry(oldap).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.Update(oldap);
+            _context.SaveChanges();
 
             return RedirectToAction("SalesIndex");
         }
-    }
+    } 
 }

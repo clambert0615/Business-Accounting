@@ -9,6 +9,7 @@ namespace AccountingProgram.Models
         {
             Invoice = new HashSet<Invoice>();
             InvoiceInventory = new HashSet<InvoiceInventory>();
+            PayableInventory = new HashSet<PayableInventory>();
             Sales = new HashSet<Sales>();
             SalesInventory = new HashSet<SalesInventory>();
         }
@@ -24,6 +25,7 @@ namespace AccountingProgram.Models
 
         public virtual ICollection<Invoice> Invoice { get; set; }
         public virtual ICollection<InvoiceInventory> InvoiceInventory { get; set; }
+        public virtual ICollection<PayableInventory> PayableInventory { get; set; }
         public virtual ICollection<Sales> Sales { get; set; }
         public virtual ICollection<SalesInventory> SalesInventory { get; set; }
     }
