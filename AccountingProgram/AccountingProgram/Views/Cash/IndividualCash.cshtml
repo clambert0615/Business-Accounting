@@ -18,5 +18,9 @@
 {
     <h3>Sales Id: <a href="/Sales/IndividualSale?id=@Model.SalesId">@Model.SalesId</a> </h3>
 }
+@if(Model.ExpenseId != null)
+{
+    <h3>Expense Id: <a href="/Expenses/IndividualExpense?id=@Model.ExpenseId">@Model.ExpenseId</a></h3>
+}
 <br />
 <button onclick="location.href='/Cash/CashIndex'">Return to Cash Menu</button>

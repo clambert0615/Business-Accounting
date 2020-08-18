@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
 namespace AccountingProgram.Models
 {
@@ -11,16 +10,14 @@ namespace AccountingProgram.Models
         {
         }
 
-        public AccountingAPIDbContext(DbContextOptions<AccountingAPIDbContext> options, IConfiguration configuration)
-             : base(options)
+        public AccountingAPIDbContext(DbContextOptions<AccountingAPIDbContext> options)
+            : base(options)
         {
-            Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; set; }
 
         public virtual DbSet<AccountsPayable> AccountsPayable { get; set; }
         public virtual DbSet<AccountsReceivable> AccountsReceivable { get; set; }
+        public virtual DbSet<AccumulatedDepreciation> AccumulatedDepreciation { get; set; }
         public virtual DbSet<Arreceipts> Arreceipts { get; set; }
         public virtual DbSet<Assets> Assets { get; set; }
         public virtual DbSet<Cash> Cash { get; set; }
@@ -30,6 +27,9 @@ namespace AccountingProgram.Models
         public virtual DbSet<Inventory> Inventory { get; set; }
         public virtual DbSet<Invoice> Invoice { get; set; }
         public virtual DbSet<InvoiceInventory> InvoiceInventory { get; set; }
+        public virtual DbSet<LongTermAssets> LongTermAssets { get; set; }
+        public virtual DbSet<LongTermLiabilities> LongTermLiabilities { get; set; }
+        public virtual DbSet<OwnersEquity> OwnersEquity { get; set; }
         public virtual DbSet<PayableInventory> PayableInventory { get; set; }
         public virtual DbSet<Payments> Payments { get; set; }
         public virtual DbSet<Sales> Sales { get; set; }
@@ -42,7 +42,7 @@ namespace AccountingProgram.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=AccountingAPIDb;Trusted_Connection=True;");
             }
         }
 
@@ -115,6 +115,30 @@ namespace AccountingProgram.Models
                     .HasConstraintName("FK__AccountsR__Invoi__151B244E");
             });
 
+            modelBuilder.Entity<AccumulatedDepreciation>(entity =>
+            {
+                entity.HasKey(e => e.AccDepId)
+                    .HasName("PK__Accumula__557ECC4D331CA9AD");
+
+                entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Description).HasMaxLength(200);
+
+                entity.Property(e => e.LongTermAssetId).HasColumnName("LongTermAssetID");
+
+                entity.Property(e => e.TotalAmount).HasColumnType("decimal(10, 2)");
+
+                entity.HasOne(d => d.Expense)
+                    .WithMany(p => p.AccumulatedDepreciation)
+                    .HasForeignKey(d => d.ExpenseId)
+                    .HasConstraintName("FK__Accumulat__Expen__2057CCD0");
+
+                entity.HasOne(d => d.LongTermAsset)
+                    .WithMany(p => p.AccumulatedDepreciation)
+                    .HasForeignKey(d => d.LongTermAssetId)
+                    .HasConstraintName("FK__Accumulat__LongT__1F63A897");
+            });
+
             modelBuilder.Entity<Arreceipts>(entity =>
             {
                 entity.HasKey(e => e.ArreciptsId)
@@ -171,6 +195,11 @@ namespace AccountingProgram.Models
                 entity.Property(e => e.TransDate).HasColumnType("date");
 
                 entity.Property(e => e.Withdrawl).HasColumnType("decimal(10, 2)");
+
+                entity.HasOne(d => d.Expense)
+                    .WithMany(p => p.Cash)
+                    .HasForeignKey(d => d.ExpenseId)
+                    .HasConstraintName("FK__Cash__ExpenseId__19AACF41");
 
                 entity.HasOne(d => d.Sales)
                     .WithMany(p => p.Cash)
@@ -230,6 +259,16 @@ namespace AccountingProgram.Models
                 entity.Property(e => e.Description).HasMaxLength(200);
 
                 entity.Property(e => e.PaymentDate).HasColumnType("date");
+
+                entity.HasOne(d => d.CashNavigation)
+                    .WithMany(p => p.Expenses)
+                    .HasForeignKey(d => d.CashId)
+                    .HasConstraintName("FK__Expenses__CashId__1A9EF37A");
+
+                entity.HasOne(d => d.LongTermLiab)
+                    .WithMany(p => p.Expenses)
+                    .HasForeignKey(d => d.LongTermLiabId)
+                    .HasConstraintName("FK__Expenses__LongTe__251C81ED");
             });
 
             modelBuilder.Entity<Inventory>(entity =>
@@ -290,6 +329,61 @@ namespace AccountingProgram.Models
                     .HasConstraintName("FK__InvoiceIn__Invoi__3D2915A8");
             });
 
+            modelBuilder.Entity<LongTermAssets>(entity =>
+            {
+                entity.HasKey(e => e.LtassetId)
+                    .HasName("PK__LongTerm__778B6714E1318721");
+
+                entity.Property(e => e.LtassetId).HasColumnName("LTAssetId");
+
+                entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Balance).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Description).HasMaxLength(200);
+
+                entity.Property(e => e.Item).HasMaxLength(50);
+
+                entity.Property(e => e.LifeRemainig).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.PurchaseDate).HasColumnType("date");
+
+                entity.Property(e => e.UsefulLife).HasColumnType("decimal(10, 2)");
+            });
+
+            modelBuilder.Entity<LongTermLiabilities>(entity =>
+            {
+                entity.HasKey(e => e.LtliabilitiesId)
+                    .HasName("PK__LongTerm__A5948EF54D4D0F50");
+
+                entity.Property(e => e.LtliabilitiesId).HasColumnName("LTLiabilitiesId");
+
+                entity.Property(e => e.Balance).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Description).HasMaxLength(200);
+
+                entity.Property(e => e.Item).HasMaxLength(50);
+
+                entity.Property(e => e.OriginDate).HasColumnType("date");
+
+                entity.Property(e => e.TotalAmount).HasColumnType("decimal(10, 2)");
+
+                entity.HasOne(d => d.Payment)
+                    .WithMany(p => p.LongTermLiabilities)
+                    .HasForeignKey(d => d.PaymentId)
+                    .HasConstraintName("FK__LongTermL__Payme__2334397B");
+            });
+
+            modelBuilder.Entity<OwnersEquity>(entity =>
+            {
+                entity.HasKey(e => e.OwnEquId)
+                    .HasName("PK__OwnersEq__8599DC9AF30546C9");
+
+                entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Date).HasColumnType("date");
+            });
+
             modelBuilder.Entity<PayableInventory>(entity =>
             {
                 entity.HasKey(e => e.PayInvId)
@@ -315,12 +409,19 @@ namespace AccountingProgram.Models
 
                 entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
 
+                entity.Property(e => e.InterestExpense).HasColumnType("decimal(10, 2)");
+
                 entity.Property(e => e.PayDate).HasColumnType("date");
 
                 entity.HasOne(d => d.Cash)
                     .WithMany(p => p.Payments)
                     .HasForeignKey(d => d.CashId)
                     .HasConstraintName("FK__Payments__CashId__5EBF139D");
+
+                entity.HasOne(d => d.LongTermLiab)
+                    .WithMany(p => p.Payments)
+                    .HasForeignKey(d => d.LongTermLiabId)
+                    .HasConstraintName("FK__Payments__LongTe__24285DB4");
 
                 entity.HasOne(d => d.Pay)
                     .WithMany(p => p.PaymentsNavigation)

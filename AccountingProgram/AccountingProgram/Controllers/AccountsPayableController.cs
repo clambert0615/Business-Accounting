@@ -91,9 +91,8 @@ namespace AccountingProgram.Controllers
                 }
             }
                 payable.PayableInventory = new List<PayableInventory>();
-                
-            if (ModelState.IsValid)
-            {
+          
+            
                 foreach(var item in inventoryList)
                 {
                     payable.PayableInventory.Add(new PayableInventory {InventoryId = item.InvId, PayableId = payable.PayableId, InvQuantity = item.Quantity, InvPrice = item.Price, InvBackOrdered = item.BackOrdered, InvReceived = item.Received });
@@ -102,7 +101,7 @@ namespace AccountingProgram.Controllers
 
                 _context.AccountsPayable.Add(payable);
                 _context.SaveChanges();
-            }
+            
 
            
             return RedirectToAction("GetAllPayables", new { id = payable.PayableId });
@@ -159,6 +158,37 @@ namespace AccountingProgram.Controllers
             _context.SaveChanges();
             return RedirectToAction("GetAllPayables");
         }
+        [HttpGet]
+        public IActionResult EditPayment(int id)
+        {
+            Payments found = _context.Payments.Find(id);
+            return View(found);
+        }
         
+        [HttpPost]
+        public IActionResult EditPayment(Payments updatedPayment)
+        {
+            Payments oldPayment = _context.Payments.Find(updatedPayment.PaymentId);
+            Cash oldCash = _context.Cash.First(x => x.Id == oldPayment.CashId);
+            AccountsPayable oldPayable = _context.AccountsPayable.First(x => x.PayableId == oldPayment.PayId);
+            oldPayment.PayDate = updatedPayment.PayDate;
+            oldPayment.Amount = updatedPayment.Amount;
+            _context.Entry(oldPayment).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.Update(oldPayment);
+            _context.SaveChanges();
+            oldCash.Withdrawl = updatedPayment.Amount;
+            oldCash.TransDate = updatedPayment.PayDate;
+            _context.Entry(oldCash).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.Update(oldCash);
+            _context.SaveChanges();
+            oldPayable.PaymentAmount = updatedPayment.Amount;
+            oldPayable.Balance -= updatedPayment.Amount;
+            oldPayable.PaymentDate = updatedPayment.PayDate;
+            _context.Entry(oldPayable).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.Update(oldPayable);
+            _context.SaveChanges();
+
+            return RedirectToAction("GetAllPayables");
+        }
     }
 }

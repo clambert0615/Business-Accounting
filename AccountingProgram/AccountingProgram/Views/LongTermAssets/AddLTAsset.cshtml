@@ -1,0 +1,21 @@
+﻿<h1 style="text-align:center">Add a Long Term Asset / Cash Purchase</h1>
+<br />
+<br />
+<form action="/LongTermAssets/AddLTAsset" method="post">
+   
+    <label for="Item">Item</label><br />
+    <input type="text" id="Item" name="Item" /><br />
+    <label for="Description">Description</label><br />
+    <input type="text" id="Description" name="Description" /><br />
+    <label for="PurchaseDate">Purchase Date</label><br />
+    <input type="date" id="PurchaseDate" name="PurchaseDate" /><br />
+    <label for="Amount">Book Value / Cash Paid</label><br />
+    <input type="number" id="Amount" name="Amount" step=".01" /><br />
+    <label for="Balance">Carrying Value</label><br />
+    <input type="number" id="Balance" name="Balance" /><br />
+    <label for="UsefulLife">Useful Life</label><br />
+    <input type="number" id="UsefulLife" name="UsefulLife" /><br />
+    <label for="LifeRemainig">Remaining Life</label><br />
+    <input type="number" id="LifeRemainig" name="LifeRemainig" /><br />
+    <input type="submit" value="Add LT Asset" />
+</form>

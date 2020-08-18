@@ -9,6 +9,7 @@ namespace AccountingProgram.Models
         public Cash()
         {
             Arreceipts = new HashSet<Arreceipts>();
+            Expenses = new HashSet<Expenses>();
             Payments = new HashSet<Payments>();
             SalesNavigation = new HashSet<Sales>();
             Wages = new HashSet<Wages>();
@@ -24,9 +25,12 @@ namespace AccountingProgram.Models
         public int? SalesId { get; set; }
         public decimal? BeginAmount { get; set; }
         public decimal? Balance { get; set; }
+        public int? ExpenseId { get; set; }
 
+        public virtual Expenses Expense { get; set; }
         public virtual Sales Sales { get; set; }
         public virtual ICollection<Arreceipts> Arreceipts { get; set; }
+        public virtual ICollection<Expenses> Expenses { get; set; }
         public virtual ICollection<Payments> Payments { get; set; }
         public virtual ICollection<Sales> SalesNavigation { get; set; }
         public virtual ICollection<Wages> Wages { get; set; }

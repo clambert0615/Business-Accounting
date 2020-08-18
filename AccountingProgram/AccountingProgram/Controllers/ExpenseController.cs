@@ -43,6 +43,7 @@ namespace AccountingProgram.Controllers
                 Cash c = new Cash();
                 c.Withdrawl = expense.Amount;
                 c.TransDate = expense.PaymentDate;
+                c.ExpenseId = expense.ExpId;
                 _context.Cash.Add(c);
                 _context.SaveChanges();
             }
@@ -74,5 +75,7 @@ namespace AccountingProgram.Controllers
             return RedirectToAction("ExpenseIndex");
 
         }
+        
+
     }
 }

@@ -1,0 +1,32 @@
+﻿@using AccountingProgram.Models
+
+@model List<LongTermAssets>
+
+<h1 style="text-align:center">Long Term Assets Index</h1>
+<br />
+<button onclick="location.href='/LongTermAssets/AddAsset'">Add Asset / Cash Payment</button>
+<button onclick="location.href='/LongTermAssets/AddLTAssetandLiability'">Add Asset / Long Term Liability</button>
+<br />
+<table style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Item</th>
+            <th>Purchase Date</th>
+            <th>Book Value</th>
+            <th>Carrying Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(LongTermAssets a in Model)
+        {
+            <tr>
+                <td><a href="/LongTermAssets/IndividualLTAsset?id=@a.LtassetId">@a.LtassetId</a></td>
+                <td>@a.Item</td>
+                <td>@a.PurchaseDate.ToShortDateString()</td>
+                <td>@a.Amount</td>
+                <td>@a.Balance</td>
+            </tr>
+        }
+    </tbody>
+</table>

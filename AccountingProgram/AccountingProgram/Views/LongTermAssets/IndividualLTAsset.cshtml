@@ -1,0 +1,33 @@
+﻿@using AccountingProgram.Models
+
+@model LongTermAssets
+
+<h1 style="text-align:center">Asset Details</h1>
+<br />
+<br />
+<h3>Id: @Model.LtassetId</h3>
+<h3>Item: @Model.Item</h3>
+<h3>Description: @Model.Description</h3>
+<h3>Purchase Date: @Model.PurchaseDate.ToShortDateString()</h3>
+<h3>Book Value: @Model.Amount</h3>
+@if (Model.AccumulatedDepreciation.Count > 0)
+{
+    foreach(var a in Model.AccumulatedDepreciation)
+    {
+        <h3>Depreciation Amount: @a.Amount</h3>
+    }
+}
+<h3>Carrying Value: @Model.Balance</h3>
+<h3>Useful Life: @Model.UsefulLife</h3>
+<h3>Life Remaining: @Model.LifeRemainig</h3>
+<br />
+<br />
+<form action="/AccumulatedDepreciation/AddAccumulatedDepreciation" method="post">
+    <h2>Record Depreciation:</h2>
+    <input type="hidden" value="@Model.LtassetId" id="LongTermAssetId" name="LongTermAssetId" />
+    <label for="Description">Description</label><br />
+    <input type="text" id="Description" name="Description" /><br />
+    <label for="Amount">Amount</label><br />
+    <input type="number" id="Amount" name="Amount" step=".01" /><br />
+    <input type="submit" value="Record Depreciation" />
+</form>
