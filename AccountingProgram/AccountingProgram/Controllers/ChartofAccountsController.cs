@@ -57,7 +57,7 @@ namespace AccountingProgram.Controllers
             decimal invbal = 0;
             foreach(Inventory i in invList)
             {
-                invbal += (i.Price) * (i.Quantity ?? 0);
+                invbal += (i.Price ?? 0) * (i.Quantity ?? 0);
             }
             bs.Inventory.Price = invbal;
 

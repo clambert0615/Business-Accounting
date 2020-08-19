@@ -1,0 +1,19 @@
+﻿@using AccountingProgram.Models
+@model Payments
+
+<h1 style="text-align:center">Update Payment</h1>
+<br />
+<br />
+<form action="/LongTermLiabilities/UpdatePayment" method="post">
+    <input type="hidden" id="PaymentId" name="PaymentId" value="@Model.PaymentId" />
+      <label for="PayDate">Payment Date</label><br />
+    <input type="date" id="PayDate" name="PayDate" value="@Model.PayDate.ToString("yyyy-MM-dd")"/><br />
+    <label for="Amount">Principal Amount</label><br />
+    <input type="number" id="Amount" name="Amount" step=".01" value="@Model.Amount" /><br />
+    <label for="InterestExpense">Interest Expense</label><br>
+    <input type="number" id="InterestExpense" name="InterestExpense" step=".01" value="@Model.InterestExpense" /><br />
+    <label for="TotalAmout">Total Amount</label><br />
+    <input type="number" name="TotalAmount" id="TotalAmount" step=".01" value="@Model.TotalAmount"/><br />
+    <input type="submit" value="Submit Payment" />
+
+</form>

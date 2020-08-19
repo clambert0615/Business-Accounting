@@ -5,6 +5,11 @@ namespace AccountingProgram.Models
 {
     public partial class AccumulatedDepreciation
     {
+        public AccumulatedDepreciation()
+        {
+            Expenses = new HashSet<Expenses>();
+        }
+
         public int AccDepId { get; set; }
         public int? LongTermAssetId { get; set; }
         public int? ExpenseId { get; set; }
@@ -14,5 +19,6 @@ namespace AccountingProgram.Models
 
         public virtual Expenses Expense { get; set; }
         public virtual LongTermAssets LongTermAsset { get; set; }
+        public virtual ICollection<Expenses> Expenses { get; set; }
     }
 }

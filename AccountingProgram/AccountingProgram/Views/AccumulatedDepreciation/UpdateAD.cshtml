@@ -1,0 +1,16 @@
+﻿@using AccountingProgram.Models
+
+@model AccumulatedDepreciation
+
+<h1 style="text-align:center">Update Accumulated Depreciation</h1>
+<br />
+<form action="/AccumulatedDepreciation/UpdateAD" method="post">
+    <input type="hidden" id="AccDepId" name="AccDepId" value="@Model.AccDepId" />
+    <input type="hidden" id="LongTermAssetId" name="LongTermAssetId" value="@Model.LongTermAssetId" />
+    <label for="Description">Description</label><br />
+    <input type="text" id="Description" name="Description" value="@Model.Description" /><br />
+    <label for="Amount">Amount</label><br />
+    <input type="number" id="Amount" name="Amount" value="@Model.Amount" step=".01" /><br />
+    <input type="submit" value="Update" /> 
+
+</form>

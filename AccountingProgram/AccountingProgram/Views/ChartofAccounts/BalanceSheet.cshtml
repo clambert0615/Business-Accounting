@@ -20,13 +20,14 @@
 <h4>Total Assets:  @(Model.Cash.Balance + Model.Receivable.Balance + Model.Inventory.Price)</h4>
 <br />
 <br />
-<h3>LIABILITIES AND SHAREHOLDER'S EQUITY</h3>
+<h3>LIABILITIES AND OWNER'S EQUITY</h3>
 <h4>Current Liabilities</h4>
 <p>Accounts Payable: @Model.Payable.Balance</p>
 <p>Total Current Liabilities: @Model.Payable.Balance</p>
 <br />
 <br />
-<h4>Shareholder's Equity</h4>
+<h4>Owner's Equity</h4>
+<p>Owner's Equity = @(Model.Cash.Balance + Model.Receivable.Balance + Model.Inventory.Price - Model.Payable.Balance) </p>
 <br />
 <br />
-<h4>Total liabilities and shareholder's equity: @Model.Payable.Balance</h4>
+<h4>Total liabilities and shareholder's equity: @(Model.Cash.Balance + Model.Receivable.Balance + Model.Inventory.Price)</h4>

@@ -17,7 +17,7 @@ namespace AccountingProgram.Models
         public decimal? Amount { get; set; }
         public decimal? Balance { get; set; }
         public decimal? UsefulLife { get; set; }
-        public decimal? LifeRemainig { get; set; }
+        public decimal? LifeRemaining { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
 

@@ -1,0 +1,30 @@
+﻿@using AccountingProgram.Models
+@model List<LongTermLiabilities>
+
+<h1 style="text-align:center">Long Term Liabilities Index</h1>
+<br />
+<button onclick="location.href='/LongTermLiabilities/AddLTLiability'">Add Long Term Liability</button>
+<br />
+<table style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Item</th>
+            <th>Origin Date</th>
+            <th>Total Amount</th>
+            <th>Balance</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(LongTermLiabilities ltl in Model)
+        {
+            <tr>
+                <td><a href="/LongTermLiabilities/IndividualLTL?id=@ltl.LtliabilitiesId">@ltl.LtliabilitiesId</a></td>
+                <td>@ltl.Ltlitem</td>
+                <td>@ltl.OriginDate.ToShortDateString()</td>
+                <td>@ltl.TotalAmount</td> 
+                <td>@ltl.Ltlbalance</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace AccountingProgram.Models
 {
@@ -10,10 +11,14 @@ namespace AccountingProgram.Models
         {
         }
 
-        public AccountingAPIDbContext(DbContextOptions<AccountingAPIDbContext> options)
+        public AccountingAPIDbContext(DbContextOptions<AccountingAPIDbContext> options, IConfiguration configuration)
             : base(options)
         {
+            Configuration = configuration;
         }
+
+        public IConfiguration Configuration { get; private set; }
+
 
         public virtual DbSet<AccountsPayable> AccountsPayable { get; set; }
         public virtual DbSet<AccountsReceivable> AccountsReceivable { get; set; }
@@ -42,7 +47,7 @@ namespace AccountingProgram.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=AccountingAPIDb;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             }
         }
 
@@ -260,6 +265,11 @@ namespace AccountingProgram.Models
 
                 entity.Property(e => e.PaymentDate).HasColumnType("date");
 
+                entity.HasOne(d => d.AccDep)
+                    .WithMany(p => p.Expenses)
+                    .HasForeignKey(d => d.AccDepId)
+                    .HasConstraintName("FK__Expenses__AccDep__2CBDA3B5");
+
                 entity.HasOne(d => d.CashNavigation)
                     .WithMany(p => p.Expenses)
                     .HasForeignKey(d => d.CashId)
@@ -269,6 +279,11 @@ namespace AccountingProgram.Models
                     .WithMany(p => p.Expenses)
                     .HasForeignKey(d => d.LongTermLiabId)
                     .HasConstraintName("FK__Expenses__LongTe__251C81ED");
+
+                entity.HasOne(d => d.Payment)
+                    .WithMany(p => p.Expenses)
+                    .HasForeignKey(d => d.PaymentId)
+                    .HasConstraintName("FK__Expenses__Paymen__3FD07829");
             });
 
             modelBuilder.Entity<Inventory>(entity =>
@@ -344,7 +359,7 @@ namespace AccountingProgram.Models
 
                 entity.Property(e => e.Item).HasMaxLength(50);
 
-                entity.Property(e => e.LifeRemainig).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.LifeRemaining).HasColumnType("decimal(10, 2)");
 
                 entity.Property(e => e.PurchaseDate).HasColumnType("date");
 
@@ -358,11 +373,17 @@ namespace AccountingProgram.Models
 
                 entity.Property(e => e.LtliabilitiesId).HasColumnName("LTLiabilitiesId");
 
-                entity.Property(e => e.Balance).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.Ltlbalance)
+                    .HasColumnName("LTLBalance")
+                    .HasColumnType("decimal(10, 2)");
 
-                entity.Property(e => e.Description).HasMaxLength(200);
+                entity.Property(e => e.Ltldescription)
+                    .HasColumnName("LTLDescription")
+                    .HasMaxLength(200);
 
-                entity.Property(e => e.Item).HasMaxLength(50);
+                entity.Property(e => e.Ltlitem)
+                    .HasColumnName("LTLItem")
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.OriginDate).HasColumnType("date");
 
@@ -413,10 +434,17 @@ namespace AccountingProgram.Models
 
                 entity.Property(e => e.PayDate).HasColumnType("date");
 
+                entity.Property(e => e.TotalAmount).HasColumnType("decimal(10, 2)");
+
                 entity.HasOne(d => d.Cash)
                     .WithMany(p => p.Payments)
                     .HasForeignKey(d => d.CashId)
                     .HasConstraintName("FK__Payments__CashId__5EBF139D");
+
+                entity.HasOne(d => d.Expense)
+                    .WithMany(p => p.Payments)
+                    .HasForeignKey(d => d.ExpenseId)
+                    .HasConstraintName("FK__Payments__Expens__40C49C62");
 
                 entity.HasOne(d => d.LongTermLiab)
                     .WithMany(p => p.Payments)

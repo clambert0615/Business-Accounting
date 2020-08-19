@@ -61,6 +61,43 @@ namespace AccountingProgram.Controllers
 
             return RedirectToAction("LongTermAssetIndex", new { id = asset.LtassetId });
         }
+        [HttpGet]
+        public IActionResult UpdateLTAsset(int id)
+        {
+            LongTermAssets found = _context.LongTermAssets.Find(id);
+            if (found != null)
+            {
+                return View(found);
+            }
+            else
+            {
+                return RedirectToAction("ErrorPage");
+            }
+        }
+        [HttpPost]
+        public IActionResult UpdateLTAsset(LongTermAssets updatedAsset)
+        {
+            LongTermAssets oldAsset = _context.LongTermAssets.Find(updatedAsset.LtassetId);
+            if(ModelState.IsValid)
+            {
+                oldAsset.Item = updatedAsset.Item;
+                oldAsset.Description = updatedAsset.Description;
+                oldAsset.Amount = updatedAsset.Amount;
+                oldAsset.Balance = updatedAsset.Balance;
+                oldAsset.PurchaseDate = updatedAsset.PurchaseDate;
+                oldAsset.LifeRemaining = updatedAsset.LifeRemaining;
+                oldAsset.UsefulLife = updatedAsset.UsefulLife;
+                _context.Entry(oldAsset).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                _context.Update(oldAsset);
+                _context.SaveChanges();
+
+                return RedirectToAction("LongTermAssetIndex");
+            }
+            else
+            {
+                return RedirectToAction("ErrorPage");
+            }
+        }
 
     }
 }

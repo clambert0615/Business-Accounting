@@ -9,6 +9,7 @@ namespace AccountingProgram.Models
         public Payments()
         {
             AccountsPayable = new HashSet<AccountsPayable>();
+            Expenses = new HashSet<Expenses>();
             LongTermLiabilities = new HashSet<LongTermLiabilities>();
         }
 
@@ -22,11 +23,15 @@ namespace AccountingProgram.Models
         public int? CashId { get; set; }
         public int? LongTermLiabId { get; set; }
         public decimal? InterestExpense { get; set; }
+        public decimal? TotalAmount { get; set; }
+        public int? ExpenseId { get; set; }
 
         public virtual Cash Cash { get; set; }
+        public virtual Expenses Expense { get; set; }
         public virtual LongTermLiabilities LongTermLiab { get; set; }
         public virtual AccountsPayable Pay { get; set; }
         public virtual ICollection<AccountsPayable> AccountsPayable { get; set; }
+        public virtual ICollection<Expenses> Expenses { get; set; }
         public virtual ICollection<LongTermLiabilities> LongTermLiabilities { get; set; }
     }
 }

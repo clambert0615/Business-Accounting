@@ -26,18 +26,65 @@ namespace AccountingProgram.Controllers
             _context.Expenses.Add(expense);
             _context.SaveChanges();
 
+            
             ad.ExpenseId = expense.ExpId;
             _context.AccumulatedDepreciation.Add(ad);
             _context.SaveChanges();
 
             LongTermAssets oldlta = _context.LongTermAssets.Find(ad.LongTermAssetId);
             oldlta.Balance -= ad.Amount;
-            oldlta.LifeRemainig -= 1;
+            oldlta.LifeRemaining -= 1;
             _context.Entry(oldlta).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             _context.Update(oldlta);
             _context.SaveChanges();
 
             return RedirectToAction("LongTermAssetIndex", "LongTermAssets");
+        }
+        [HttpGet]
+        public IActionResult UpdateAD(int id)
+        {
+            AccumulatedDepreciation found = _context.AccumulatedDepreciation.Find(id);
+            if(found != null)
+            {
+                return View(found);
+            }
+            else
+            {
+                return RedirectToAction("ErrorPage");
+            }
+        }
+        [HttpPost]
+        public IActionResult UpdateAD(AccumulatedDepreciation updatedAD)
+        {
+            AccumulatedDepreciation oldAD = _context.AccumulatedDepreciation.Find(updatedAD.AccDepId);
+            if (ModelState.IsValid)
+            {
+                LongTermAssets oldlta = _context.LongTermAssets.Find(updatedAD.LongTermAssetId);
+                oldlta.Balance = oldlta.Balance + oldAD.Amount - updatedAD.Amount;
+           
+                _context.Entry(oldlta).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                _context.Update(oldlta);
+                _context.SaveChanges();
+
+                oldAD.Description = updatedAD.Description;
+                oldAD.Amount = updatedAD.Amount;
+                _context.Entry(oldAD).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                _context.Update(oldAD);
+                _context.SaveChanges();
+
+                Expenses oldExp = _context.Expenses.First(x => x.AccDepId ==updatedAD.AccDepId);
+                oldExp.Amount = updatedAD.Amount;
+                _context.Entry(oldExp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                _context.Update(oldExp);
+                _context.SaveChanges();
+
+                return RedirectToAction("LongTermAssetIndex", "LongTermAssets");
+            }
+            else
+            {
+                return RedirectToAction("ErrorPage");
+            }
+
         }
     }
 }

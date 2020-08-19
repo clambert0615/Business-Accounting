@@ -14,12 +14,12 @@
 {
     foreach(var a in Model.AccumulatedDepreciation)
     {
-        <h3>Depreciation Amount: @a.Amount</h3>
+        <h3>Id: @a.AccDepId &nbsp; &nbsp; Amount: @a.Amount &nbsp; &nbsp; <button onclick="location.href='/AccumulatedDepreciation/UpdateAD?id=@a.AccDepId'" style="font-size:20px">Update this Accumulated Depreciation</button></h3>
     }
 }
 <h3>Carrying Value: @Model.Balance</h3>
 <h3>Useful Life: @Model.UsefulLife</h3>
-<h3>Life Remaining: @Model.LifeRemainig</h3>
+<h3>Life Remaining: @Model.LifeRemaining</h3>
 <br />
 <br />
 <form action="/AccumulatedDepreciation/AddAccumulatedDepreciation" method="post">
@@ -31,3 +31,5 @@
     <input type="number" id="Amount" name="Amount" step=".01" /><br />
     <input type="submit" value="Record Depreciation" />
 </form>
+<br />
+<button onclick="location.href='/LongTermAssets/UpdateLTAsset?id=@Model.LtassetId'">Update Asset</button>

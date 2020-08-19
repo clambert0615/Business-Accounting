@@ -1,0 +1,37 @@
+﻿@using AccountingProgram.Models
+
+@model LongTermLiabilities
+
+<h1 style="text-align:center">Long Term Liability Details</h1>
+
+<h3>Id: @Model.LtliabilitiesId</h3>
+<h3>Item: @Model.Ltlitem</h3>
+<h3>Description: @Model.Ltldescription</h3>
+<h3>Origin Date: @Model.OriginDate.ToShortDateString()</h3>
+<h3>Total Number of Payments: @Model.TotalNumberofPayments</h3>
+<h3>Total Amount Due: @Model.TotalAmount</h3>
+@if (Model.Payments.Count > 0)
+{
+@foreach (var p in Model.Payments)
+{
+    <h5>PaymentId: <a href="/LongTermLiabilities/UpdatePayment?id=@p.PaymentId">@p.PaymentId</a> &nbsp;&nbsp; Payment Amount: @p.Amount  &nbsp;&nbsp; Interest Expense: @p.InterestExpense
+    &nbsp;&nbsp; Total Amount: @p.TotalAmount</h5>
+}
+}
+<h3>Balance: @Model.Ltlbalance</h3>
+<br />
+<h2>Make a Payment on this Liability:</h2>
+<form action="/LongTermLiabilities/MakePayment" method="Post">
+    <input type="hidden" id="LongTermLiabId" name="LongTermLiabId" value="@Model.LtliabilitiesId" />
+    <label for="PayDate">Payment Date</label><br />
+    <input type="date" id="PayDate" name="PayDate" /><br />
+    <label for="Amount">Principal Amount</label><br />
+    <input type="number" id="Amount" name="Amount" step=".01" /><br />
+    <label for="InterestExpense">Interest Expense</label><br>
+    <input type="number" id="InterestExpense" name="InterestExpense" step=".01" /><br />
+    <label for="TotalAmout">Total Amount</label><br />
+    <input type="number" name="TotalAmount" id="TotalAmount" step=".01" /><br />
+    <input type="submit" value="Submit Payment" />
+</form>
+<br />
+<button onclick="location.href='/LongTermLiabilities/UpdateLTL?id=@Model.LtliabilitiesId'">Update Liability</button>

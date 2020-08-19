@@ -27,7 +27,7 @@ namespace AccountingProgram.Controllers
             return View(found);
         }
        
-        //categories for expenses: Utilities, Advertising, Vehicle, Employee Benefits, Meals/Entertainment, Supplies, Depreciation, Insurance, Wages, Travel, Rent/Lease, Other
+        //categories for expenses: Utilities, Interest, Advertising, Vehicle, Employee Benefits, Meals/Entertainment, Supplies, Depreciation, Insurance, Wages, Travel, Rent/Lease, Other
         [HttpGet]
         public IActionResult AddExpense()
         {
