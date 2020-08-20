@@ -8,16 +8,17 @@
 <p>Cash and Cash Equivalents:  @Model.Cash.Balance</p>
 <p>Accounts Receivable:  @Model.Receivable.Balance</p>
 <p>Inventory: @Model.Inventory.Price</p>
-<p>Total current assets:  @(Model.Cash.Balance + Model.Receivable.Balance + Model.Inventory.Price)</p>
+<p>Total current assets:  @Model.TotalCurrentAssets</p>
 <br />
-<br />
-<h4>Property and Equipment</h4>
-<br />
+<h4>Property, Plant and Equipment</h4>
+<p>Buildings and Improvements, net: @Model.Buildings</p>
+<p>Equipment, net: @Model.Equipment</p>
+<p>Land, net: @Model.Land</p>
+<p>Total Propery, Plant and Equipment: @Model.TotalPPE</p>
 <br />
 <h4>Other Assets</h4>
 <br />
-<br />
-<h4>Total Assets:  @(Model.Cash.Balance + Model.Receivable.Balance + Model.Inventory.Price)</h4>
+<h4>Total Assets:  @Model.TotalAssets</h4>
 <br />
 <br />
 <h3>LIABILITIES AND OWNER'S EQUITY</h3>
@@ -25,9 +26,14 @@
 <p>Accounts Payable: @Model.Payable.Balance</p>
 <p>Total Current Liabilities: @Model.Payable.Balance</p>
 <br />
+<h4>Long Term Liabilities</h4>
+<p>Long Term Debt: @Model.LoanBalance</p>
+<br />
+<h4>Total Liabilities: @Model.TotalLiabilities</h4>
+<br />
 <br />
 <h4>Owner's Equity</h4>
-<p>Owner's Equity = @(Model.Cash.Balance + Model.Receivable.Balance + Model.Inventory.Price - Model.Payable.Balance) </p>
+<p>Owner's Equity: @Model.Equity.Amount </p>
 <br />
 <br />
-<h4>Total liabilities and shareholder's equity: @(Model.Cash.Balance + Model.Receivable.Balance + Model.Inventory.Price)</h4>
+<h4>Total liabilities and shareholder's equity: @Model.TotalLiabilitiesEquity</h4>

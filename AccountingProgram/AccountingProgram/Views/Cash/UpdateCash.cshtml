@@ -1,0 +1,17 @@
+﻿@using AccountingProgram.Models
+
+@model Cash
+
+<h1 style="text-align:center">Update Cash Item</h1>
+<br />
+<br />
+<form action="/Cash/UpdateCash" method="post">
+    <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+    <label for="TransDate">Transaction Date</label><br />
+    <input type="date" id="TransDate" name="TransDate" value="@Model.TransDate.ToString("yyyy-MM-dd")"/><br />
+    <label for="Deposit">Deposit</label><br />
+    <input type="number" id="Deposit" name="Deposit" step=".01" value="@Model.Deposit"/><br />
+    <label for="Withdrawl">Withdrawl</label><br />
+    <input type="number" id="Withdrawl" name="Withdrawl" step=".01" value="@Model.Withdrawl"/><br />
+    <input type="submit" value="Submit" />
+</form>

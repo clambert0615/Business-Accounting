@@ -1,29 +1,37 @@
 ﻿<h1 style="text-align:center">Add Long Term Asset and Liability</h1>
 <br />
 <form action="/LongTermAssets/AddLTAssetandLiability" method="post">
-   <div>
-       Asset Information: <br />
-    <label for="Item">Item</label><br />
-    <input type="text" id="Item" name="Item" /><br />
-    <label for="Description">Description</label><br />
-    <input type="text" id="Description" name="Description" /><br />
-    <label for="PurchaseDate">Purchase Date</label><br />
-    <input type="date" id="PurchaseDate" name="PurchaseDate" /><br />
-    <label for="Amount">Book Value </label><br />
-    <input type="number" id="Amount" name="Amount" step=".01" /><br />
-    <label for="Balance">Carrying Value</label><br />
-    <input type="number" id="Balance" name="Balance" /><br />
-    <label for="UsefulLife">Useful Life</label><br />
-    <input type="number" id="UsefulLife" name="UsefulLife" /><br />
-    <label for="LifeRemaining">Remaining Life</label><br />
-    <input type="number" id="LifeRemaining" name="LifeRemaining" /><br />
-       </div>
+    <div>
+        Asset Information: <br />
+        <label for="Item">Item</label><br />
+        <input type="text" id="Item" name="Item" /><br />
+        <label for="Description">Asset Type</label><br />
+        <select id="Description" name="Description">
+            <option value="---">------</option>
+            <option value="Buildings and Improvements">Buildings and Improvements</option>
+            <option value="Equipment">Equipment</option>
+            <option value="Land">Land</option>
+        </select><br />
+        <label for="PurchaseDate">Purchase Date</label><br />
+        <input type="date" id="PurchaseDate" name="PurchaseDate" /><br />
+        <label for="Amount">Book Value </label><br />
+        <input type="number" id="Amount" name="Amount" step=".01" /><br />
+        <label for="Balance">Carrying Value</label><br />
+        <input type="number" id="Balance" name="Balance" /><br />
+        <label for="UsefulLife">Useful Life</label><br />
+        <input type="number" id="UsefulLife" name="UsefulLife" /><br />
+        <label for="LifeRemaining">Remaining Life</label><br />
+        <input type="number" id="LifeRemaining" name="LifeRemaining" /><br />
+    </div>
     <div>
         Long Term Liability Information: <br />
-    <label for="Ltlitem">Liability Item</label><br />
-     <input type="text" id="Ltlitem" name="Ltlitem" /><br />
-     <label for="Ltldescription">Liability Description</label><br />
-        <input type="text" id="Ltldescription" name="Ltldescription" /><br />
+        <label for="Ltlitem">Liability Item</label><br />
+        <input type="text" id="Ltlitem" name="Ltlitem" /><br />
+        <label for="Ltldescription">Liability Type</label><br />
+        <select id="Ltldescription" name="Ltldescription">
+            <option value="---">------</option>
+            <option value="Loan Payable">Loan Payable</option>
+        </select><br />
         <label for="OriginDate">Origin Date</label><br />
         <input type="date" id="OriginDate" name="OriginDate" /><br />
         <label for="TotalAmount">Total Amount</label><br />
@@ -32,8 +40,8 @@
         <input type="number" id="TotalNumberofPayments" name="TotalNumberofPayments" /><br />
         <label for="Ltlbalance">Balance</label><br />
         <input type="number" id="Ltlbalance" name="Ltlbalance" step=".01" /><br />
-        
-  </div>
-<input type="submit" value="Submit" />
+
+    </div>
+    <input type="submit" value="Submit" />
 
 </form>

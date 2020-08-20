@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AccountingProgram.Models
 {
@@ -19,7 +20,10 @@ namespace AccountingProgram.Models
         public int? Zip { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public DateTime? Birthdate { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+
+        public DateTime Birthdate { get; set; }
         public int? Ssn { get; set; }
 
         public virtual ICollection<Wages> Wages { get; set; }

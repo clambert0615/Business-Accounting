@@ -5,8 +5,13 @@
    
     <label for="Item">Item</label><br />
     <input type="text" id="Item" name="Item" /><br />
-    <label for="Description">Description</label><br />
-    <input type="text" id="Description" name="Description" /><br />
+    <label for="Description">Asset Type</label><br />
+    <select id="Description" name="Description">
+        <option value="---">------</option>
+        <option value="Buildings and Improvements">Buildings and Improvements</option>
+        <option value="Equipment">Equipment</option> 
+        <option value="Land">Land</option>
+    </select><br />
     <label for="PurchaseDate">Purchase Date</label><br />
     <input type="date" id="PurchaseDate" name="PurchaseDate" /><br />
     <label for="Amount">Book Value / Cash Paid</label><br />

@@ -54,5 +54,31 @@ namespace AccountingProgram.Controllers
                 return RedirectToAction("ErrorPage");
             }
         }
+        [HttpGet]
+        public IActionResult UpdateCash(int id)
+        {
+            Cash found = _context.Cash.Find(id);
+            if(found != null)
+            {
+                return View(found);
+            }
+            else
+            {
+                return RedirectToAction("ErrorPage");
+            }
+        }
+        [HttpPost]
+        public IActionResult UpdateCash(Cash updatedCash)
+        {
+            Cash oldCash = _context.Cash.Find(updatedCash.Id);
+            oldCash.TransDate = updatedCash.TransDate;
+            oldCash.Withdrawl = updatedCash.Withdrawl;
+            oldCash.Deposit = updatedCash.Deposit;
+            _context.Entry(oldCash).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.Update(oldCash);
+            _context.SaveChanges();
+
+            return RedirectToAction("CashIndex");
+        }
     }
 }

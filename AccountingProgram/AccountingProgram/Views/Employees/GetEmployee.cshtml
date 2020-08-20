@@ -1,0 +1,28 @@
+﻿@using AccountingProgram.Models
+
+@model Employee
+
+<h1 style="text-align:center">Employee Details</h1>
+<br />
+<h3>Employee Id: @Model.EmpId</h3>
+<p>First Name: @Model.FirstName</p>
+<p>Last Name: @Model.LastName</p>
+<p>Street Address: @Model.StreetAddress</p>
+<p>City: @Model.City</p>
+<p>State: @Model.State</p>
+<p>Zip Code: @Model.Zip</p>
+<p>Phone Number: @Model.Phone</p>
+<p>Email: @Model.Email</p>
+<p>Birth Date: @Model.Birthdate.ToShortDateString()</p>
+<p>Social Security Number @Model.Ssn</p>
+<br />
+<h3>Pay Records</h3>
+@if(Model.Wages.Count > 0)
+{
+    @foreach(var w in Model.Wages)
+    {
+        <p>Wage Id: @w.WageId &nbsp; &nbsp; PayDate: @w.PayDate &nbsp;&nbsp; Gross Pay: @w.GrossPay &nbsp; &nbsp; Net Pay: @w.NetPay </p>
+    }
+}
+<br />
+<button onclick="location.href='/Employees/UpdateEmployee?id=@Model.EmpId'">Update Employee</button>

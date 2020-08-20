@@ -7,16 +7,19 @@
 <form action="/LongTermLiabilities/UpdateLTL" method="post">
     <input type="hidden" id="LtliabilitiesId" name="LtliabilitiesId" value="@Model.LtliabilitiesId" />
     <label for="Ltlitem">Item</label><br />
-    <input type="text" id="Ltlitem" name="Ltlitem" value="@Model.Ltlitem"/><br />
-    <label for="Ltldescription">Description</label><br />
-    <input type="text" name="Ltldescription" id="Ltldescription" value="@Model.Ltldescription"/><br />
+    <input type="text" id="Ltlitem" name="Ltlitem" value="@Model.Ltlitem" /><br />
+    <label for="Ltldescription">Liability Type</label><br />
+    <select id="Ltldescription" name="Ltldescription">
+        <option value="---">------</option>
+        <option value="Loan Payable">Loan Payable</option>
+    </select><br />
     <label for="OriginDate">Origin Date</label><br />
     <input type="date" id="OriginDate" name="OriginDate" value="@Model.OriginDate.ToString("yyyy-MM-dd")" /><br />
     <label for="TotalAmount">Total Amount</label><br />
-    <input type="number" id="TotalAmount" name="TotalAmount" step=".01" value="@Model.TotalAmount"/><br />
+    <input type="number" id="TotalAmount" name="TotalAmount" step=".01" value="@Model.TotalAmount" /><br />
     <label for="TotalNumberofPayments">Total Number of Payments</label><br />
     <input type="number" id="TotalNumberofPayments" name="TotalNumberofPayments" value="@Model.TotalNumberofPayments" /><br />
     <label for="Ltlbalance">Balance</label><br />
-    <input type="number" id="Ltlbalance" name="Ltlbalance" step=".01" value="@Model.Ltlbalance"/><br />
+    <input type="number" id="Ltlbalance" name="Ltlbalance" step=".01" value="@Model.Ltlbalance" /><br />
     <input type="submit" value="Update LT Liability" />
 </form>

@@ -4,8 +4,11 @@
 <form action="/LongTermLiabilities/AddLTLiability" method="post">
     <label for="Ltlitem">Item</label><br />
     <input type="text" id="Ltlitem" name="Ltlitem" /><br />
-    <label for="Lltdescription">Description</label><br />
-    <input type="text" name="Ltldescription" id="Ltldescription" /><br />
+    <label for="Lltdescription">Liability Type</label><br />
+    <select id="Ltldescription" name="Ltldescription">
+        <option value="---">------</option>
+        <option value="Loan Payable">Loan Payable</option>
+    </select><br />
     <label for="OriginDate">Origin Date</label><br />
     <input type="date" id="OriginDate" name="OriginDate" /><br />
     <label for="TotalAmount">Total Amount</label><br />
