@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AccountingProgram.Models
 {
@@ -8,7 +9,9 @@ namespace AccountingProgram.Models
         public int WageId { get; set; }
         public int? EmployeeId { get; set; }
         public int? CashId { get; set; }
-        public DateTime? PayDate { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime PayDate { get; set; }
         public decimal? GrossPay { get; set; }
         public decimal? Sstax { get; set; }
         public decimal? MedicareTax { get; set; }

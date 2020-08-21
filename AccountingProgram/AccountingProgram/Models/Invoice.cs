@@ -17,11 +17,9 @@ namespace AccountingProgram.Models
         public int InvoiceId { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-
         public DateTime InvDate { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-
         public DateTime DueDate { get; set; }
         public string CustomerName { get; set; }
         public string StreetAddress { get; set; }

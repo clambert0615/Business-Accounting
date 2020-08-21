@@ -1,0 +1,26 @@
+﻿@using AccountingProgram.Models
+@model List<Wages> 
+<h1 style="width:100%">Payroll Index</h1>
+<br />
+<button onclick="location.href='/Payroll/AddWages'">Add Paycheck</button>
+<table style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Payroll Date</th>
+            <th>Gross Pay</th>
+            <th>Net Pay</th>            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(Wages w in Model)
+        {
+            <tr>
+                <td>@w.WageId</td>
+                <td>@w.PayDate.ToShortDateString()</td>
+                <td>@w.GrossPay</td>
+                <td>@w.NetPay</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -15,6 +15,7 @@ namespace AccountingProgram.Models
         public Inventory Inventory { get; set; }
         public LongTermAssets LTAssets { get; set; }
         public LongTermLiabilities LTLiabilities { get; set; }
+        public PayrollPayable PayrollPay { get; set; }
         public Sales Sales { get; set; }
         public OwnersEquity Equity { get; set; }
         
@@ -28,6 +29,7 @@ namespace AccountingProgram.Models
         public decimal? LoanBalance { get; set; }
         public decimal TotalLiabilities { get; set; }
         public decimal TotalLiabilitiesEquity { get; set; }
+        public decimal CurrentLiabilities { get; set; }
        
 
     }

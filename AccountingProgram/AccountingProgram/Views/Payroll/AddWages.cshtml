@@ -1,0 +1,28 @@
+﻿<h1 style="text-align:center">Add Employee Paycheck</h1>
+<br />
+<form action="/Payroll/AddWages" method="post">
+    <label for="EmployeeId">Employee Id</label><br />
+    <input type="number" id="EmployeeId" name="EmployeeId" /><br />
+    <label for="PayDate">Pay Date</label><br />
+    <input type="date" id="PayDate" name="PayDate" /><br />
+    <label for="GrossPay">Gross Pay</label><br />
+    <input type="number" id="GrossPay" name="GrossPay" step=".01" /><br />
+    <label for="Sstax">Social Security Tax</label><br />
+    <input type="number" id="Sstax" name="Sstax" step=".01"/><br />
+    <label for="MedicareTax">Medicare Tax</label><br />
+    <input type="number" id="MedicareTax" name="MedicareTax" step=".01" /><br />
+    <label for="FedIncTax">Federal Income Tax</label><br />
+    <input type="number" id="FedIncTax" name="FedIncTax" step=".01"/><br />
+    <label for="StateIncTax">State Income Tax</label><br />
+    <input type="number" id="StateIncTax" name="StateIncTax" step=".01" /><br />
+    <label for="LocalIncTax">Local Income Tax</label><br />
+    <input type="number" id="LocalIntTax" name="LocalIncTax" step=".01" /><br />
+    <label for="InsuranceDed">Insurance Deduction</label><br />
+    <input type="number" id="InsuranceDed" name="InsuranceDed" step=".01"/><br />
+    <label for="SavingsDed">Retirement Deduction</label><br />
+    <input type="number" id="SavingsDed" name="SavingsDed"step=".01"/><br />
+    <label for="NetPay">Net Pay</label><br />
+    <input type="number" id="NetPay" name="NetPay" step=".01" /><br />
+    <input type="submit" value="Submit" />
+
+</form>

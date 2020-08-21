@@ -16,7 +16,6 @@ namespace AccountingProgram.Models
         public int PaymentId { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-
         public DateTime PayDate { get; set; }
         public decimal? Amount { get; set; }
         public int? PayId { get; set; }

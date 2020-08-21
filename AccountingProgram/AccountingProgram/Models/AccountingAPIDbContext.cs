@@ -12,7 +12,7 @@ namespace AccountingProgram.Models
         }
 
         public AccountingAPIDbContext(DbContextOptions<AccountingAPIDbContext> options, IConfiguration configuration)
-            : base(options)
+              : base(options)
         {
             Configuration = configuration;
         }
@@ -37,6 +37,7 @@ namespace AccountingProgram.Models
         public virtual DbSet<OwnersEquity> OwnersEquity { get; set; }
         public virtual DbSet<PayableInventory> PayableInventory { get; set; }
         public virtual DbSet<Payments> Payments { get; set; }
+        public virtual DbSet<PayrollPayable> PayrollPayable { get; set; }
         public virtual DbSet<Sales> Sales { get; set; }
         public virtual DbSet<SalesInventory> SalesInventory { get; set; }
         public virtual DbSet<Vendor> Vendor { get; set; }
@@ -455,6 +456,44 @@ namespace AccountingProgram.Models
                     .WithMany(p => p.PaymentsNavigation)
                     .HasForeignKey(d => d.PayId)
                     .HasConstraintName("FK__Payments__PayId__5DCAEF64");
+            });
+
+            modelBuilder.Entity<PayrollPayable>(entity =>
+            {
+                entity.HasKey(e => e.PayrollId)
+                    .HasName("PK__PayrollP__99DFC6728C71AD4F");
+
+                entity.Property(e => e.EmployerFicass)
+                    .HasColumnName("EmployerFICASS")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.EmployerMed).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.EmployerMedIns).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.FedIncTaxWithheld).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Ficamed)
+                    .HasColumnName("FICAMed")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Ficasstax)
+                    .HasColumnName("FICASSTax")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Futataxes)
+                    .HasColumnName("FUTATaxes")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.MedicalIns).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.SalariesPay).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.StateIncTaxWithheld).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Sutataxes)
+                    .HasColumnName("SUTATaxes")
+                    .HasColumnType("decimal(10, 2)");
             });
 
             modelBuilder.Entity<Sales>(entity =>

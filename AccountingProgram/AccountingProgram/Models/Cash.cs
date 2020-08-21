@@ -18,7 +18,6 @@ namespace AccountingProgram.Models
         public int Id { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-
         public DateTime TransDate { get; set; }
         public decimal? Deposit { get; set; }
         public decimal? Withdrawl { get; set; }

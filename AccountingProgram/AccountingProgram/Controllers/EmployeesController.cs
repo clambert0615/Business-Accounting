@@ -23,6 +23,8 @@ namespace AccountingProgram.Controllers
         public IActionResult GetEmployee(int id)
         {
             Employee found = _context.Employee.Find(id);
+            List<Wages> wageList = _context.Wages.Where(x => x.EmployeeId == found.EmpId).ToList();
+            found.Wages = wageList;
             return View(found);
         }
         [HttpGet]
@@ -74,5 +76,7 @@ namespace AccountingProgram.Controllers
 
             return RedirectToAction("EmployeesIndex");
         }
+       
+
     }
 }

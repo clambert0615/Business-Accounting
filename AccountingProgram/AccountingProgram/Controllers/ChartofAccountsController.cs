@@ -10,9 +10,10 @@ namespace AccountingProgram.Controllers
     public class ChartofAccountsController : Controller
     {
         private readonly AccountingAPIDbContext _context;
-        public BalanceSheet bs = new BalanceSheet { Cash = new Cash(), Payable = new AccountsPayable(), 
-        Receivable = new AccountsReceivable(), Expense = new Expenses(), Inventory = new Inventory(), 
-        LTAssets = new LongTermAssets(), LTLiabilities = new LongTermLiabilities(), Equity = new OwnersEquity()};
+        public BalanceSheet bs = new BalanceSheet { Cash = new Cash(), Payable = new AccountsPayable(),
+            Receivable = new AccountsReceivable(), Expense = new Expenses(), Inventory = new Inventory(),
+            LTAssets = new LongTermAssets(), LTLiabilities = new LongTermLiabilities(), Equity = new OwnersEquity(),
+            PayrollPay = new PayrollPayable()};
         public IncomeStatement inc = new IncomeStatement { Sales = new Sales() };
        
         public ChartofAccountsController(AccountingAPIDbContext Context)
@@ -40,6 +41,13 @@ namespace AccountingProgram.Controllers
                 apbal += (ap.Balance ?? 0);
             }
             bs.Payable.Balance = apbal;
+            List<PayrollPayable> payList = _context.PayrollPayable.ToList();
+            decimal ppbal = 0;
+            foreach(PayrollPayable pp in payList)
+            {
+                ppbal += (pp.SalariesPay ?? 0);
+            }
+            bs.PayrollPay.SalariesPay = ppbal;
             List<AccountsReceivable> arList = _context.AccountsReceivable.ToList();
             decimal arbal = 0;
             foreach (AccountsReceivable ar in arList)
@@ -98,7 +106,8 @@ namespace AccountingProgram.Controllers
             bs.TotalCurrentAssets = (decimal)(bs.Cash.Balance + bs.Inventory.Price + bs.Receivable.Balance);
             bs.TotalPPE = (decimal)(bs.Buildings + bs.Equipment + bs.Land);
             bs.TotalAssets = (decimal)(bs.TotalCurrentAssets + bs.TotalPPE);
-            bs.TotalLiabilities = (decimal)(bs.Payable.Balance + bs.LoanBalance);
+            bs.CurrentLiabilities = (decimal)(bs.Payable.Balance + bs.PayrollPay.SalariesPay);
+            bs.TotalLiabilities = (decimal)(bs.CurrentLiabilities + bs.LoanBalance);
             bs.Equity.Amount = bs.TotalAssets - bs.TotalLiabilities;
             bs.TotalLiabilitiesEquity =(decimal)(bs.TotalLiabilities + bs.Equity.Amount);
             return View(bs);
@@ -144,8 +153,9 @@ namespace AccountingProgram.Controllers
             inc.Wages = GetExpenseBalance("Wages");
             inc.Other = GetExpenseBalance("Other");
             inc.IncomeTaxExpense = GetExpenseBalance("Income Tax");
+            inc.PayrollTax = GetExpenseBalance("Payroll Tax");
 
-            inc.Totalexpenses = inc.Advertising + inc.Depreciation + inc.EmployeeBenefits + inc.Insurance
+            inc.Totalexpenses = inc.Advertising + inc.Depreciation + inc.EmployeeBenefits + inc.Insurance + inc.PayrollTax
                 + inc.Interest + inc.Meals + inc.Supplies + inc.Rent + inc.Travel + inc.Utilities + inc.Vehicle + inc.Wages + inc.Other;
 
             inc.IncomeBeforeTax = inc.GrossProfit - inc.Totalexpenses;

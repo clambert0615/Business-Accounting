@@ -22,7 +22,6 @@ namespace AccountingProgram.Models
         public string Email { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-
         public DateTime Birthdate { get; set; }
         public int? Ssn { get; set; }
 
