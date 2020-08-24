@@ -22,7 +22,7 @@ namespace AccountingProgram.Models
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
 
         public DateTime PaymentDate { get; set; }
-        public decimal? PaymentAmount { get; set; } 
+        public decimal? PaymentAmount { get; set; }
         public decimal? Balance { get; set; }
         public decimal? AmountDue { get; set; }
         public int? VenId { get; set; }

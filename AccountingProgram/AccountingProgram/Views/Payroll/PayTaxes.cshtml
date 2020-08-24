@@ -1,0 +1,29 @@
+﻿@using AccountingProgram.Models
+
+@model List<PayrollTaxesPayable> 
+
+<h1 style="text-align:center">Payroll Taxes Payable List</h1>
+
+<table style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Balance</th>
+        </tr>
+    </thead>
+<tbody>
+    @foreach(PayrollTaxesPayable p in Model)
+    {
+        <tr>
+            <td><a href="/Payroll/MakeTaxPayment?id=@p.PayTaxesId">@p.PayTaxesId</a></td>
+            <td>@p.PayrollDate.ToShortDateString()</td>
+            <td>@p.Amount</td>
+            <td>@p.Balance</td>
+
+        </tr>
+    }
+
+</tbody>
+</table>

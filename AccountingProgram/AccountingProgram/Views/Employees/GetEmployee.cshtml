@@ -21,7 +21,7 @@
 {
     @foreach(var w in Model.Wages)
     {
-        <p>Wage Id: @w.WageId &nbsp; &nbsp; PayDate: @w.PayDate &nbsp;&nbsp; Gross Pay: @w.GrossPay &nbsp; &nbsp; Net Pay: @w.NetPay </p>
+        <p>Wage Id:<a href="/Employees/GetWageDetail?id=@w.WageId">@w.WageId</a> &nbsp; &nbsp; PayDate: @w.PayDate &nbsp;&nbsp; Gross Pay: @w.GrossPay &nbsp; &nbsp; Net Pay: @w.NetPay </p>
     }
 }
 <br />

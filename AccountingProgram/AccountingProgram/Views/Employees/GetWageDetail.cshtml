@@ -1,0 +1,18 @@
+﻿@using AccountingProgram.Models
+
+@model Wages
+
+<h1 style="text-align:center">Pay Check Detail</h1>
+<br />
+<br />
+<h3>PaycheckId: @Model.WageId</h3>
+<p>Pay Date: @Model.PayDate.ToShortDateString()</p>
+<p>Gross Pay: @Model.GrossPay</p>
+<p>Federal Income Tax: @Model.FedIncTax</p>
+<p>State Income Tax: @Model.StateIncTax</p>
+<p>Local Income Tax: @Model.LocalIncTax</p>
+<p>Social Security Tax: @Model.Sstax</p>
+<p>Medicare Tax: @Model.MedicareTax</p>
+<p>Benefits Deduction: @Model.InsuranceDed</p>
+<p>Retirement Savings Deduction: @Model.SavingsDed</p>
+<p>Net Pay: @Model.NetPay</p>

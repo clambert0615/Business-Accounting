@@ -27,6 +27,12 @@ namespace AccountingProgram.Controllers
             found.Wages = wageList;
             return View(found);
         }
+        public IActionResult GetWageDetail(int id)
+        {
+            Wages found = _context.Wages.Find(id);
+            return View(found);
+        }
+
         [HttpGet]
         public IActionResult AddEmployee()
         {

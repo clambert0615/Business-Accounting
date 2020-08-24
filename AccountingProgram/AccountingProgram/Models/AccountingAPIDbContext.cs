@@ -18,8 +18,6 @@ namespace AccountingProgram.Models
         }
 
         public IConfiguration Configuration { get; private set; }
-
-
         public virtual DbSet<AccountsPayable> AccountsPayable { get; set; }
         public virtual DbSet<AccountsReceivable> AccountsReceivable { get; set; }
         public virtual DbSet<AccumulatedDepreciation> AccumulatedDepreciation { get; set; }
@@ -38,6 +36,7 @@ namespace AccountingProgram.Models
         public virtual DbSet<PayableInventory> PayableInventory { get; set; }
         public virtual DbSet<Payments> Payments { get; set; }
         public virtual DbSet<PayrollPayable> PayrollPayable { get; set; }
+        public virtual DbSet<PayrollTaxesPayable> PayrollTaxesPayable { get; set; }
         public virtual DbSet<Sales> Sales { get; set; }
         public virtual DbSet<SalesInventory> SalesInventory { get; set; }
         public virtual DbSet<Vendor> Vendor { get; set; }
@@ -206,6 +205,11 @@ namespace AccountingProgram.Models
                     .WithMany(p => p.Cash)
                     .HasForeignKey(d => d.ExpenseId)
                     .HasConstraintName("FK__Cash__ExpenseId__19AACF41");
+
+                entity.HasOne(d => d.Payroll)
+                    .WithMany(p => p.Cash)
+                    .HasForeignKey(d => d.PayrollId)
+                    .HasConstraintName("FK__Cash__PayrollId__79FD19BE");
 
                 entity.HasOne(d => d.Sales)
                     .WithMany(p => p.Cash)
@@ -463,15 +467,65 @@ namespace AccountingProgram.Models
                 entity.HasKey(e => e.PayrollId)
                     .HasName("PK__PayrollP__99DFC6728C71AD4F");
 
+                entity.Property(e => e.BenefitsBalance).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.BenefitsTotal).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.EmployerMedIns).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.LocalIncTax).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.MedicalIns).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.PayableDate).HasColumnType("date");
+
+                entity.Property(e => e.PaymentDate).HasColumnType("date");
+
+                entity.Property(e => e.SalariesPay).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.SalaryBalance).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.SavingsDed).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.SavingsDedBalance).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.BenefitsPayment).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.SavingsPayment).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.SalaryPayment).HasColumnType("decimal(10, 2)");
+
+                entity.HasOne(d => d.CashNavigation)
+                    .WithMany(p => p.PayrollPayable)
+                    .HasForeignKey(d => d.CashId)
+                    .HasConstraintName("FK__PayrollPa__CashI__7908F585");
+
+                entity.HasOne(d => d.Wage)
+                    .WithMany(p => p.PayrollPayable)
+                    .HasForeignKey(d => d.WageId)
+                    .HasConstraintName("FK__PayrollPa__WageI__65F62111");
+            });
+
+            modelBuilder.Entity<PayrollTaxesPayable>(entity =>
+            {
+                entity.HasKey(e => e.PayTaxesId)
+                    .HasName("PK__PayrollT__6AB44C8C723A680D");
+
+                entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Balance).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.EmployerFicamed)
+                    .HasColumnName("EmployerFICAMed")
+                    .HasColumnType("decimal(10, 2)");
+
                 entity.Property(e => e.EmployerFicass)
                     .HasColumnName("EmployerFICASS")
                     .HasColumnType("decimal(10, 2)");
 
-                entity.Property(e => e.EmployerMed).HasColumnType("decimal(10, 2)");
-
                 entity.Property(e => e.EmployerMedIns).HasColumnType("decimal(10, 2)");
 
-                entity.Property(e => e.FedIncTaxWithheld).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.FedInTaxWithheld).HasColumnType("decimal(10, 2)");
 
                 entity.Property(e => e.Ficamed)
                     .HasColumnName("FICAMed")
@@ -485,15 +539,34 @@ namespace AccountingProgram.Models
                     .HasColumnName("FUTATaxes")
                     .HasColumnType("decimal(10, 2)");
 
-                entity.Property(e => e.MedicalIns).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.LocalIncomeTaxWithheld).HasColumnType("decimal(10, 2)");
 
-                entity.Property(e => e.SalariesPay).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.PaymentAmount).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.PaymentDate).HasColumnType("date");
+
+                entity.Property(e => e.PayrollDate).HasColumnType("date");
 
                 entity.Property(e => e.StateIncTaxWithheld).HasColumnType("decimal(10, 2)");
 
                 entity.Property(e => e.Sutataxes)
                     .HasColumnName("SUTATaxes")
                     .HasColumnType("decimal(10, 2)");
+
+                entity.HasOne(d => d.Cash)
+                    .WithMany(p => p.PayrollTaxesPayable)
+                    .HasForeignKey(d => d.CashId)
+                    .HasConstraintName("FK__PayrollTa__CashI__7DCDAAA2");
+
+                entity.HasOne(d => d.PayrollPay)
+                    .WithMany(p => p.PayrollTaxesPayable)
+                    .HasForeignKey(d => d.PayrollPayId)
+                    .HasConstraintName("FK__PayrollTa__Payro__7CD98669");
+
+                entity.HasOne(d => d.Wage)
+                    .WithMany(p => p.PayrollTaxesPayable)
+                    .HasForeignKey(d => d.WageId)
+                    .HasConstraintName("FK__PayrollTa__WageI__0C1BC9F9");
             });
 
             modelBuilder.Entity<Sales>(entity =>
@@ -598,6 +671,11 @@ namespace AccountingProgram.Models
                     .WithMany(p => p.Wages)
                     .HasForeignKey(d => d.EmployeeId)
                     .HasConstraintName("FK__Wages__EmployeeI__66603565");
+
+                entity.HasOne(d => d.PayrollPayableNavigation)
+                    .WithMany(p => p.Wages)
+                    .HasForeignKey(d => d.PayrollPayableId)
+                    .HasConstraintName("FK__Wages__PayrollPa__66EA454A");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -1,0 +1,25 @@
+﻿@using AccountingProgram.Models
+
+@model PayrollTaxesPayable
+
+<h1 style="text-align:center"> Payroll Taxes Payable / Payment</h1>
+<br />
+<h3>Id: @Model.PayTaxesId</h3>
+<p>Payroll Date: @Model.PayrollDate.ToShortDateString()</p>
+<p>Total Amount: @Model.Amount</p>
+@if (Model.PaymentAmount != null)
+{
+<p>Payment Amount: @Model.PaymentAmount</p>
+}
+<p>Balance: @Model.Balance</p>
+
+<br />
+<h3>Pay Payroll Taxes</h3>
+<form action="/Payroll/MakeTaxPayment" method="post">
+    <input type="hidden" value="@Model.PayTaxesId" id="PayTaxesId" name="PayTaxesId" />
+    Payment Date:
+    <input type="date" id="PaymentDate" name="PaymentDate" />
+    Payment Amount:
+    <input type="number" id="PaymentAmount" name="PaymentAmount" step=".01" />
+    <input type="submit" value="Make Payment" />
+</form>

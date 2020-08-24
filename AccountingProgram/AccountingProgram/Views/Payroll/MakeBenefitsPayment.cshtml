@@ -1,0 +1,31 @@
+﻿@using AccountingProgram.Models
+@model PayrollPayable
+
+<h1 style="text-align:center">Benefits Details / Payment</h1>
+<br />
+<h3>Id: @Model.PayrollId</h3>
+<p>Payroll Date: @Model.PayableDate</p>
+<p>Benefits Payable Total: @Model.BenefitsTotal</p>
+@if (Model.BenefitsPayment != null)
+{
+<p>Benefits Payment Amount: @Model.BenefitsPayment</p>
+}
+<p>Benefits Payable Balance: @Model.BenefitsBalance</p>
+<p>Savings / 401K Payable Total: @Model.SavingsDed</p>
+@if (Model.SavingsPayment != null)
+{
+<p>Savings / 401K Payment Amount: @Model.SavingsPayment</p>
+}
+<p>Savings / 401K Balance: @Model.SavingsDedBalance</p>
+<br />
+<h3>Pay Benefits / Savings Payables</h3>
+<form action="/Payroll/MakeBenefitsPayment" method="post">
+    <input type="hidden" id="PayrollId" name="PayrollId" value="@Model.PayrollId" />
+    Payment Date:
+    <input type="date" id="PaymentDate" name="PaymentDate" />
+    Benefits Payment Amount:
+    <input type="number" id="BenefitsPayment" name="BenefitsPayment" step=".01" />
+    Savings Payment Amount:
+    <input type="number" id="SavingsPayment" name="SavingsPayment" step=".01"/>
+    <input type="submit" value="Submit" />
+</form>

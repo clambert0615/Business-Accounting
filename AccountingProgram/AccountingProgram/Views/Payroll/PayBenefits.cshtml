@@ -1,0 +1,31 @@
+﻿@using AccountingProgram.Models
+
+@model List<PayrollPayable>
+
+    <table style="width:100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Payroll Date</th>
+                <th>Benefits Total Amount</th>
+                <th>Benefits Balance</th>
+                <th>Retirement Amount</th>
+                <th>Retirement Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (PayrollPayable p in Model)
+            {
+                <tr>
+                    <td><a href="/Payroll/MakeBenefitsPayment?id=@p.PayrollId">@p.PayrollId</a></td>
+                    <td>@p.PayableDate.ToShortDateString()</td>
+                    <td>@p.BenefitsTotal</td>
+                    <td>@p.BenefitsBalance</td>
+                    <td>@p.SavingsDed</td>
+                    <td>@p.SavingsDedBalance</td>
+
+                </tr>
+            }
+
+        </tbody>
+    </table>

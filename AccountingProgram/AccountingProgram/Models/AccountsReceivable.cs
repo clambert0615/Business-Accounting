@@ -16,6 +16,7 @@ namespace AccountingProgram.Models
         public string CustomerName { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+
         public DateTime DueDate { get; set; }
         public decimal? Amount { get; set; }
         public decimal? CashAmount { get; set; }

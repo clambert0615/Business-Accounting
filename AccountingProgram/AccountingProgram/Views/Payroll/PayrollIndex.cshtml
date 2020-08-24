@@ -1,8 +1,10 @@
 ﻿@using AccountingProgram.Models
-@model List<Wages> 
+@model List<Wages>
 <h1 style="width:100%">Payroll Index</h1>
 <br />
 <button onclick="location.href='/Payroll/AddWages'">Add Paycheck</button>
+<button onclick="location.href='/Payroll/PayTaxes'">Pay Payroll Taxes</button>
+<button onclick="location.href='/Payroll/PayBenefits'">Pay Benefits/Retirement Payables</button>
 <table style="width:100%">
     <thead>
         <tr>
@@ -13,13 +15,15 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(Wages w in Model)
+        @foreach(var w in Model)
         {
             <tr>
                 <td>@w.WageId</td>
                 <td>@w.PayDate.ToShortDateString()</td>
                 <td>@w.GrossPay</td>
                 <td>@w.NetPay</td>
+                <td><button onclick="location.href='/Payroll/IndividualPay?id=@w.PayrollPayableId'" style="font-size:15px">View Related Payable / Pay Salary</button></td>
+               
             </tr>
         }
     </tbody>

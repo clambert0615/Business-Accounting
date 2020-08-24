@@ -17,6 +17,7 @@ namespace AccountingProgram.Models
         public string Description { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+
         public DateTime PaymentDate { get; set; }
         public decimal? Amount { get; set; }
         public int? CashId { get; set; }

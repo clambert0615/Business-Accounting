@@ -1,0 +1,46 @@
+﻿@using AccountingProgram.Models
+
+@model PayrollPayable
+
+<h1 style="width:100%">Payroll Payable Details</h1>
+<br />
+<br />
+<h3>Payroll Payable Id: @Model.PayrollId</h3>
+<h3>Associated Wage Id: @Model.WageId</h3>
+<h3>Payable Date: @Model.PayableDate.ToShortDateString()</h3>
+<p>Employee Portion: <br />
+    @foreach(var p in Model.PayrollTaxesPayable)
+    {
+        
+   <p> Employee Federal Income Tax Withheld: @p.FedInTaxWithheld <br />
+   Employee State Income Tax Withheld: @p.StateIncTaxWithheld <br />
+   Employee FICA Social Security Tax Withheld: @p.Ficasstax <br />
+    Employee FICA Medicare Tax Withheld: @p.Ficamed <br />
+    Employee Local Income Tax Withheld @p.LocalIncomeTaxWithheld <br /></p>
+    }
+   <p> Employee Medical Insurance Premium Deduction: @Model.MedicalIns <br />
+    Employee Salary Payable: @Model.SalariesPay<br />
+    Employee Salary Payment: @Model.SalaryPayment<br />
+    Employee Salary Payable Balance: @Model.SalaryBalance
+    </p>
+<br />
+<p>
+    Employer Portion: <br />
+    @foreach (var p in Model.PayrollTaxesPayable)
+    {
+      <p>  Employer FICA Social Security Tax: @p.EmployerFicass<br />
+        Employer FICA Medicare Tax: @p.EmployerFicamed <br />
+        FUTA Tax: @p.Futataxes <br /> </p>
+    }
+    Employee Benefits: @Model.EmployerMedIns
+    </p>
+<br />
+<h3>Make Payment on Salary Payable:</h3>
+<form action="/Payroll/PaySalary" method="post">
+    <input type="hidden" id="PayrollId" name="PayrollId" value="@Model.PayrollId" />
+    Payment Date:
+    <input type="date" id="PaymentDate" name="PaymentDate" />
+    Salaries Payable Amount:
+    <input type="number" id="SalariesPay" name="SalariesPay" step=".01" />
+    <input type="submit" value="Submit Payment" />
+</form>

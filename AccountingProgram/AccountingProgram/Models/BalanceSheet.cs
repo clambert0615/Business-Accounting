@@ -16,6 +16,7 @@ namespace AccountingProgram.Models
         public LongTermAssets LTAssets { get; set; }
         public LongTermLiabilities LTLiabilities { get; set; }
         public PayrollPayable PayrollPay { get; set; }
+        public PayrollTaxesPayable PayTaxesPayable { get; set; }
         public Sales Sales { get; set; }
         public OwnersEquity Equity { get; set; }
         

@@ -21,6 +21,7 @@ namespace AccountingProgram.Models
         public int? PaymentId { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+
         public DateTime OriginDate { get; set; }
 
         public virtual Payments Payment { get; set; }

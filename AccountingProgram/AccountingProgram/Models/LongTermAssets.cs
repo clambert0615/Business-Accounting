@@ -20,6 +20,7 @@ namespace AccountingProgram.Models
         public decimal? LifeRemaining { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+
         public DateTime PurchaseDate { get; set; }
 
         public virtual ICollection<AccumulatedDepreciation> AccumulatedDepreciation { get; set; }
