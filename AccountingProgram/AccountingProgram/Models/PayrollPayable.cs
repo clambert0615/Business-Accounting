@@ -21,9 +21,6 @@ namespace AccountingProgram.Models
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
 
         public DateTime PayableDate { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-
         public DateTime? PaymentDate { get; set; }
         public int? WageId { get; set; }
         public decimal? LocalIncTax { get; set; }
@@ -36,6 +33,11 @@ namespace AccountingProgram.Models
         public decimal? BenefitsPayment { get; set; }
         public decimal? SavingsPayment { get; set; }
         public decimal? SalaryPayment { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+
+        public DateTime? BenefitPaymentDate { get; set; }
+
         public virtual Cash CashNavigation { get; set; }
         public virtual Wages Wage { get; set; }
         public virtual ICollection<Cash> Cash { get; set; }

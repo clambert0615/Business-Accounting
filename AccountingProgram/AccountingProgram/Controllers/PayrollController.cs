@@ -42,8 +42,8 @@ namespace AccountingProgram.Controllers
         public IActionResult PaySalary(int payrollId, decimal salariesPay, DateTime paymentDate)
         {
             PayrollPayable found = _context.PayrollPayable.Find(payrollId);
-            found.SalaryPayment = salariesPay;
-            found.SalaryBalance -= salariesPay;
+            found.SalaryPayment += salariesPay;
+            found.SalaryBalance = found.SalariesPay - found.SalaryPayment;
             found.PaymentDate = paymentDate;
             _context.Update(found);
             _context.SaveChanges();
@@ -111,16 +111,20 @@ namespace AccountingProgram.Controllers
 
 
                 Expenses exp = new Expenses();
+                exp.WageId = wage.WageId;
                 exp.PaymentDate = wage.PayDate;
                 exp.Description = "Salary Expense";
                 exp.Amount = wage.GrossPay;
 
                 Expenses exp2 = new Expenses();
+                exp.WageId = wage.WageId;
                 exp2.Description = "Payroll Tax";
                 exp2.PaymentDate = wage.PayDate;
                 exp2.Amount = ptp.EmployerFicass + ptp.EmployerFicamed + ptp.Futataxes + ptp.Sutataxes;
 
                 Expenses exp3 = new Expenses();
+                exp.WageId = wage.WageId;
+                exp3.PaymentDate = wage.PayDate;
                 exp3.Description = "EmployeeBenefits";
                 exp3.Amount = pp.EmployerMedIns;
 
@@ -136,6 +140,105 @@ namespace AccountingProgram.Controllers
                 return RedirectToAction("ErrorPage");
             }
         }
+        public IActionResult WageDetails(int id)
+        {
+            Wages found = _context.Wages.Find(id);
+            if(found != null)
+            {
+                return View(found);
+            }
+            else
+            {
+                return RedirectToAction("ErrorPage");
+            }
+        }
+        [HttpGet]
+        public IActionResult UpdateWage(int id)
+        {
+            Wages found = _context.Wages.Find(id);
+            return View(found);
+        }
+        [HttpPost]
+        public IActionResult UpdateWage(Wages updatedWage)
+        {
+            Wages old = _context.Wages.Find(updatedWage.WageId);
+            if (ModelState.IsValid)
+            {
+                old.PayDate = updatedWage.PayDate;
+                old.GrossPay = updatedWage.GrossPay;
+                old.Sstax = updatedWage.Sstax;
+                old.MedicareTax = updatedWage.MedicareTax;
+                old.FedIncTax = updatedWage.FedIncTax;
+                old.StateIncTax = updatedWage.StateIncTax;
+                old.LocalIncTax = updatedWage.LocalIncTax;
+                old.InsuranceDed = updatedWage.InsuranceDed;
+                old.SavingsDed = updatedWage.SavingsDed;
+                old.NetPay = updatedWage.NetPay;
+                _context.Entry(old).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                _context.Update(old);
+                _context.SaveChanges();
+
+                PayrollPayable ppfound = _context.PayrollPayable.First(x => x.WageId == updatedWage.WageId);
+                ppfound.PayableDate = updatedWage.PayDate;
+                ppfound.WageId = updatedWage.WageId;
+                ppfound.MedicalIns = updatedWage.InsuranceDed;
+                ppfound.SalariesPay = updatedWage.NetPay;
+                ppfound.SalaryBalance = updatedWage.NetPay;
+                ppfound.EmployerMedIns = (updatedWage.InsuranceDed ?? 0) * (decimal)1.50;
+                ppfound.BenefitsTotal = ppfound.MedicalIns + ppfound.EmployerMedIns;
+                ppfound.SavingsDed = updatedWage.SavingsDed;
+                ppfound.BenefitsBalance = ppfound.BenefitsTotal;
+                ppfound.SavingsDedBalance = ppfound.SavingsDed;
+                _context.Entry(ppfound).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                _context.Update(ppfound);
+                _context.SaveChanges();
+
+                PayrollTaxesPayable ptpfound = _context.PayrollTaxesPayable.First(x => x.PayrollPayId == ppfound.PayrollId);
+                ptpfound.PayrollDate = updatedWage.PayDate;
+                ptpfound.PayrollPayId = ppfound.PayrollId;
+                ptpfound.FedInTaxWithheld = updatedWage.FedIncTax;
+                ptpfound.StateIncTaxWithheld = updatedWage.StateIncTax;
+                ptpfound.LocalIncomeTaxWithheld = updatedWage.LocalIncTax;
+                ptpfound.Ficasstax = updatedWage.Sstax;
+                ptpfound.Ficamed = updatedWage.MedicareTax;
+                ptpfound.EmployerFicass = updatedWage.Sstax;
+                ptpfound.EmployerFicamed = updatedWage.MedicareTax;
+                ptpfound.Futataxes = (updatedWage.GrossPay ?? 0) * (decimal)0.008;
+                ptpfound.Sutataxes = (updatedWage.GrossPay ?? 0) * (decimal)0.027;
+                ptpfound.Amount = ptpfound.FedInTaxWithheld + ptpfound.StateIncTaxWithheld + ptpfound.LocalIncomeTaxWithheld + ptpfound.Ficasstax +
+                    ptpfound.Ficamed + ptpfound.EmployerFicass + ptpfound.EmployerFicamed + ptpfound.Futataxes + ptpfound.Sutataxes;
+                ptpfound.Balance = ptpfound.Amount;
+                _context.Entry(ptpfound).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                _context.Update(ptpfound);
+                _context.SaveChanges();
+
+                Expenses foundexp1 = _context.Expenses.First(x => (x.WageId == updatedWage.WageId) && (x.Description == "Salary Expense"));
+                foundexp1.PaymentDate = updatedWage.PayDate;
+                foundexp1.Amount = updatedWage.GrossPay;
+                _context.Update(foundexp1);
+                _context.SaveChanges();
+
+                Expenses foundexp2 = _context.Expenses.First(x => (x.WageId == updatedWage.WageId) && (x.Description == "Payroll Tax"));
+                foundexp2.PaymentDate = updatedWage.PayDate;
+                foundexp2.Amount = ptpfound.EmployerFicass + ptpfound.EmployerFicamed + ptpfound.Futataxes + ptpfound.Sutataxes;
+                _context.Update(foundexp2);
+                _context.SaveChanges();
+
+                Expenses foundexp3 = _context.Expenses.First(x => (x.WageId == updatedWage.WageId) && (x.Description == "EmployeeBenefits"));
+                foundexp3.PaymentDate = updatedWage.PayDate;
+                foundexp3.Amount = ppfound.EmployerMedIns;
+                _context.Update(foundexp3);
+                _context.SaveChanges();
+
+                return RedirectToAction("PayrollIndex");
+
+            }
+            else
+            {
+                return RedirectToAction("ErrorPage");
+            }
+        }
+
         public IActionResult PayTaxes()
         {
             List<PayrollTaxesPayable> ptpList = _context.PayrollTaxesPayable.ToList();
@@ -158,8 +261,8 @@ namespace AccountingProgram.Controllers
         {
             PayrollTaxesPayable found = _context.PayrollTaxesPayable.Find(payTaxesId);
             found.PaymentDate = paymentDate;
-            found.PaymentAmount = paymentAmount;
-            found.Balance -= paymentAmount;
+            found.PaymentAmount += paymentAmount;
+            found.Balance = found.Amount - found.PaymentAmount;
             _context.Update(found);
             _context.SaveChanges();
 
@@ -193,19 +296,19 @@ namespace AccountingProgram.Controllers
             }
         }
         [HttpPost]
-        public IActionResult MakeBenefitsPayment(int payrollId, DateTime paymentDate, decimal? benefitsPayment, decimal? savingsPayment )
+        public IActionResult MakeBenefitsPayment(int payrollId, DateTime benefitPaymentDate, decimal? benefitsPayment, decimal? savingsPayment )
         {
             PayrollPayable found = _context.PayrollPayable.Find(payrollId);
-            found.PaymentDate = paymentDate;
-            found.BenefitsPayment = benefitsPayment;
-            found.SavingsPayment = savingsPayment;
-            found.BenefitsBalance -= benefitsPayment;
-            found.SavingsDedBalance -= savingsPayment;
+            found.PaymentDate = benefitPaymentDate;
+            found.BenefitsPayment += benefitsPayment;
+            found.SavingsPayment += savingsPayment;
+            found.BenefitsBalance = found.BenefitsTotal - found.BenefitsPayment;
+            found.SavingsDedBalance = found.SavingsDed - found.SavingsPayment;
             _context.Update(found);
             _context.SaveChanges();
 
             Cash c = new Cash();
-            c.TransDate = paymentDate;
+            c.TransDate = benefitPaymentDate;
             c.Withdrawl = (benefitsPayment ?? 0) + (savingsPayment ?? 0);
             c.PayrollId = payrollId;
             _context.Cash.Add(c);

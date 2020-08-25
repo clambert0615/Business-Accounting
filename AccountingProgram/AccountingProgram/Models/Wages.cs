@@ -8,6 +8,7 @@ namespace AccountingProgram.Models
     {
         public Wages()
         {
+            Expenses = new HashSet<Expenses>();
             PayrollPayable = new HashSet<PayrollPayable>();
             PayrollTaxesPayable = new HashSet<PayrollTaxesPayable>();
         }
@@ -33,6 +34,7 @@ namespace AccountingProgram.Models
         public virtual Cash Cash { get; set; }
         public virtual Employee Employee { get; set; }
         public virtual PayrollPayable PayrollPayableNavigation { get; set; }
+        public virtual ICollection<Expenses> Expenses { get; set; }
         public virtual ICollection<PayrollPayable> PayrollPayable { get; set; }
         public virtual ICollection<PayrollTaxesPayable> PayrollTaxesPayable { get; set; }
     }

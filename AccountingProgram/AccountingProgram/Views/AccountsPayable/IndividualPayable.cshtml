@@ -2,37 +2,33 @@
 
 @model AccPayInvExp
 
-<h1 style="text-align:center">Payable Information</h1>
+<h1 style="text-align:center;border-bottom-style:solid;border-bottom-color:aqua;border-bottom-width:thick">Payable Information</h1>
 <br />
-<h3>Payable Id: @Model.Payable.PayableId</h3>
+<h4>Payable Id: @Model.Payable.PayableId &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vendor: @Model.Payable.VendorName &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Total Amount Due: @Model.Payable.AmountDue &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Due Date: @Model.Payable.DueDate.ToShortDateString()</h4>
 <br />
-<h3>Vendor: @Model.Payable.VendorName</h3>
-<br />
-<h3>Amount Due: @Model.Payable.AmountDue</h3>
-<br />
-<h4>Due Date: @Model.Payable.DueDate.ToShortDateString()</h4>
-
 <br />
 
-@foreach (var p in Model.PaymentList)
-{
-    
-<h4>Payment Id: @p.PaymentId &nbsp;&nbsp;Payment Date: @p.PayDate.ToShortDateString() &nbsp; &nbsp; Payment Amount: @p.Amount &nbsp; &nbsp; <button onclick="location.href='/AccountsPayable/EditPayment?id=@p.PaymentId'" style="font-size:20px">Edit Payment</button></h4>
-    
-}
+<h4>Payment History:</h4>
+    @foreach (var p in Model.PaymentList)
+    {
 
+        <h4>Payment Id: @p.PaymentId &nbsp;&nbsp;Payment Date: @p.PayDate.ToShortDateString() &nbsp; &nbsp; Payment Amount: @p.Amount &nbsp; &nbsp; <button onclick="location.href='/AccountsPayable/EditPayment?id=@p.PaymentId'" style="font-size:20px">Edit Payment</button></h4>
+
+    }
+
+ 
 <br />
 
-<h3>Balance Due: @Model.Payable.Balance</h3>
+    <h4>Balance Due: @Model.Payable.Balance</h4>
 
 
-<br />
-<form action="/AccountsPayable/MakePayment?id=@Model.Payable.PayableId" method="post">
-    Make a Payment:
-    <input type="number" id="amount" name="amount" step=".01"/>
-    <input type="submit" value="Submit Payment" />
+    <br />
+<h4>Make a Payment:</h4>
+    <form action="/AccountsPayable/MakePayment?id=@Model.Payable.PayableId" method="post">
+        <input type="number" id="amount" name="amount" step=".01" />
+        <input type="submit" value="Submit Payment" />
 
-</form>
-<br />
-<button onclick="location.href='/AccountsPayable/UpdatePayable?id=@Model.Payable.PayableId'">Update This Payable</button>
-<button onclick="location.href='/AccountsPayable/GetAllPayables'">Return to Accounts Payable Menu</button>
+    </form>
+    <br />
+    <button onclick="location.href='/AccountsPayable/UpdatePayable?id=@Model.Payable.PayableId'">Update This Payable</button>
+    <button onclick="location.href='/AccountsPayable/GetAllPayables'">Return to Accounts Payable Menu</button>

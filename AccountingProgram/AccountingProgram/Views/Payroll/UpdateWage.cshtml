@@ -1,0 +1,32 @@
+﻿@using AccountingProgram.Models
+@model Wages
+
+<h1 style="text-align:center">Update Paycheck</h1>
+<br />
+<form action="/Payroll/UpdateWage" method="post">
+    <input type="hidden" id="WageId" name="WageId" value="@Model.WageId" />
+    <label for="EmployeeId">Employee Id</label><br />
+    <input type="number" id="EmployeeId" name="EmployeeId" value="@Model.EmployeeId" /><br />
+    <label for="PayDate">Pay Date</label><br />
+    <input type="date" id="PayDate" name="PayDate" value="@Model.PayDate.ToString("yyyy-MM-dd")"/><br />
+    <label for="GrossPay">Gross Pay</label><br />
+    <input type="number" id="GrossPay" name="GrossPay" step=".01" value="@Model.GrossPay"/><br />
+    <label for="Sstax">Social Security Tax</label><br />
+    <input type="number" id="Sstax" name="Sstax" step=".01" value="@Model.Sstax"/><br />
+    <label for="MedicareTax">Medicare Tax</label><br />
+    <input type="number" id="MedicareTax" name="MedicareTax" step=".01" value="@Model.MedicareTax" /><br />
+    <label for="FedIncTax">Federal Income Tax</label><br />
+    <input type="number" id="FedIncTax" name="FedIncTax" step=".01" value="@Model.FedIncTax" /><br />
+    <label for="StateIncTax">State Income Tax</label><br />
+    <input type="number" id="StateIncTax" name="StateIncTax" step=".01" value="@Model.StateIncTax" /><br />
+    <label for="LocalIncTax">Local Income Tax</label><br />
+    <input type="number" id="LocalIntTax" name="LocalIncTax" step=".01" value="@Model.LocalIncTax" /><br />
+    <label for="InsuranceDed">Insurance Deduction</label><br />
+    <input type="number" id="InsuranceDed" name="InsuranceDed" step=".01" value="@Model.InsuranceDed" /><br />
+    <label for="SavingsDed">Retirement Deduction</label><br />
+    <input type="number" id="SavingsDed" name="SavingsDed" step=".01" value="@Model.SavingsDed"/><br />
+    <label for="NetPay">Net Pay</label><br />
+    <input type="number" id="NetPay" name="NetPay" step=".01" value="@Model.NetPay" /><br />
+    <input type="submit" value="Submit" />
+
+</form>

@@ -24,11 +24,13 @@ namespace AccountingProgram.Models
         public int? LongTermLiabId { get; set; }
         public int? AccDepId { get; set; }
         public int? PaymentId { get; set; }
+        public int? WageId { get; set; }
 
         public virtual AccumulatedDepreciation AccDep { get; set; }
         public virtual Cash CashNavigation { get; set; }
         public virtual LongTermLiabilities LongTermLiab { get; set; }
         public virtual Payments Payment { get; set; }
+        public virtual Wages Wage { get; set; }
         public virtual ICollection<AccumulatedDepreciation> AccumulatedDepreciation { get; set; }
         public virtual ICollection<Cash> Cash { get; set; }
         public virtual ICollection<Payments> Payments { get; set; }

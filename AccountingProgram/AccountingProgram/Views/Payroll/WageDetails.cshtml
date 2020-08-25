@@ -1,0 +1,20 @@
+﻿@using AccountingProgram.Models
+@model Wages
+
+<h1 style="text-align:center">Paycheck Details</h1>
+<br />
+<br />
+<h3>Paycheck Id: @Model.WageId</h3>
+<h3>Employee Id: <a href="/Employees/GetEmployee?id=@Model.EmployeeId">@Model.EmployeeId</a></h3>
+<p>Pay Date: @Model.PayDate</p>
+<p>Gross Pay: @Model.GrossPay</p>
+<p>Federal Income Tax: @Model.FedIncTax</p>
+<p>State Income Tax: @Model.StateIncTax</p>
+<p>Local Income Tax: @Model.LocalIncTax</p>
+<p>Socail Security Tax: @Model.Sstax</p>
+<p>Medicare Tax: @Model.MedicareTax</p>
+<p>Benefits/Insurance Deducdtion: @Model.InsuranceDed</p>
+<p>Retirement/401K Deduction: @Model.SavingsDed</p>
+<p>Net Pay: @Model.NetPay</p>
+<br />
+<button onclick="location.href='/Payroll/UpdateWage?id=@Model.WageId'">Update Paycheck</button>

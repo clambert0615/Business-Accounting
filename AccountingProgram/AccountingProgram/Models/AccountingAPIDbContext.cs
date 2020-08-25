@@ -12,12 +12,13 @@ namespace AccountingProgram.Models
         }
 
         public AccountingAPIDbContext(DbContextOptions<AccountingAPIDbContext> options, IConfiguration configuration)
-              : base(options)
+             : base(options)
         {
             Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; private set; }
+
         public virtual DbSet<AccountsPayable> AccountsPayable { get; set; }
         public virtual DbSet<AccountsReceivable> AccountsReceivable { get; set; }
         public virtual DbSet<AccumulatedDepreciation> AccumulatedDepreciation { get; set; }
@@ -289,6 +290,11 @@ namespace AccountingProgram.Models
                     .WithMany(p => p.Expenses)
                     .HasForeignKey(d => d.PaymentId)
                     .HasConstraintName("FK__Expenses__Paymen__3FD07829");
+
+                entity.HasOne(d => d.Wage)
+                    .WithMany(p => p.Expenses)
+                    .HasForeignKey(d => d.WageId)
+                    .HasConstraintName("FK__Expenses__WageId__1F2E9E6D");
             });
 
             modelBuilder.Entity<Inventory>(entity =>
@@ -467,7 +473,11 @@ namespace AccountingProgram.Models
                 entity.HasKey(e => e.PayrollId)
                     .HasName("PK__PayrollP__99DFC6728C71AD4F");
 
+                entity.Property(e => e.BenefitPaymentDate).HasColumnType("date");
+
                 entity.Property(e => e.BenefitsBalance).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.BenefitsPayment).HasColumnType("decimal(10, 2)");
 
                 entity.Property(e => e.BenefitsTotal).HasColumnType("decimal(10, 2)");
 
@@ -485,15 +495,13 @@ namespace AccountingProgram.Models
 
                 entity.Property(e => e.SalaryBalance).HasColumnType("decimal(10, 2)");
 
+                entity.Property(e => e.SalaryPayment).HasColumnType("decimal(10, 2)");
+
                 entity.Property(e => e.SavingsDed).HasColumnType("decimal(10, 2)");
 
                 entity.Property(e => e.SavingsDedBalance).HasColumnType("decimal(10, 2)");
 
-                entity.Property(e => e.BenefitsPayment).HasColumnType("decimal(10, 2)");
-
                 entity.Property(e => e.SavingsPayment).HasColumnType("decimal(10, 2)");
-
-                entity.Property(e => e.SalaryPayment).HasColumnType("decimal(10, 2)");
 
                 entity.HasOne(d => d.CashNavigation)
                     .WithMany(p => p.PayrollPayable)
