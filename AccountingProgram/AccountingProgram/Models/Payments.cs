@@ -11,6 +11,7 @@ namespace AccountingProgram.Models
             AccountsPayable = new HashSet<AccountsPayable>();
             Expenses = new HashSet<Expenses>();
             LongTermLiabilities = new HashSet<LongTermLiabilities>();
+            Stliabilities = new HashSet<Stliabilities>();
         }
 
         public int PaymentId { get; set; }
@@ -25,6 +26,7 @@ namespace AccountingProgram.Models
         public decimal? InterestExpense { get; set; }
         public decimal? TotalAmount { get; set; }
         public int? ExpenseId { get; set; }
+        public int? StliabilityId { get; set; }
 
         public virtual Cash Cash { get; set; }
         public virtual Expenses Expense { get; set; }
@@ -33,5 +35,6 @@ namespace AccountingProgram.Models
         public virtual ICollection<AccountsPayable> AccountsPayable { get; set; }
         public virtual ICollection<Expenses> Expenses { get; set; }
         public virtual ICollection<LongTermLiabilities> LongTermLiabilities { get; set; }
+        public virtual ICollection<Stliabilities> Stliabilities { get; set; }
     }
 }

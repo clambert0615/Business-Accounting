@@ -1,0 +1,16 @@
+﻿@using AccountingProgram.Models
+
+@model Payments
+<h1 style="text-align:center">Edit Payment</h1>
+<br />
+<br />
+
+<form action="/ShortTermLiabilities/EditPayment" method="post">
+    <input type="hidden" id="PaymentId" name="PaymentId" value="@Model.PaymentId" />
+    <label for="PayDate">Payment Date</label><br />
+    <input type="date" id="PayDate" name="PayDate" value="@Model.PayDate.ToString("yyyy-MM-dd")" /><br />
+    <label for="Amount">Amount</label><br />
+    <input type="number" id="Amount" name="Amount" value="@Model.Amount" step=".01" /><br />
+    <input type="submit" value="Submit" />
+</form>
+

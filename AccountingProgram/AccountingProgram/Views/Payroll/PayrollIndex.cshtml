@@ -19,7 +19,7 @@
         {
             <tr>
                 <td><a href="/Payroll/WageDetails?id=@w.WageId">@w.WageId</a></td>
-                <td>@w.PayDate.ToShortDateString()</td>
+                <td>@w.PayDate.ToString("yyyy-MM-dd")</td>
                 <td>@w.GrossPay</td>
                 <td>@w.NetPay</td>
                 <td><button onclick="location.href='/Payroll/IndividualPay?id=@w.PayrollPayableId'" style="font-size:15px">View Related Payable / Pay Salary</button></td>

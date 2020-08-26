@@ -17,10 +17,14 @@ namespace AccountingProgram.Models
         public decimal? MedicalIns { get; set; }
         public decimal? SalariesPay { get; set; }
         public decimal? EmployerMedIns { get; set; }
+
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
 
         public DateTime PayableDate { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+
         public DateTime? PaymentDate { get; set; }
         public int? WageId { get; set; }
         public decimal? LocalIncTax { get; set; }

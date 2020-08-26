@@ -12,7 +12,7 @@
     @foreach (var p in Model.PaymentList)
     {
 
-        <h4>Payment Id: @p.PaymentId &nbsp;&nbsp;Payment Date: @p.PayDate.ToShortDateString() &nbsp; &nbsp; Payment Amount: @p.Amount &nbsp; &nbsp; <button onclick="location.href='/AccountsPayable/EditPayment?id=@p.PaymentId'" style="font-size:20px">Edit Payment</button></h4>
+        <h4>Payment Id: @p.PaymentId &nbsp;&nbsp;Payment Date: @p.PayDate.ToString("yyyy-MM-dd") &nbsp; &nbsp; Payment Amount: @p.Amount &nbsp; &nbsp; <button onclick="location.href='/AccountsPayable/EditPayment?id=@p.PaymentId'" style="font-size:20px">Edit Payment</button></h4>
 
     }
 

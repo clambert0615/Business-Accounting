@@ -12,7 +12,7 @@ namespace AccountingProgram.Controllers
     public class AccountsPayableController : Controller
     {
         private readonly AccountingAPIDbContext _context;
-
+        
         public AccPayInvExp apie = new AccPayInvExp();
 
         public AccountsPayableController(AccountingAPIDbContext Context)
@@ -171,22 +171,26 @@ namespace AccountingProgram.Controllers
             Payments oldPayment = _context.Payments.Find(updatedPayment.PaymentId);
             Cash oldCash = _context.Cash.First(x => x.Id == oldPayment.CashId);
             AccountsPayable oldPayable = _context.AccountsPayable.First(x => x.PayableId == oldPayment.PayId);
+
+            oldPayable.PaymentAmount = updatedPayment.Amount;
+            oldPayable.Balance = oldPayable.Balance + oldPayment.Amount - updatedPayment.Amount;
+            oldPayable.PaymentDate = updatedPayment.PayDate;
+            _context.Entry(oldPayable).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.Update(oldPayable);
+            _context.SaveChanges();
+
             oldPayment.PayDate = updatedPayment.PayDate;
             oldPayment.Amount = updatedPayment.Amount;
             _context.Entry(oldPayment).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             _context.Update(oldPayment);
             _context.SaveChanges();
+
             oldCash.Withdrawl = updatedPayment.Amount;
             oldCash.TransDate = updatedPayment.PayDate;
             _context.Entry(oldCash).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             _context.Update(oldCash);
             _context.SaveChanges();
-            oldPayable.PaymentAmount = updatedPayment.Amount;
-            oldPayable.Balance -= updatedPayment.Amount;
-            oldPayable.PaymentDate = updatedPayment.PayDate;
-            _context.Entry(oldPayable).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            _context.Update(oldPayable);
-            _context.SaveChanges();
+
 
             return RedirectToAction("GetAllPayables");
         }

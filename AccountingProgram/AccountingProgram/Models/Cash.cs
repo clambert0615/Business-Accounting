@@ -29,6 +29,7 @@ namespace AccountingProgram.Models
         public decimal? Balance { get; set; }
         public int? ExpenseId { get; set; }
         public int? PayrollId { get; set; }
+        public int? AssetId { get; set; }
 
         public virtual Expenses Expense { get; set; }
         public virtual PayrollPayable Payroll { get; set; }

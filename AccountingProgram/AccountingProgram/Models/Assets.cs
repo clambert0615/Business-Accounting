@@ -7,9 +7,11 @@ namespace AccountingProgram.Models
     {
         public int AssetId { get; set; }
         public string Type { get; set; }
+        public DateTime? TransDate { get; set; }
         public string Description { get; set; }
         public decimal? Cost { get; set; }
         public decimal? AccDepreciation { get; set; }
         public decimal? UsefulLife { get; set; }
+     
     }
 }

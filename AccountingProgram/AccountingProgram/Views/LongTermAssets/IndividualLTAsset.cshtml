@@ -8,7 +8,7 @@
 <h3>Id: @Model.LtassetId</h3>
 <h3>Item: @Model.Item</h3>
 <h3>Description: @Model.Description</h3>
-<h3>Purchase Date: @Model.PurchaseDate.ToShortDateString()</h3>
+<h3>Purchase Date: @Model.PurchaseDate.ToString("yyyy-MM-dd")</h3>
 <h3>Book Value: @Model.Amount</h3>
 @if (Model.AccumulatedDepreciation.Count > 0)
 {

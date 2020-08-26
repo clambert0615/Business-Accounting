@@ -1,0 +1,14 @@
+﻿@using AccountingProgram.Models
+@model Assets
+
+<h1 style="text-align:center">Asset Details</h1>
+<br />
+<br />
+<h3>Asset Id: @Model.AssetId</h3>
+<h5>Item: @Model.Type</h5>
+<h5>Description: @Model.Description</h5>
+<h5>Transaction Date: @Model.TransDate?.ToString("yyyy-MM-dd")</h5>
+<h5>Amount: @Model.Cost</h5>
+<br />
+<button onclick="location.href='/ShortTermAssets/UpdateAsset?id=@Model.AssetId'">Update Asset</button>
+

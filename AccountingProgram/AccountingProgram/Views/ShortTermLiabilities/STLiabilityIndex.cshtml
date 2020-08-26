@@ -1,0 +1,30 @@
+﻿@using AccountingProgram.Models
+@model List<Stliabilities>
+
+<h1 style="text-align:center">Other Short Term Liaiblities Index</h1>
+<br />
+<button onclick="location.href='/ShortTermLiabilities/AddLiability'">Add Liability</button>
+<br />
+<table style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Item</th>
+            <th>Origin Date</th>
+            <th>Amount</th>
+            <th>Balance</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(Stliabilities stl in Model)
+        {
+            <tr>
+                <td><a href="/ShortTermLiabilities/IndividualLiability?id=@stl.StliabilityId">@stl.StliabilityId</a></td>
+                <td>@stl.Item</td>
+                <td>@stl.OriginDate?.ToString("yyyy-MM-dd")</td>
+                <td>@stl.Amount</td>
+                <td>@stl.Balance</td>
+            </tr>
+        }
+    </tbody>
+</table>

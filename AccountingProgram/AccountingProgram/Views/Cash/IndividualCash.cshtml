@@ -5,7 +5,7 @@
 <h1 style="text-align:center">Cash Transaction Details</h1>
 <br />
 <h3>Cash Id: @Model.Id</h3>
-<h3>Transaction Date: @Model.TransDate.ToShortDateString()</h3>
+<h3>Transaction Date: @Model.TransDate.ToString("yyyy-MM-dd")</h3>
 @if (Model.Deposit != null)
 {
 <h3>Deposit: $@Model.Deposit</h3>

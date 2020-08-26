@@ -5,7 +5,7 @@
 <h1 style="text-align:center"> Payroll Taxes Payable / Payment</h1>
 <br />
 <h3>Id: @Model.PayTaxesId</h3>
-<p>Payroll Date: @Model.PayrollDate.ToShortDateString()</p>
+<p>Payroll Date: @Model.PayrollDate.ToString("yyyy-MM-dd")</p>
 <p>Total Amount: @Model.Amount</p>
 @if (Model.PaymentAmount != null)
 {

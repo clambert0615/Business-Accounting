@@ -18,7 +18,7 @@
     {
         <tr>
             <td><a href="/Payroll/MakeTaxPayment?id=@p.PayTaxesId">@p.PayTaxesId</a></td>
-            <td>@p.PayrollDate.ToShortDateString()</td>
+            <td>@p.PayrollDate.ToString("yyyy-MM-dd")</td>
             <td>@p.Amount</td>
             <td>@p.Balance</td>
 

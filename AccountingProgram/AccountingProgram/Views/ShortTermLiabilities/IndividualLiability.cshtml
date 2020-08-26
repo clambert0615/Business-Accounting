@@ -1,0 +1,31 @@
+﻿@using AccountingProgram.Models
+@model STLiabilityPayment
+
+<h1 style="text-align:center">Liability Details</h1>
+<br />
+<h3>Id: @Model.STLiability.StliabilityId</h3>
+<h5>Date: @Model.STLiability.OriginDate?.ToString("yyyy-MM-dd")</h5>
+<h5>Item: @Model.STLiability.Item</h5>
+<h5>Description: @Model.STLiability.Description</h5>
+<br />
+<h5>Total Amount: @Model.STLiability.Amount</h5>
+@if (Model.PaymentList.Count > 0)
+{
+    foreach (var p in Model.PaymentList)
+    {
+        <p>Payment Id: @p.PaymentId &nbsp;&nbsp; Payment Date: @p.PayDate.ToString("yyyy-MM-dd") &nbsp;&nbsp; Payment Amount: @p.Amount &nbsp;&nbsp; <button onclick="location.href='/ShortTermLiabilities/EditPayment?id=@p.PaymentId'">Edit Payment</button></p>
+    }
+}
+<h5>Balance: @Model.STLiability.Balance</h5>
+<br />
+<h4>Make a Payment:</h4>
+<form action="/ShortTermLiabilities/MakePayment?id=@Model.STLiability.StliabilityId" method="post">
+    <label for="PayDate">Paymentn Date</label><br />
+    <input type="date" id="PayDate" name="PayDate" /><br />
+    <label for="amount">Amount</label><br />
+    <input type="number" id="amount" name="amount" step=".01" /><br />
+    <input type="submit" value="Submit Payment" />
+
+</form>
+<br />
+<button onclick="location.href='/ShortTermLiabilities/UpdateLiability?id=@Model.STLiability.StliabilityId'">Update Liability</button>

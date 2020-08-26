@@ -6,7 +6,7 @@
 <br />
 <h3>Paycheck Id: @Model.WageId</h3>
 <h3>Employee Id: <a href="/Employees/GetEmployee?id=@Model.EmployeeId">@Model.EmployeeId</a></h3>
-<p>Pay Date: @Model.PayDate</p>
+<p>Pay Date: @Model.PayDate.ToString("yyyy-MM-dd")</p>
 <p>Gross Pay: @Model.GrossPay</p>
 <p>Federal Income Tax: @Model.FedIncTax</p>
 <p>State Income Tax: @Model.StateIncTax</p>

@@ -10,11 +10,11 @@
 <table style="width:100%" id="apTable" class="table">
 
     <tr class="header">
-        <th>Payable ID</th>
-        <th>Vendor Name</th>
-        <th>Total Amount Due</th>
-        <th>Payment Due Date</th>
-        <th>Balance</th>
+        <th onclick="sortTable(0)" style="cursor:pointer">Payable ID</th>
+        <th onclick="sortTable(1)" style="cursor:pointer">Vendor Name</th>
+        <th onclick="sortTable(2)" style="cursor:pointer">Total Amount Due</th>
+        <th onclick="sortTable(3)" style="cursor:pointer">Payment Due Date</th>
+        <th onclick="sortTable(4)" style="cursor:pointer">Balance</th>
     </tr>
 
 
@@ -22,10 +22,10 @@
         foreach (var pay in Model.PayableList)
         {
             <tr>
-                <td class="td1"><a href="/AccountsPayable/IndividualPayable?id=@pay.PayableId">@pay.PayableId</a> </td>
+                <td class="td1"><a name="@pay.PayableId" href="/AccountsPayable/IndividualPayable?id=@pay.PayableId">@pay.PayableId</a> </td>
                 <td class="td1">@pay.VendorName</td>
                 <td class="td1">@pay.AmountDue</td>
-                <td class="td1">@pay.DueDate.ToShortDateString()</td>
+                <td class="td1">@pay.DueDate.ToString("yyyy-MM-dd")</td>
                 <td class="td1">@pay.Balance </td>
 
             </tr>
@@ -36,6 +36,46 @@
 <button onclick="location.href='/AccountsPayable/AddPayable'">Add New Purchase Order</button>
 
 <script>
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("apTable");
+        switching = true;
+        dir = "asc";
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                const isNumeric = !isNaN(parseFloat(x.innerHTML)) && !isNaN(parseFloat(y.innerHTML));
+                console.log(isNumeric);
+                if (dir == "asc") {
+                    if ((isNumeric && parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) ||
+                        (!isNumeric && x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase())) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if ((isNumeric && parseFloat(x.innerHTML) < parseFloat(y.innerHTML)) ||
+                        (!isNumeric && x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase())) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
 
     function myFunction() {
         var input, filter, table, tr, td, i, txtValue;

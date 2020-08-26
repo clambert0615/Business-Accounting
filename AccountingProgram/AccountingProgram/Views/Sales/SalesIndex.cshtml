@@ -24,7 +24,7 @@
             {
                 <tr>
                     <td><a href="/Sales/IndividualSale?id=@s.SalesId">@s.SalesId</a></td>
-                    <td>@s.TransDate.ToShortDateString()</td>
+                    <td>@s.TransDate.ToString("yyyy-MM-dd")</td>
                     <td>@s.InvoiceId</td>
                     <td>@s.Subtotal</td>
                     <td>@s.SalesTax</td>

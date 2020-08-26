@@ -5,7 +5,7 @@
 <h1 style="text-align:center">Sale Details</h1>
 
 <h3>Sales Id: @Model.SalesId</h3>
-<h3>Sales Date: @Model.TransDate.ToShortDateString()</h3>
+<h3>Sales Date: @Model.TransDate.ToString("yyyy-MM-dd")</h3>
 <h3>Subtotal: @Model.Subtotal</h3>
 <h3>Sales Tax: @Model.SalesTax</h3>
 <h3>Total Amount: @Model.Amount</h3>

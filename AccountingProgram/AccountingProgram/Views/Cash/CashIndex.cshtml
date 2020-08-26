@@ -22,7 +22,7 @@
             { 
                 <tr>
                     <td><a href="/Cash/IndividualCash?id=@c.Id">@c.Id</a></td>
-                    <td>@c.TransDate.ToShortDateString()</td>
+                    <td>@c.TransDate.ToString("yyyy-MM-dd")</td>
                     <td>@c.Deposit</td>
                     <td>@c.Withdrawl</td>
                     <td>@c.Balance</td>

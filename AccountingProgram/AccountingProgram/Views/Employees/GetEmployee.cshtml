@@ -13,7 +13,7 @@
 <p>Zip Code: @Model.Zip</p>
 <p>Phone Number: @Model.Phone</p>
 <p>Email: @Model.Email</p>
-<p>Birth Date: @Model.Birthdate.ToShortDateString()</p>
+<p>Birth Date: @Model.Birthdate.ToString("yyyy-MM-dd")</p>
 <p>Social Security Number @Model.Ssn</p>
 <br />
 <h3>Pay Records</h3>
@@ -21,7 +21,7 @@
 {
     @foreach(var w in Model.Wages)
     {
-        <p>Wage Id:<a href="/Employees/GetWageDetail?id=@w.WageId">@w.WageId</a> &nbsp; &nbsp; PayDate: @w.PayDate &nbsp;&nbsp; Gross Pay: @w.GrossPay &nbsp; &nbsp; Net Pay: @w.NetPay </p>
+        <p>Wage Id:<a href="/Employees/GetWageDetail?id=@w.WageId">@w.WageId</a> &nbsp; &nbsp; PayDate: @w.PayDate.ToString("yyyy-MM-dd") &nbsp;&nbsp; Gross Pay: @w.GrossPay &nbsp; &nbsp; Net Pay: @w.NetPay </p>
     }
 }
 <br />

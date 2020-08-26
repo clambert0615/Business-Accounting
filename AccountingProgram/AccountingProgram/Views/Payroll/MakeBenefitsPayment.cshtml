@@ -4,7 +4,7 @@
 <h1 style="text-align:center">Benefits Details / Payment</h1>
 <br />
 <h3>Id: @Model.PayrollId</h3>
-<p>Payroll Date: @Model.PayableDate</p>
+<p>Payroll Date: @Model.PayableDate.ToString("yyyy-MM-dd")</p>
 <p>Benefits Payable Total: @Model.BenefitsTotal</p>
 @if (Model.BenefitsPayment != null)
 {

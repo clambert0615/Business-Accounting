@@ -8,7 +8,7 @@
 <br />
 <h3>Amount Due: @Model.AR.Amount</h3>
 <br />
-<h3>Due Date: @Model.AR.DueDate.ToShortDateString()</h3>
+<h3>Due Date: @Model.AR.DueDate.ToString("yyyy-MM-dd")/h3>
 <br />
 
 @foreach (var r in Model.Receipts)
@@ -17,7 +17,7 @@
     Receipt Id: @r.ArreciptsId <button onclick="location.href='/AccountsReceivable/UpdateReceipt?id=@r.ArreciptsId'" style="font-size:20px">Update this receipt</button>
     <button onclick="location.href='/AccountsReceivable/DeleteReceipt?id=@r.ArreciptsId'" style="font-size:20px">Delete this receipt</button>
 </h4>
-    <h4>Receipt Date: @r.ReceiptDate.ToShortDateString()</h4>
+    <h4>Receipt Date: @r.ReceiptDate.ToString("yyyy-MM-dd")</h4>
     <h4>Receipt Amount: @r.Amount</h4>
 }
 <br />

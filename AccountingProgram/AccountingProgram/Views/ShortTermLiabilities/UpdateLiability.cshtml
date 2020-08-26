@@ -1,0 +1,29 @@
+﻿@using AccountingProgram.Models
+@model Stliabilities
+
+<h1 style="text-align:center">Update Liability</h1>
+<br />
+<form action="/ShortTermLiabilities/UpdateLiability" method="post">
+    <input type="hidden" id="StliabilityId" name="StliabilityId" value="@Model.StliabilityId" />
+    <label for="OriginDate">Origin Date</label><br />
+    <input type="date" id="OriginDate" name="OriginDate" value="@Model.OriginDate?.ToString("yyyy-MM-dd")" /><br />
+    <label for="Item">Item</label><br />
+    <input type="text" id="Item" name="Item" value="@Model.Item" /><br />
+    <label for="Description">Description</label><br />
+    <select id="Description" name="Description">
+        <option value="---">------</option>
+        <option value="Accrued Expenses">Accrued Expenses</option>
+        <option value="Current Portion of Long Term Debt">Current Portion of Long Term Debt</option>
+        <option value="Short Term Debt">Short-Term Debt</option>
+        <option value="Taxes Payable">Taxes Payable</option>
+        <option value="Unearned Revenue">Unearned Revenue</option>
+        <option value="Other Current Liabilities">Other Current Liabilities</option>
+
+    </select><br />
+    <label for="Amount">Total Amount</label><br />
+    <input type="number" id="Amount" name="Amount" step=".01" value="@Model.Amount"/><br />
+    <label for="Balance">Balance</label><br />
+    <input type="number" id="Balance" name="Balance" step=".01" value="@Model.Balance"/><br />
+    <input type="submit" value="Add Liability" />
+
+</form>

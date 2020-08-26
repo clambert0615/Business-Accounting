@@ -4,7 +4,7 @@
 <br />
 <h3>Expense Id: @Model.ExpId</h3>
 <h3>Expense Type: @Model.Description</h3>
-<h3>Payment Date: @Model.PaymentDate.ToShortDateString()</h3>
+<h3>Payment Date: @Model.PaymentDate.ToString("yyyy-MM-dd")</h3>
 <h3>Payment Amount: @Model.Amount</h3>
 
 <button onclick="location.href='/Expense/UpdateExpense?id=@Model.ExpId'">Update Expense</button>

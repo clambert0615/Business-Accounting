@@ -12,7 +12,7 @@ namespace AccountingProgram.Models
         }
 
         public AccountingAPIDbContext(DbContextOptions<AccountingAPIDbContext> options, IConfiguration configuration)
-             : base(options)
+            : base(options)
         {
             Configuration = configuration;
         }
@@ -40,6 +40,7 @@ namespace AccountingProgram.Models
         public virtual DbSet<PayrollTaxesPayable> PayrollTaxesPayable { get; set; }
         public virtual DbSet<Sales> Sales { get; set; }
         public virtual DbSet<SalesInventory> SalesInventory { get; set; }
+        public virtual DbSet<Stliabilities> Stliabilities { get; set; }
         public virtual DbSet<Vendor> Vendor { get; set; }
         public virtual DbSet<Wages> Wages { get; set; }
 
@@ -188,6 +189,8 @@ namespace AccountingProgram.Models
                 entity.Property(e => e.Type).HasMaxLength(100);
 
                 entity.Property(e => e.UsefulLife).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.TransDate).HasColumnType("date");
             });
 
             modelBuilder.Entity<Cash>(entity =>
@@ -201,6 +204,7 @@ namespace AccountingProgram.Models
                 entity.Property(e => e.TransDate).HasColumnType("date");
 
                 entity.Property(e => e.Withdrawl).HasColumnType("decimal(10, 2)");
+                
 
                 entity.HasOne(d => d.Expense)
                     .WithMany(p => p.Cash)
@@ -623,6 +627,33 @@ namespace AccountingProgram.Models
                     .WithMany(p => p.SalesInventory)
                     .HasForeignKey(d => d.SalesId)
                     .HasConstraintName("FK__SalesInve__Sales__40058253");
+            });
+
+            modelBuilder.Entity<Stliabilities>(entity =>
+            {
+                entity.HasKey(e => e.StliabilityId)
+                    .HasName("PK__STLiabil__F60259674F4485B2");
+
+                entity.ToTable("STLiabilities");
+
+                entity.Property(e => e.StliabilityId).HasColumnName("STLiabilityId");
+
+                entity.Property(e => e.Amount).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Balance).HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Description).HasMaxLength(200);
+
+                entity.Property(e => e.Item).HasMaxLength(100);
+
+                entity.Property(e => e.OriginDate).HasColumnType("date");
+
+                entity.Property(e => e.PaymentDate).HasColumnType("date");
+
+                entity.HasOne(d => d.Payment)
+                    .WithMany(p => p.Stliabilities)
+                    .HasForeignKey(d => d.PaymentId)
+                    .HasConstraintName("FK__STLiabili__Payme__3429BB53");
             });
 
             modelBuilder.Entity<Vendor>(entity =>

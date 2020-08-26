@@ -1,0 +1,29 @@
+﻿@using AccountingProgram.Models
+
+@model List<Assets>
+<h1 style="text-align:center">Current Assets Index</h1>
+<br />
+<button onclick="location.href='/ShortTermAssets/AddAsset'">Add Current Asset</button>
+<br />
+<br />
+<table style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Item</th>
+            <th>Transaction Date</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(Assets a in Model)
+        {
+            <tr>
+                <td><a href="/ShortTermAssets/IndividualAsset?id=@a.AssetId">@a.AssetId</a></td>
+                <td>@a.Type</td>
+                <td>@a.TransDate?.ToString("yyyy-MM-dd")</td>
+                <td>@a.Cost</td>
+            </tr>
+        }
+    </tbody>
+</table>

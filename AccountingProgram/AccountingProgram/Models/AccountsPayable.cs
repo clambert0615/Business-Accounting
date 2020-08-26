@@ -21,7 +21,7 @@ namespace AccountingProgram.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
 
-        public DateTime PaymentDate { get; set; }
+        public DateTime? PaymentDate { get; set; }
         public decimal? PaymentAmount { get; set; }
         public decimal? Balance { get; set; }
         public decimal? AmountDue { get; set; }

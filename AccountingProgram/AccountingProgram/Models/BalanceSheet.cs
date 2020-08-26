@@ -31,7 +31,16 @@ namespace AccountingProgram.Models
         public decimal TotalLiabilities { get; set; }
         public decimal TotalLiabilitiesEquity { get; set; }
         public decimal CurrentLiabilities { get; set; }
-       
-
+        public decimal MarketableSecurities { get; set; }
+        public decimal PrepaidInsurance { get; set; }
+        public decimal PrepaidRent { get; set; }
+        public decimal OtherPrepaidExpense { get; set; }
+        public decimal OtherCurrentAsset { get; set; }
+        public decimal AccruedExpenses { get; set; }
+        public decimal UnearnedRevenue { get; set; }
+        public decimal ShortTermDebt { get; set; }
+        public decimal TaxesPayable { get; set; }
+        public decimal CurrentLTDebt { get; set; }
+        public decimal OtherCurrentLiabiltiy { get; set; }
     }
 }

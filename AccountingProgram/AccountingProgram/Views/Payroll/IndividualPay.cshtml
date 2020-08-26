@@ -7,7 +7,7 @@
 <br />
 <h3>Payroll Payable Id: @Model.PayrollId</h3>
 <h3>Associated Wage Id: @Model.WageId</h3>
-<h3>Payable Date: @Model.PayableDate.ToShortDateString()</h3>
+<h3>Payable Date: @Model.PayableDate.ToString("yyyy-MM-dd"))</h3>
 <p>Employee Portion: <br />
     @foreach(var p in Model.PayrollTaxesPayable)
     {

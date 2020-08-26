@@ -1,0 +1,24 @@
+﻿@using AccountingProgram.Models
+@model Assets
+
+<h1 style="text-align:center">Update Asset</h1>
+<form action="/ShortTermAssets/UpdateAsset" method="post">
+    <input type="hidden" id="AssetId" name="AssetId" value="@Model.AssetId" />
+    <label for="Type">Item</label><br />
+    <input type="text" id="Type" name="Type" value="@Model.Type"/><br />
+    <label for="Description">Asset Type</label><br />
+    <select id="Description" name="Description">
+        <option value="---">------</option>
+        <option value="Marketable Securities">Marketable Securities</option>
+        <option value="Prepaid Insurance">Prepaid Insurance</option>
+        <option value="Prepaid Rent">Prepaid Rent</option>
+        <option value="Other Prepaid Expense">Other Prepaid Expense</option>
+        <option value="Other Current Asset">Other Current Asset</option>
+
+    </select><br />
+    <label for="TransDate">Transaction Date</label><br />
+    <input type="date" id="TransDate" name="TransDate" @Model.TransDate?.ToString("yyyy-MM-dd") /><br />
+    <label for="Cost">Payment Amount to be Credited to Cash</label><br />
+    <input type="number" id="Cost" name="Cost" step=".01" @Model.Cost/><br />
+    <input type="submit" value="Update Asset" />
+</form>

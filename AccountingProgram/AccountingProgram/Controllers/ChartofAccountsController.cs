@@ -110,10 +110,27 @@ namespace AccountingProgram.Controllers
             }
             bs.LoanBalance = loanbal;
 
-            bs.TotalCurrentAssets = (decimal)(bs.Cash.Balance + bs.Inventory.Price + bs.Receivable.Balance);
+            bs.MarketableSecurities = GetSTAssetBalance("Marketable Securities");
+            bs.PrepaidInsurance = GetSTAssetBalance("Prepaid Insurance");
+            bs.PrepaidRent = GetSTAssetBalance("Prepaid Rent");
+            bs.OtherPrepaidExpense = GetSTAssetBalance("Other Prepaid Expense");
+            bs.OtherCurrentAsset = GetSTAssetBalance("Other Current Asset");
+
+            bs.ShortTermDebt = GetSTLiabilityBalance("Short Term Debt");
+            bs.TaxesPayable = GetSTLiabilityBalance("Taxes Payable");
+            bs.UnearnedRevenue = GetSTLiabilityBalance("Unearned Revenue");
+            bs.AccruedExpenses = GetSTLiabilityBalance("Accrued Expenses");
+            bs.CurrentLTDebt = GetSTLiabilityBalance("Current Portion of Long Term Debt");
+            bs.OtherCurrentLiabiltiy = GetSTLiabilityBalance("Other Current Liabilities");
+            
+
+            bs.TotalCurrentAssets = (decimal)(bs.Cash.Balance + bs.Inventory.Price + bs.Receivable.Balance + 
+                bs.MarketableSecurities + bs.PrepaidInsurance + bs.PrepaidRent + bs.OtherCurrentAsset + bs.OtherPrepaidExpense);
             bs.TotalPPE = (decimal)(bs.Buildings + bs.Equipment + bs.Land);
             bs.TotalAssets = (decimal)(bs.TotalCurrentAssets + bs.TotalPPE);
-            bs.CurrentLiabilities = (decimal)(bs.Payable.Balance + bs.PayrollPay.SalaryBalance + bs.PayTaxesPayable.Balance); ;
+            bs.CurrentLiabilities = (decimal)(bs.Payable.Balance + bs.PayrollPay.SalaryBalance + bs.PayTaxesPayable.Balance
+                + bs.ShortTermDebt + bs.TaxesPayable + bs.UnearnedRevenue + bs.AccruedExpenses + bs.CurrentLTDebt
+                + bs.OtherCurrentLiabiltiy); 
             bs.TotalLiabilities = (decimal)(bs.CurrentLiabilities + bs.LoanBalance);
             bs.Equity.Amount = bs.TotalAssets - bs.TotalLiabilities;
             bs.TotalLiabilitiesEquity =(decimal)(bs.TotalLiabilities + bs.Equity.Amount);
@@ -183,6 +200,28 @@ namespace AccountingProgram.Controllers
                 exp += ie;
             }
             return exp;
+        }
+        public decimal GetSTAssetBalance(string description)
+        {
+            List<Assets> stassetList = _context.Assets.ToList();
+            var assetList = stassetList.Where(s => s.Description == description).Select(s => s.Cost).ToList();
+            decimal sta = 0;
+            foreach(decimal st in assetList)
+            {
+                sta += st;
+            }
+            return sta;
+        }
+        public decimal GetSTLiabilityBalance(string description)
+        {
+            List<Stliabilities> stliabiityList = _context.Stliabilities.ToList();
+            var liabilityList = stliabiityList.Where(s => s.Description == description).Select(s => s.Balance).ToList();
+            decimal stl = 0;
+            foreach(decimal sl in liabilityList)
+            {
+                stl += sl;
+            }
+            return stl;
         }
     }
 }
