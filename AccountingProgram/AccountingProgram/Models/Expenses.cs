@@ -25,6 +25,7 @@ namespace AccountingProgram.Models
         public int? AccDepId { get; set; }
         public int? PaymentId { get; set; }
         public int? WageId { get; set; }
+        public int? AssetId { get; set; }
 
         public virtual AccumulatedDepreciation AccDep { get; set; }
         public virtual Cash CashNavigation { get; set; }

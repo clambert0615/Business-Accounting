@@ -72,9 +72,16 @@ namespace AccountingProgram.Controllers
             _context.Entry(old).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             _context.Update(old);
             _context.SaveChanges();
+
+            Cash cash = _context.Cash.First(x => x.ExpenseId == updatedExpense.ExpId);
+            cash.TransDate = updatedExpense.PaymentDate;
+            cash.Withdrawl = updatedExpense.Amount;
+            _context.Update(cash);
+            _context.SaveChanges();
+
             return RedirectToAction("ExpenseIndex");
 
-        }
+         }
         
 
     }

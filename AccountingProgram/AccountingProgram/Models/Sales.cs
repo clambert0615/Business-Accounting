@@ -28,6 +28,7 @@ namespace AccountingProgram.Models
         public decimal? SalesTax { get; set; }
         public decimal? Subtotal { get; set; }
         public int? InvoiceId { get; set; }
+        public int? StliabilityId { get; set; }
 
         public virtual AccountsReceivable AccRec { get; set; }
         public virtual Cash CashNavigation { get; set; }

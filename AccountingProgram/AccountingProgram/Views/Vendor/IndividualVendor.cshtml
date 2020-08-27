@@ -2,16 +2,28 @@
 
 @model Vendor
 
-<h1>@Model.Name      @Model.VenId </h1>
-<p>@Model.Address</p>
-<p>@Model.City</p>
-<p>@Model.State</p>
-<p>@Model.Zip</p>
-<p>@Model.Phone</p>
-<p>@Model.Email</p>
+<h1>Name: @Model.Name &nbsp; &nbsp;  Id: @Model.VenId </h1>
+<p>Address: @Model.Address</p>
+<p>City: @Model.City</p>
+<p>State: @Model.State</p>
+<p>Zip: @Model.Zip</p>
+<p>Phone: @Model.Phone</p>
+<p>Email: @Model.Email</p>
+<br />
+@if (Model.AccountsPayable.Count > 0) 
+{
+    <h3>Accounts Payable:</h3>
+    decimal? bal = 0;
+    foreach (AccountsPayable ap in Model.AccountsPayable)
+    {
+        <p>Id: <a href="/AccountsPayable/IndividualPayable?id=@ap.PayableId">@ap.PayableId</a> &nbsp;&nbsp; Total Amount: @ap.AmountDue  &nbsp;&nbsp; Balance: @ap.Balance</p>
+        bal += ap.Balance;
+    }
+    <p>Total Accounts Payable Balance: @bal</p>
+}
 <br />
 <button onclick="location.href='/Vendor/UpdateVendor?id=@Model.VenId'">Update Vendor</button>
-<br />
+
 <button onclick="location.href='/Vendor/DeleteVendor?id=@Model.VenId'" onsubmit="return confirm('Are you sure you want to delete?');">Delete Vendor</button>
-<br />
-<button onclick="location.href='/Vendor/VendorIndex'">Return to Vendor Menu</button>
+
+<button onclick="location.href='/Vendor/GetAllVendors'">Return to Vendor Index</button>

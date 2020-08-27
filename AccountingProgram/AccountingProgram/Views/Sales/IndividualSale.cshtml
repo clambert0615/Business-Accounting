@@ -15,14 +15,17 @@
 }
 @if (Model.AccRecId != null)
 {
-    <h3>Accounts Receivable Id/Information:<a href="/AccountsReceivable/IndividualReceivable?id=@Model.AccRecId">@Model.AccRecId</a></h3>
+    <h3>Accounts Receivable Id/Information: <a href="/AccountsReceivable/IndividualReceivable?id=@Model.AccRecId">@Model.AccRecId</a></h3>
 }
 @if (Model.InvoiceId != null)
 {
     <h3>Click on Invoice Id to Update Invoice:</h3>
-    <h3>Invoice Id:<a href="/Sales/UpdateInvoice?id=@Model.InvoiceId">@Model.InvoiceId</a></h3>
+    <h3>Invoice Id: <a href="/Sales/UpdateInvoice?id=@Model.InvoiceId">@Model.InvoiceId</a></h3>
 }
-    
+@if(Model.StliabilityId != null)
+{
+    <h3>Unearned Revenue Id: <a href ="/ShortTermLiabilities/IndividualLiability?id=@Model.StliabilityId">@Model.StliabilityId</a></h3>
+}
 
 <br />
 <button onclick="location.href='/Sales/SalesIndex'">Return to Sales Menu</button>

@@ -9,6 +9,7 @@
 <h5>Description: @Model.STLiability.Description</h5>
 <br />
 <h5>Total Amount: @Model.STLiability.Amount</h5>
+
 @if (Model.PaymentList.Count > 0)
 {
     foreach (var p in Model.PaymentList)
@@ -18,14 +19,30 @@
 }
 <h5>Balance: @Model.STLiability.Balance</h5>
 <br />
-<h4>Make a Payment:</h4>
-<form action="/ShortTermLiabilities/MakePayment?id=@Model.STLiability.StliabilityId" method="post">
-    <label for="PayDate">Paymentn Date</label><br />
-    <input type="date" id="PayDate" name="PayDate" /><br />
-    <label for="amount">Amount</label><br />
-    <input type="number" id="amount" name="amount" step=".01" /><br />
-    <input type="submit" value="Submit Payment" />
+@if (Model.STLiability.Description == "Unearned Revenue")
+{
+    <h4>Make an Adjusting Entry to recored Unearned Sales Revenue</h4>
+    <form action="/ShortTermLiabilities/NewAdjustingEntry" method="post">
+        <input type="hidden" id="StliabilityId" name="StliabilityId" value="@Model.STLiability.StliabilityId" />
+        <label for="date">Date</label><br />
+        <input type="date" id="date" name="date" /><br />
+        <label for="amount">Amount to Debit to Sales Revenue</label><br />
+        <input type="number" id="amount" name="amount" step=".01" /><br />
+        <input type="submit" value="Submit" />
+    </form>
+}
+else
+{
+    <h4>Make a Payment:</h4>
+    <form action="/ShortTermLiabilities/MakePayment?id=@Model.STLiability.StliabilityId" method="post">
+        <label for="PayDate">Paymentn Date</label><br />
+        <input type="date" id="PayDate" name="PayDate" /><br />
+        <label for="amount">Amount</label><br />
+        <input type="number" id="amount" name="amount" step=".01" /><br />
+        <input type="submit" value="Submit Payment" />
 
-</form>
+    </form>
+}
+
 <br />
 <button onclick="location.href='/ShortTermLiabilities/UpdateLiability?id=@Model.STLiability.StliabilityId'">Update Liability</button>

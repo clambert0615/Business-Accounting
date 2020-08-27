@@ -48,7 +48,19 @@ namespace AccountingProgram.Controllers
             {
                 _context.Stliabilities.Add(liability);
                 _context.SaveChanges();
+
+                if(liability.Description == "Unearned Revenue")
+                {
+                    Cash cash = new Cash();
+                    cash.TransDate = (DateTime)liability.OriginDate;
+                    cash.Deposit = liability.Amount;
+                    cash.StliabilityId = liability.StliabilityId;
+                    _context.Cash.Add(cash);
+                    _context.SaveChanges();
+                   
+                }
                 return RedirectToAction("STLiabilityIndex");
+
             }
             else
             {
@@ -73,6 +85,16 @@ namespace AccountingProgram.Controllers
             _context.Entry(old).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             _context.Update(old);
             _context.SaveChanges();
+
+            if(updatedLiability.Description == "Unearned Revenue")
+            {
+                Cash found = _context.Cash.First(x => x.StliabilityId == updatedLiability.StliabilityId);
+                found.TransDate = (DateTime)updatedLiability.OriginDate;
+                found.Deposit = updatedLiability.Amount;
+                _context.Update(found);
+                _context.SaveChanges();
+
+            }
 
             return RedirectToAction("STLiabilityIndex");
         }
@@ -137,6 +159,24 @@ namespace AccountingProgram.Controllers
 
             return RedirectToAction("STLiabilityIndex");
 
+        }
+
+        public IActionResult NewAdjustingEntry(int stliabilityId, decimal amount, DateTime date)
+        {
+            Stliabilities found = _context.Stliabilities.Find(stliabilityId);
+            found.Balance -= amount;
+            found.PaymentDate = date;
+            _context.Update(found);
+            _context.SaveChanges();
+
+            Sales sale = new Sales();
+            sale.TransDate = date;
+            sale.Amount = amount;
+            sale.StliabilityId = found.StliabilityId;
+            _context.Sales.Add(sale);
+            _context.SaveChanges();
+
+            return RedirectToAction("STLiabilityIndex");
         }
 
     }

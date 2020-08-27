@@ -12,6 +12,7 @@ namespace AccountingProgram.Models
         public decimal? Cost { get; set; }
         public decimal? AccDepreciation { get; set; }
         public decimal? UsefulLife { get; set; }
+        public decimal? Balance { get; set; }
      
     }
 }

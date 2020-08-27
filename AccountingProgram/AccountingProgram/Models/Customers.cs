@@ -18,7 +18,7 @@ namespace AccountingProgram.Models
         public int? Zip { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-
+       
         public virtual ICollection<AccountsReceivable> AccountsReceivable { get; set; }
     }
 }

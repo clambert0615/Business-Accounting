@@ -1,29 +1,37 @@
 ﻿@using AccountingProgram.Models;
 
 @model List<Vendor>
+<h1 style="text-align:center">Vendor Index</h1>
+<br />
+<button onclick="location.href='/Vendor/AddNewVendor'">Add New Vendor</button>
 
 <table style="width:100%">
     <thead>
         <tr>
-            <th>
-                Vendor ID
-            </th>
-            <th>
-                Vendor Name
-            </th>
+            <th>Vendor ID</th>
+            <th>Vendor Name</th>
+            <th>Accounts Payable Balance</th>
         </tr>
     </thead>
     <tbody>
         @{ 
+            
             foreach(Vendor v in Model )
             {
+
+                decimal? bal = 0;
                 <tr>
                     <td><a href="/Vendor/IndividualVendor?id=@v.VenId">@v.VenId</a> </td>
                     <td>@v.Name</td>
+                    <td>
+                        @foreach (AccountsPayable ap in v.AccountsPayable)
+                        {
+                            bal += ap.Balance;
+                        }
+                    @bal
+                </td>
                 </tr>
             }
         }
     </tbody>
 </table>
-<br />
-<button onclick="location.href='/Vendor/VendorIndex'">Return to Vendor Menu</button>

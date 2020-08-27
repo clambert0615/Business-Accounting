@@ -17,45 +17,21 @@ namespace AccountingProgram.Controllers
             _context = context;
         }
 
-        public IActionResult VendorIndex(int option)
-        {
-            if (option == 1)
-            {
-                return RedirectToAction("GetAllVendors");
-            }
-            else if (option == 2)
-            {
-                return RedirectToAction("GetVendor");
-            }
-            else if (option == 3)
-            {
-                return RedirectToAction("AddNewVendor");
-            }
-            else if (option == 4)
-            {
-                return RedirectToAction("GetVendorToUpdate");
-            }
-            else if (option == 5)
-            {
-                return RedirectToAction("GetVendorToDelete");
-            }
-            else
-            {
-                return View();
-            }
-        }
+        
         public IActionResult GetAllVendors()
         {
             List<Vendor> vendorList = _context.Vendor.ToList();
+            foreach(Vendor v in vendorList)
+            {
+                v.AccountsPayable = _context.AccountsPayable.Where(x => x.VenId == v.VenId).ToList();
+            }
             return View(vendorList);
         }
-        public IActionResult GetVendor()
-        {
-            return View();
-        }
+     
         public IActionResult IndividualVendor(int id)
         {
             Vendor foundVendor = _context.Vendor.Find(id);
+            foundVendor.AccountsPayable = _context.AccountsPayable.Where(x => x.VenId == foundVendor.VenId).ToList();
             return View(foundVendor);
         }
         [HttpGet]
@@ -71,13 +47,10 @@ namespace AccountingProgram.Controllers
                 _context.Vendor.Add(vendor);
                 _context.SaveChanges();
             }
-            return RedirectToAction("VendorIndex", new { id = vendor.VenId });
+            return RedirectToAction("GetAllVendors", new { id = vendor.VenId });
 
         }
-        public IActionResult GetVendorToUpdate()
-        {
-            return View();
-        }
+       
         [HttpGet]
         public IActionResult UpdateVendor(int id)
         {
@@ -107,10 +80,7 @@ namespace AccountingProgram.Controllers
             _context.SaveChanges();
             return RedirectToAction("GetAllVendors");
         }
-        public IActionResult GetVendorToDelete()
-        {
-            return View();
-        }
+      
 
         public IActionResult DeleteVendor(int id)
         {
@@ -119,7 +89,7 @@ namespace AccountingProgram.Controllers
             {
                 _context.Vendor.Remove(found);
                 _context.SaveChanges();
-                return RedirectToAction("VendorIndex");
+                return RedirectToAction("GetAllVendors");
             }
             else
             {

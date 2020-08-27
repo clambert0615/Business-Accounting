@@ -43,6 +43,7 @@ namespace AccountingProgram.Controllers
         {
             if(ModelState.IsValid)
             {
+                asset.Balance = asset.Cost;
                 _context.Assets.Add(asset);
                 _context.SaveChanges();
               
@@ -86,6 +87,22 @@ namespace AccountingProgram.Controllers
 
             return RedirectToAction("STAssetIndex");
         }
+        public IActionResult AddAdjustingEntry(int assetId, DateTime date, string description, decimal amount)
+        {
+            Assets asset = _context.Assets.Find(assetId);
+            asset.Balance -= amount;
+            _context.Update(asset);
+            _context.SaveChanges();
 
+            Expenses expense = new Expenses();
+            expense.PaymentDate = date;
+            expense.Amount = amount;
+            expense.Description = description;
+            expense.AssetId = asset.AssetId;
+            _context.Expenses.Add(expense);
+            _context.SaveChanges();
+
+            return RedirectToAction("STAssetIndex");
+        }
     }
 }

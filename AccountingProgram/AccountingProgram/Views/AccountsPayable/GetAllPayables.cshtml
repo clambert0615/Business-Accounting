@@ -48,17 +48,18 @@
                 shouldSwitch = false;
                 x = rows[i].getElementsByTagName("TD")[n];
                 y = rows[i + 1].getElementsByTagName("TD")[n];
-                const isNumeric = !isNaN(parseFloat(x.innerHTML)) && !isNaN(parseFloat(y.innerHTML));
-                console.log(isNumeric);
+                let xData = x.innerText;
+                let yData = y.innerText;
+                const isNumeric = !isNaN(parseFloat(xData)) && !isNaN(parseFloat(yData));
                 if (dir == "asc") {
-                    if ((isNumeric && parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) ||
-                        (!isNumeric && x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase())) {
+                    if ((isNumeric && parseFloat(xData) > parseFloat(yData)) ||
+                        (!isNumeric && xData.toLowerCase() > yData.toLowerCase())) {
                         shouldSwitch = true;
                         break;
                     }
                 } else if (dir == "desc") {
-                    if ((isNumeric && parseFloat(x.innerHTML) < parseFloat(y.innerHTML)) ||
-                        (!isNumeric && x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase())) {
+                    if ((isNumeric && parseFloat(xData) < parseFloat(yData)) ||
+                        (!isNumeric && xData.toLowerCase() < yData.toLowerCase())) {
                         shouldSwitch = true;
                         break;
                     }

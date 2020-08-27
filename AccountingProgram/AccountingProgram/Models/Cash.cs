@@ -30,6 +30,7 @@ namespace AccountingProgram.Models
         public int? ExpenseId { get; set; }
         public int? PayrollId { get; set; }
         public int? AssetId { get; set; }
+        public int? StliabilityId { get; set; }
 
         public virtual Expenses Expense { get; set; }
         public virtual PayrollPayable Payroll { get; set; }

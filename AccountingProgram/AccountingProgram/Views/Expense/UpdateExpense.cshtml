@@ -22,9 +22,9 @@
         <option value="Other">Other</option>
     </select><br />
     <label for="paymentDate">Payment Date</label><br />
-    <input type="text" id="paymentDate" name="paymentDate" value="@Model.PaymentDate.ToString("yyyy-MM-dd")" readonly /><br />
+    <input type="text" id="paymentDate" name="paymentDate" value="@Model.PaymentDate.ToString("yyyy-MM-dd")" /><br />
     <label for="amount">Amount to Debit from Cash</label><br />
-    <input type="number" id="amount" name="amount" step=".01" value="@Model.Amount" readonly /><br />
+    <input type="number" id="amount" name="amount" step=".01" value="@Model.Amount" /><br />
     <input type="submit" value="Update Expense" />
 </form>
 <br />

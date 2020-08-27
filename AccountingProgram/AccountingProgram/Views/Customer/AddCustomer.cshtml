@@ -1,15 +1,10 @@
-﻿@using AccountingProgram.Models;
-
-@model Vendor
-
-<h1 style="text-align:center">Add a New Vendor</h1>
+﻿<h1 style="text-align:center">Add New Customer</h1>
 <br />
-
-<form action="/Vendor/AddNewVendor" method="post">
-    <label for="Name">Enter Vendor Name</label><br />
+<form action="/Customer/AddCustomer" method="post">
+    <label for="Name">Name</label><br />
     <input type="text" id="Name" name="Name" /><br />
-    <label for="Address">Street Address</label><br />
-    <input type="text" id="Address" name="Address" /><br />
+    <label for="StreetAdd">Street Address</label><br />
+    <input type="text" id="StreetAdd" name="StreetAdd" /><br />
     <label for="City">City</label><br />
     <input type="text" id="City" name="City" /><br />
     <label for="State">State</label><br />
@@ -20,9 +15,5 @@
     <input type="text" id="Phone" name="Phone" /><br>
     <label for="Email">Email address</label><br />
     <input type="text" id="Email" name="Email" /><br />
-
-    <input type="submit" value="Add Vendor" />
-
+    <input type="submit" value="Add Customer" />
 </form>
-<br />
-<button onclick="location.href='/Vendor/GetAllVendors'">Return to Vendor Index</button>

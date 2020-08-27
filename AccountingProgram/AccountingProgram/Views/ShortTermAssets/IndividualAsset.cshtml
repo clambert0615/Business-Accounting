@@ -9,6 +9,27 @@
 <h5>Description: @Model.Description</h5>
 <h5>Transaction Date: @Model.TransDate?.ToString("yyyy-MM-dd")</h5>
 <h5>Amount: @Model.Cost</h5>
+<h5>Balance: @Model.Balance</h5>
 <br />
+@if(Model.Description == "Prepaid Insurance" || Model.Description == "Prepaid Rent" || Model.Description == "Other Prepaid Expense")
+{
+    <h3>Make an Adjusting Entry to Record Expense</h3>
+    <form action="/ShortTermAssets/AddAdjustingEntry" method="post">
+        <input type="hidden" id="AssetId" name="AssetId" value="@Model.AssetId" />
+        <label for="date">Date</label><br />
+        <input type="date" name="date" id="date" /><br />
+        <label for="description">Expense Account to Debit</label><br />
+        <select id="description" name="description">
+            <option value="---">------</option>
+            <option value="Insurance">Insurance</option>
+            <option value="Rent">Rent</option>
+            <option value="Other">Other Expense</option>
+        </select><br />
+        <label for="amount">Amount</label><br />
+        <input type="number" id="amount" name="amount" step=".01" /><br />
+        <input type="submit" value="Submit" />
+    </form>
+}
+
 <button onclick="location.href='/ShortTermAssets/UpdateAsset?id=@Model.AssetId'">Update Asset</button>
 

@@ -184,6 +184,8 @@ namespace AccountingProgram.Models
 
                 entity.Property(e => e.Cost).HasColumnType("decimal(10, 2)");
 
+                entity.Property(e => e.Balance).HasColumnType("decimal(10, 2)");
+
                 entity.Property(e => e.Description).HasMaxLength(200);
 
                 entity.Property(e => e.Type).HasMaxLength(100);
@@ -238,6 +240,7 @@ namespace AccountingProgram.Models
                 entity.Property(e => e.State).HasMaxLength(10);
 
                 entity.Property(e => e.StreetAdd).HasMaxLength(100);
+
             });
 
             modelBuilder.Entity<Employee>(entity =>

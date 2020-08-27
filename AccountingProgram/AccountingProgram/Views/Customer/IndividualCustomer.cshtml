@@ -1,0 +1,29 @@
+﻿@using AccountingProgram.Models;
+
+@model Customers
+
+<h1>Name:@Model.Name &nbsp;&nbsp;     Id:@Model.CustId </h1>
+<p>Street Address: @Model.StreetAdd</p>
+<p>City: @Model.City</p>
+<p>State: @Model.State</p>
+<p>Zip Code: @Model.Zip</p>
+<p>Phone Number: @Model.Phone</p>
+<p>Email Address: @Model.Email</p>
+<br />
+@if( Model.AccountsReceivable.Count > 0)
+{
+    <h3>Accounts Receivable:</h3>
+    decimal? bal = 0;
+    foreach(AccountsReceivable ar in Model.AccountsReceivable)
+    {
+        <p>Id: <a href="/AccountsReceivable/IndividualReceivable?id=@ar.Id">@ar.Id</a> &nbsp;&nbsp; Total Amount: @ar.Amount  &nbsp;&nbsp; Balance: @ar.Balance</p>
+        bal += ar.Balance;
+    }
+    <p>Total Accounts Receivable Balance: @bal</p>
+}
+<br />
+<button onclick="location.href='/Customer/UpdateCustomer?id=@Model.CustId'">Update Customer</button>
+
+<button onclick="location.href='/Customer/DeleteCustomer?id=@Model.CustId'" onsubmit="return confirm('Are you sure you want to delete?');">Delete Customer</button>
+
+<button onclick="location.href='/Customer/CustomerIndex'">Return to Customer Index</button>

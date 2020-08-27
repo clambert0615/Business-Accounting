@@ -107,6 +107,7 @@ namespace AccountingProgram.Controllers
                 _context.SaveChanges();
                 AccountsReceivable ar = new AccountsReceivable();
                 ar.InvoiceId = invoice.InvoiceId;
+                ar.CustomerId = invoice.CustomerId;
                 ar.CustomerName = invoice.CustomerName;
                 ar.DueDate = invoice.DueDate;
                 ar.Amount = invoice.AmountDue;
@@ -128,6 +129,7 @@ namespace AccountingProgram.Controllers
                 ap.InvoiceId = invoice.InvoiceId;
                 ap.DueDate = new DateTime(2021, 01, 01);
                 ap.AmountDue = sale.SalesTax;
+                ap.Balance = sale.SalesTax;
                 _context.AccountsPayable.Add(ap);
                 _context.SaveChanges();
             }
@@ -159,6 +161,7 @@ namespace AccountingProgram.Controllers
 
             AccountsReceivable oldar = _context.AccountsReceivable.First(x => x.InvoiceId == updatedInvoice.InvoiceId);
             oldar.CustomerName = updatedInvoice.CustomerName;
+            oldar.CustomerId = updatedInvoice.CustomerId;
             oldar.DueDate = updatedInvoice.DueDate;
             oldar.Amount = updatedInvoice.AmountDue;
             _context.Entry(oldar).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
@@ -180,6 +183,7 @@ namespace AccountingProgram.Controllers
             old.InvoiceInventory = updatedInvoice.InvoiceInventory;
             old.InvDate = updatedInvoice.InvDate;
             old.DueDate = updatedInvoice.DueDate;
+            old.CustomerId = updatedInvoice.CustomerId;
             old.CustomerName = updatedInvoice.CustomerName;
             old.StreetAddress = updatedInvoice.StreetAddress;
             old.City = updatedInvoice.City;
@@ -205,6 +209,7 @@ namespace AccountingProgram.Controllers
 
              AccountsPayable oldap = _context.AccountsPayable.First(x => x.InvoiceId == old.InvoiceId);
             oldap.AmountDue = updatedInvoice.SalesTax;
+            oldap.Balance = updatedInvoice.SalesTax;
             _context.Entry(oldap).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             _context.Update(oldap);
             _context.SaveChanges();
@@ -253,6 +258,7 @@ namespace AccountingProgram.Controllers
 
             AccountsPayable oldap = _context.AccountsPayable.First(x => x.SalesId == updatedSale.SalesId);
             oldap.AmountDue = updatedSale.SalesTax;
+            oldap.Balance = updatedSale.SalesTax;
             _context.Entry(oldap).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             _context.Update(oldap);
             _context.SaveChanges();

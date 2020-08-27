@@ -31,6 +31,7 @@ namespace AccountingProgram.Models
         public decimal? AmountDue { get; set; }
         public decimal? SalesTax { get; set; }
         public decimal? Subtotal { get; set; }
+        public int? CustomerId { get; set; }
         public int? InventoryId { get; set; }
 
         public virtual Inventory Inventory { get; set; }
