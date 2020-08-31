@@ -1,12 +1,12 @@
 ﻿@using AccountingProgram.Models
 @model STLiabilityPayment
 
-<h1 style="text-align:center">Liability Details</h1>
+<h1 style="text-align:center; border-bottom-style:solid;border-bottom-color:aqua;border-bottom-width:thick">Liability Details</h1>
 <br />
 <h3>Id: @Model.STLiability.StliabilityId</h3>
-<h5>Date: @Model.STLiability.OriginDate?.ToString("yyyy-MM-dd")</h5>
-<h5>Item: @Model.STLiability.Item</h5>
-<h5>Description: @Model.STLiability.Description</h5>
+<p>Date: @Model.STLiability.OriginDate?.ToString("yyyy-MM-dd")</p>
+<p>Item: @Model.STLiability.Item</p>
+<p>Description: @Model.STLiability.Description</p>
 <br />
 <h5>Total Amount: @Model.STLiability.Amount</h5>
 

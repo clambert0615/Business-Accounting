@@ -29,6 +29,7 @@ namespace AccountingProgram.Models
         public decimal IncomeBeforeTax { get; set; }
         public decimal NetIncome { get; set; }
         public decimal PayrollTax { get; set; }
-        
+        public decimal LTAGain { get; set; }
+        public decimal LTALoss { get; set; }        
     }
 }

@@ -2,20 +2,20 @@
 
 @model LongTermLiabilities
 
-<h1 style="text-align:center">Long Term Liability Details</h1>
+<h1 style="text-align:center; border-bottom-style:solid;border-bottom-color:aqua;border-bottom-width:thick">Long Term Liability Details</h1>
 
-<h3>Id: @Model.LtliabilitiesId</h3>
-<h3>Item: @Model.Ltlitem</h3>
-<h3>Description: @Model.Ltldescription</h3>
-<h3>Origin Date: @Model.OriginDate.ToString("yyyy-MM-dd")</h3>
-<h3>Total Number of Payments: @Model.TotalNumberofPayments</h3>
-<h3>Total Amount Due: @Model.TotalAmount</h3>
+<h3>Id: @Model.LtliabilitiesId &nbsp;&nbsp;&nbsp;&nbsp; Item: @Model.Ltlitem </h3>
+
+<p>Description: @Model.Ltldescription</p>
+<p>Origin Date: @Model.OriginDate.ToString("yyyy-MM-dd")</p>
+<p>Total Number of Payments: @Model.TotalNumberofPayments</p>
+<p>Total Amount Due: @Model.TotalAmount</p>
 @if (Model.Payments.Count > 0)
 {
 @foreach (var p in Model.Payments)
 {
-    <h5>PaymentId: <a href="/LongTermLiabilities/UpdatePayment?id=@p.PaymentId">@p.PaymentId</a> &nbsp;&nbsp; Payment Amount: @p.Amount  &nbsp;&nbsp; Interest Expense: @p.InterestExpense
-    &nbsp;&nbsp; Total Amount: @p.TotalAmount</h5>
+    <p>PaymentId: <a href="/LongTermLiabilities/UpdatePayment?id=@p.PaymentId">@p.PaymentId</a> &nbsp;&nbsp; Payment Amount: @p.Amount  &nbsp;&nbsp; Interest Expense: @p.InterestExpense
+    &nbsp;&nbsp; Total Amount: @p.TotalAmount</p>
 }
 }
 <h3>Balance: @Model.Ltlbalance</h3>

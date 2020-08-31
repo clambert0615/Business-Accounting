@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using AccountingProgram.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -98,6 +99,61 @@ namespace AccountingProgram.Controllers
                 return RedirectToAction("ErrorPage");
             }
         }
+        [HttpGet]
+        public IActionResult SellAsset(int id)
+        {
+            LongTermAssets found = _context.LongTermAssets.Find(id);
+            if(found != null)
+            {
+                return View(found);
+            }
+            else
+            {
+                return RedirectToAction("LongTermAssetIndex");
 
+            }
+        }
+        [HttpPost]
+        public IActionResult SellAsset(int ltassetId, DateTime date, decimal amount )
+        {
+            LongTermAssets asset = _context.LongTermAssets.Find(ltassetId);
+            asset.DisposalDate = date;
+            if (amount != 0)
+            {
+                if (asset.Balance > amount)
+                {
+                    asset.Loss = asset.Balance - amount;
+                }
+                else
+                {
+                    asset.Gain = amount - asset.Balance;
+                }
+            }
+            asset.Amount -= asset.Amount;
+
+            _context.Update(asset);
+            _context.SaveChanges();
+
+            List<AccumulatedDepreciation> adList = _context.AccumulatedDepreciation.Where(x => x.LongTermAssetId == ltassetId).ToList();
+            foreach (AccumulatedDepreciation ad in adList)
+            {
+                ad.Amount -= ad.Amount;
+                _context.Update(ad);
+                _context.SaveChanges();
+            }
+
+            if (amount != 0)
+            {
+                Cash cash = new Cash
+                {
+                    TransDate = date,
+                    Deposit = amount
+                };
+                _context.Cash.Add(cash);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("LongTermAssetIndex");
+        }
     }
 }

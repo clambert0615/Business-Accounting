@@ -2,13 +2,11 @@
 
 @model AccRecReceiptsView
 
-<h1 style="text-align:center">Accounts Receivable Details</h1>
+<h1 style="text-align:center; border-bottom-style:solid;border-bottom-color:aqua;border-bottom-width:thick">Accounts Receivable Details</h1>
 
-<h3>Accounts Receivable ID: @Model.AR.Id</h3>
-<br />
-<h3>Amount Due: @Model.AR.Amount</h3>
-<br />
-<h3>Due Date: @Model.AR.DueDate.ToString("yyyy-MM-dd")</h3>
+<h4>Receivable ID: @Model.AR.Id <br />
+    Amount Due: @Model.AR.Amount <br />
+    Due Date: @Model.AR.DueDate.ToString("yyyy-MM-dd")</h4>
 <br />
 
 @foreach (var r in Model.Receipts)

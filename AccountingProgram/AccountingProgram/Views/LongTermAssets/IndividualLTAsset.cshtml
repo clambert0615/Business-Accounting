@@ -2,24 +2,31 @@
 
 @model LongTermAssets
 
-<h1 style="text-align:center">Asset Details</h1>
+    <h1 style="text-align:center; border-bottom-style:solid;border-bottom-color:aqua;border-bottom-width:thick">Asset Details</h1>
 <br />
 <br />
-<h3>Id: @Model.LtassetId</h3>
-<h3>Item: @Model.Item</h3>
-<h3>Description: @Model.Description</h3>
-<h3>Purchase Date: @Model.PurchaseDate.ToString("yyyy-MM-dd")</h3>
-<h3>Book Value: @Model.Amount</h3>
+<h3>Id: @Model.LtassetId &nbsp;&nbsp;&nbsp;&nbsp; Item: @Model.Item</h3>
+
+<p>Description: @Model.Description</p>
+<p>Purchase Date: @Model.PurchaseDate.ToString("yyyy-MM-dd")</p>
+@if (Model.DisposalDate.HasValue)
+{
+<p>Disposal Date: @Model.DisposalDate.Value.ToString("yyyy-MM-dd")</p>
+}
+else
+{
+
+<p>Book Value: @Model.Amount</p>
 @if (Model.AccumulatedDepreciation.Count > 0)
 {
-    foreach(var a in Model.AccumulatedDepreciation)
+    foreach (var a in Model.AccumulatedDepreciation)
     {
-        <h3>Id: @a.AccDepId &nbsp; &nbsp; Amount: @a.Amount &nbsp; &nbsp; <button onclick="location.href='/AccumulatedDepreciation/UpdateAD?id=@a.AccDepId'" style="font-size:20px">Update this Accumulated Depreciation</button></h3>
+        <p>Id: @a.AccDepId &nbsp; &nbsp; Amount: @a.Amount &nbsp; &nbsp; <button onclick="location.href='/AccumulatedDepreciation/UpdateAD?id=@a.AccDepId'" style="font-size:20px">Update this Accumulated Depreciation</button></p>
     }
 }
-<h3>Carrying Value: @Model.Balance</h3>
-<h3>Useful Life: @Model.UsefulLife</h3>
-<h3>Life Remaining: @Model.LifeRemaining</h3>
+<p>Carrying Value: @Model.Balance</p>
+<p>Useful Life: @Model.UsefulLife</p>
+<p>Life Remaining: @Model.LifeRemaining</p>
 <br />
 <br />
 <form action="/AccumulatedDepreciation/AddAccumulatedDepreciation" method="post">
@@ -31,5 +38,7 @@
     <input type="number" id="Amount" name="Amount" step=".01" /><br />
     <input type="submit" value="Record Depreciation" />
 </form>
+}
 <br />
 <button onclick="location.href='/LongTermAssets/UpdateLTAsset?id=@Model.LtassetId'">Update Asset</button>
+<button onclick="location.href='/LongTermAssets/SellAsset?id=@Model.LtassetId'">Sell / Retire Asset</button>

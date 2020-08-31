@@ -382,6 +382,8 @@ namespace AccountingProgram.Models
                 entity.Property(e => e.PurchaseDate).HasColumnType("date");
 
                 entity.Property(e => e.UsefulLife).HasColumnType("decimal(10, 2)");
+                entity.Property(e => e.DisposalDate).HasColumnType("date");
+               
             });
 
             modelBuilder.Entity<LongTermLiabilities>(entity =>

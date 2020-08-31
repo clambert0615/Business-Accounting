@@ -22,6 +22,11 @@ namespace AccountingProgram.Models
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
 
         public DateTime PurchaseDate { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime? DisposalDate { get; set; }
+        public decimal? Gain { get; set; }
+        public decimal? Loss { get; set; }
 
         public virtual ICollection<AccumulatedDepreciation> AccumulatedDepreciation { get; set; }
     }

@@ -3,28 +3,111 @@
 
 <h1 style="text-align:center">Other Short Term Liaiblities Index</h1>
 <br />
-<button onclick="location.href='/ShortTermLiabilities/AddLiability'">Add Liability</button>
+<label for="stlInput">Further filter your search: </label>
+<input type="text" id="stlInput" onkeyup="myFunction()" placeholder="Filter search" title="Type in a keyword">
+
+<button onclick="location.href='/ShortTermLiabilities/AddLiability'" style="float:right;">Add Liability</button>
 <br />
-<table style="width:100%">
+<table style="width:100%" id="stlTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
     <thead>
-        <tr>
-            <th>Id</th>
-            <th>Item</th>
-            <th>Origin Date</th>
-            <th>Amount</th>
-            <th>Balance</th>
+        <tr class="header">
+            <th onclick="sortTable(0)" style="cursor:pointer">Id</th>
+            <th onclick="sortTable(1)" style="cursor:pointer">Item</th>
+            <th onclick="sortTable(2)" style="cursor:pointer">Origin Date</th>
+            <th onclick="sortTable(3)" style="cursor:pointer">Amount</th>
+            <th onclick="sortTable(4)" style="cursor:pointer">Balance</th>
         </tr>
     </thead>
     <tbody>
-        @foreach(Stliabilities stl in Model)
+        @foreach (Stliabilities stl in Model)
         {
             <tr>
-                <td><a href="/ShortTermLiabilities/IndividualLiability?id=@stl.StliabilityId">@stl.StliabilityId</a></td>
-                <td>@stl.Item</td>
-                <td>@stl.OriginDate?.ToString("yyyy-MM-dd")</td>
-                <td>@stl.Amount</td>
-                <td>@stl.Balance</td>
+                <td class="td1"><a href="/ShortTermLiabilities/IndividualLiability?id=@stl.StliabilityId">@stl.StliabilityId</a></td>
+                <td class="td1">@stl.Item</td>
+                <td class="td1">@stl.OriginDate?.ToString("yyyy-MM-dd")</td>
+                <td class="td1">@stl.Amount</td>
+                <td class="td1">@stl.Balance</td>
             </tr>
         }
     </tbody>
 </table>
+
+
+
+<script>
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("stlTable");
+        switching = true;
+        dir = "asc";
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                let xData = x.innerText;
+                let yData = y.innerText;
+                const isNumeric =
+                    xData.indexOf("-") === -1 &&
+                    yData.indexOf("-") === -1 &&
+                    !isNaN(parseFloat(xData)) &&
+                    !isNaN(parseFloat(yData));
+                if (dir == "asc") {
+                    if ((isNumeric && parseFloat(xData) > parseFloat(yData)) ||
+                        (!isNumeric && xData.toLowerCase() > yData.toLowerCase())) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if ((isNumeric && parseFloat(xData) < parseFloat(yData)) ||
+                        (!isNumeric && xData.toLowerCase() < yData.toLowerCase())) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("stlInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("stlTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            td2 = tr[i].getElementsByTagName("td")[1];
+            td3 = tr[i].getElementsByTagName("td")[2];
+            td4 = tr[i].getElementsByTagName("td")[3];
+            td5 = tr[i].getElementsByTagName("td")[4];
+
+            if (td || td2 || td3 || td4 || td5) {
+                txtValue = td.textContent || td.innerText;
+                txtValue2 = td2.textContent || td2.innerText;
+                txtValue3 = td3.textContent || td3.innerText;
+                txtValue4 = td4.textContent || td4.innerText;
+                txtValue5 = td5.textContent || td5.innerText;
+
+                if (txtValue.toUpperCase().indexOf(filter) > -1 || txtValue2.toUpperCase().indexOf(filter) > -1 || txtValue3.toUpperCase().indexOf(filter) > -1
+                    || txtValue4.toUpperCase().indexOf(filter) > -1 || txtValue5.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

@@ -7,7 +7,10 @@
 <label for="apInput">Further filter your search: </label>
 <input type="text" id="apInput" onkeyup="myFunction()" placeholder="Filter search" title="Type in a keyword">
 
-<table style="width:100%" id="apTable" class="table">
+<button onclick="location.href='/AccountsPayable/AddPayable'" style="float:right;">Add New Purchase Order</button>
+<br />
+
+<table style="width:100%" id="apTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
 
     <tr class="header">
         <th onclick="sortTable(0)" style="cursor:pointer">Payable ID</th>
@@ -33,7 +36,7 @@
     }
 
 </table>
-<button onclick="location.href='/AccountsPayable/AddPayable'">Add New Purchase Order</button>
+
 
 <script>
     function sortTable(n) {
@@ -50,7 +53,11 @@
                 y = rows[i + 1].getElementsByTagName("TD")[n];
                 let xData = x.innerText;
                 let yData = y.innerText;
-                const isNumeric = !isNaN(parseFloat(xData)) && !isNaN(parseFloat(yData));
+                const isNumeric =
+                    xData.indexOf("-") === -1 &&
+                    yData.indexOf("-") === -1 &&
+                    !isNaN(parseFloat(xData)) &&
+                    !isNaN(parseFloat(yData));
                 if (dir == "asc") {
                     if ((isNumeric && parseFloat(xData) > parseFloat(yData)) ||
                         (!isNumeric && xData.toLowerCase() > yData.toLowerCase())) {

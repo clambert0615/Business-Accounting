@@ -1,0 +1,14 @@
+﻿@using AccountingProgram.Models
+@model LongTermAssets
+
+<h1 style="text-align:center">Sell or Dispose of Long Term Asset</h1>
+<br />
+<form action="/LongTermAssets/SellAsset" method="post">
+    <input type="hidden" id="LtassetId" name="Ltassetid" value="@Model.LtassetId" />
+    <label for="date">Disposal Date</label><br />
+    <input type="date" id="date" name="date" /><br />
+    <label for="amount">Sale Amount (use 0 if this is a disposal)</label><br />
+    <input type="number" id="amount" name="amount" step=".01" /><br />
+    <input type="submit" value="Submit" />
+
+</form>

@@ -1,42 +1,65 @@
 ﻿@using AccountingProgram.Models
 @model BalanceSheet
 
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            .row {
+                display: flex;
+            }
+
+           .column {
+                flex: 50%;
+                padding: 10px;
+                height: 1000px; 
+            }
+        </style>
+    </head>
+<body>
 <h1 style="text-align:center">Balance Sheet</h1>
 <br />
+    <div class="row">
+        <div class="column">
 <h3>ASSETS</h3>
 <h4>Current Assets</h4>
-<p>Cash and Cash Equivalents:  @Model.Cash.Balance</p>
-<p>Accounts Receivable:  @Model.Receivable.Balance</p>
-<p>Inventory: @Model.Inventory.Price</p>
-<p>Marketable Securities: @Model.MarketableSecurities</p>
-<p>Prepaid Rent: @Model.PrepaidRent</p>
-<p>Prepaid Insurance: @Model.PrepaidInsurance</p>
-<p>Other Prepaid Expenses: @Model.OtherPrepaidExpense</p>
-<p>Other Current Assets: @Model.OtherCurrentAsset</p>
-<p>Total current assets:  @Model.TotalCurrentAssets</p>
+<p>Cash and Cash Equivalents:  @Model.Cash.Balance<br />
+Accounts Receivable:  @Model.Receivable.Balance<br />
+Inventory: @Model.Inventory.Price<br />
+Marketable Securities: @Model.MarketableSecurities<br />
+Prepaid Rent: @Model.PrepaidRent<br />
+Prepaid Insurance: @Model.PrepaidInsurance<br />
+Other Prepaid Expenses: @Model.OtherPrepaidExpense<br />
+Other Current Assets: @Model.OtherCurrentAsset<br />
+Total current assets:  @Model.TotalCurrentAssets<p/>
 <br />
 <h4>Property, Plant and Equipment</h4>
-<p>Buildings and Improvements, net: @Model.Buildings</p>
-<p>Equipment, net: @Model.Equipment</p>
-<p>Land, net: @Model.Land</p>
-<p>Total Propery, Plant and Equipment: @Model.TotalPPE</p>
+<p>Buildings and Improvements, net: @Model.Buildings<br />
+Equipment, net: @Model.Equipment<br />
+Land, net: @Model.Land<br />
+Total Propery, Plant and Equipment: @Model.TotalPPE</p>
 <br />
 
 <h4>Total Assets:  @Model.TotalAssets</h4>
 <br />
-<br />
+        </div>
+    <div class="column">
+
 <h3>LIABILITIES AND OWNER'S EQUITY</h3>  
 <h4>Current Liabilities</h4>
-<p>Accounts Payable: @Model.Payable.Balance</p>
-<p>Salaries Payable: @Model.PayrollPay.SalaryBalance</p>
-<p>Payroll Taxes Payable: @Model.PayTaxesPayable.Balance</p>
-<p>Accrued Expenses: @Model.AccruedExpenses</p>
-<p>Current Portion of Long Term Debt: @Model.CurrentLTDebt</p>
-<p>Short Term Debt: @Model.ShortTermDebt</p>
-<p>Taxes Payable: @Model.TaxesPayable</p>
-<p>Unearned Revenue: @Model.UnearnedRevenue</p>
-<p>Other Current Liabilities: @Model.OtherCurrentLiabiltiy</p>
-<p>Total Current Liabilities: @Model.CurrentLiabilities</p>
+Accounts Payable: @Model.Payable.Balance<br />
+Salaries Payable: @Model.PayrollPay.SalaryBalance<br />
+Payroll Taxes Payable: @Model.PayTaxesPayable.Balance<br />
+Accrued Expenses: @Model.AccruedExpenses<br />
+Current Portion of Long Term Debt: @Model.CurrentLTDebt<br />
+Short Term Debt: @Model.ShortTermDebt<br />
+Taxes Payable: @Model.TaxesPayable<br />
+Unearned Revenue: @Model.UnearnedRevenue</br>
+Other Current Liabilities: @Model.OtherCurrentLiabiltiy<br />
+Total Current Liabilities: @Model.CurrentLiabilities<br />
 <br />
 <h4>Long Term Liabilities</h4>
 <p>Long Term Debt: @Model.LoanBalance</p>
@@ -49,3 +72,7 @@
 <br />
 <br />
 <h4>Total liabilities and shareholder's equity: @Model.TotalLiabilitiesEquity</h4>
+        </div>
+    </div>
+
+    </body>

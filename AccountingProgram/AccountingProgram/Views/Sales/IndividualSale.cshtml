@@ -2,29 +2,29 @@
 
 @model Sales
 
-<h1 style="text-align:center">Sale Details</h1>
+<h1 style="text-align:center; border-bottom-style:solid;border-bottom-color:aqua;border-bottom-width:thick">Sale Details</h1>
 
 <h3>Sales Id: @Model.SalesId</h3>
-<h3>Sales Date: @Model.TransDate.ToString("yyyy-MM-dd")</h3>
-<h3>Subtotal: @Model.Subtotal</h3>
-<h3>Sales Tax: @Model.SalesTax</h3>
-<h3>Total Amount: @Model.Amount</h3>
+<p>Sales Date: @Model.TransDate.ToString("yyyy-MM-dd")</p>
+<p>Subtotal: @Model.Subtotal</p>
+<p>Sales Tax: @Model.SalesTax</p>
+<p>Total Amount: @Model.Amount</p>
 @if (Model.CashAmount != null)
 {
-    <h3>Cash Amount Received: @Model.CashAmount</h3>
+    <p>Cash Amount Received: @Model.CashAmount</p>
 }
 @if (Model.AccRecId != null)
 {
-    <h3>Accounts Receivable Id/Information: <a href="/AccountsReceivable/IndividualReceivable?id=@Model.AccRecId">@Model.AccRecId</a></h3>
+    <p>Accounts Receivable Id/Information: <a href="/AccountsReceivable/IndividualReceivable?id=@Model.AccRecId">@Model.AccRecId</a></p>
 }
 @if (Model.InvoiceId != null)
 {
-    <h3>Click on Invoice Id to Update Invoice:</h3>
-    <h3>Invoice Id: <a href="/Sales/UpdateInvoice?id=@Model.InvoiceId">@Model.InvoiceId</a></h3>
+    <p>Click on Invoice Id to Update Invoice:</p>
+    <p>Invoice Id: <a href="/Sales/UpdateInvoice?id=@Model.InvoiceId">@Model.InvoiceId</a></p>
 }
 @if(Model.StliabilityId != null)
 {
-    <h3>Unearned Revenue Id: <a href ="/ShortTermLiabilities/IndividualLiability?id=@Model.StliabilityId">@Model.StliabilityId</a></h3>
+    <p>Unearned Revenue Id: <a href ="/ShortTermLiabilities/IndividualLiability?id=@Model.StliabilityId">@Model.StliabilityId</a></p>
 }
 
 <br />

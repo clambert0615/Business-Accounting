@@ -1,14 +1,14 @@
 ﻿@model AccountingProgram.Models.Inventory
 
-<h1 style="text-align:center">Item Details</h1>
-<br />
-<h3>Item: @Model.Item   &nbsp; &nbsp; &nbsp; Id: @Model.InvId</h3> 
-<h5>Description: @Model.Description</h5>
-<h5>Price: @Model.Price</h5>
-<h5>Quantity: @Model.Quantity</h5>
-<h5>Received: @Model.Received</h5>
-<h5>Back Ordered: @Model.BackOrdered</h5>
+    <h1 style="text-align:center;  border-bottom-style:solid;border-bottom-color:aqua;border-bottom-width:thick">Item Details</h1>
+    <br />
+    <h3>Item: @Model.Item   &nbsp; &nbsp; &nbsp; Id: @Model.InvId</h3>
+    <p>Description: @Model.Description</p>
+    <p>Price: @Model.Price</p>
+    <p>Quantity: @Model.Quantity</p>
+    <p>Received: @Model.Received</p>
+    <p>Back Ordered: @Model.BackOrdered</p>
 
-<button onclick="location.href='/Inventory/UpdateInventory?id=@Model.InvId'">Update Item</button>
+    <button onclick="location.href='/Inventory/UpdateInventory?id=@Model.InvId'">Update Item</button>
 
-<button onclick="location.href='/Inventory/InventoryIndex'">Return to Inventory Menu</button>
+    <button onclick="location.href='/Inventory/InventoryIndex'">Return to Inventory Menu</button>

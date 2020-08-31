@@ -2,12 +2,17 @@
 
 <h1 style="text-align:center">Expenses</h1>
 <br />
-<table style="width:100%">
+<label for="expInput">Further filter your search: </label>
+<input type="text" id="expInput" onkeyup="myFunction()" placeholder="Filter search" title="Type in a keyword">
+<button onclick="location.href='/Expense/AddExpense'" style="float:right;">Add New Expense</button>
+<br />
+
+<table style="width:100%" id="expTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
     <thead>
-        <tr>
-            <th>Id</th>
-            <th>Description</th>
-            <th>Amount</th>
+        <tr class="header">
+            <th onclick="sortTable(0)" style="cursor:pointer">Id</th>
+            <th onclick="sortTable(1)" style="cursor:pointer">Description</th>
+            <th onclick="sortTable(2)" style="cursor:pointer">Amount</th>
         </tr>
 
     </thead>
@@ -15,16 +20,90 @@
         @{
             foreach (var e in Model.ExpenseList)
             {
-            <tr>
-                <td><a href="/Expense/IndividualExpense?id=@e.ExpId">@e.ExpId</a></td>
-                <td>@e.Description</td>
-                <td>@e.Amount</td>
-            </tr>
-                }
+                <tr>
+                    <td class="td1"><a href="/Expense/IndividualExpense?id=@e.ExpId">@e.ExpId</a></td>
+                    <td class="td1">@e.Description</td>
+                    <td class="td1">@e.Amount</td>
+                </tr>
             }
+        }
     </tbody>
 
 </table>
 <br />
 
-<button onclick="location.href='/Expense/AddExpense'">Add New Expense</button>
+<script>
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("expTable");
+        switching = true;
+        dir = "asc";
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                let xData = x.innerText;
+                let yData = y.innerText;
+                const isNumeric =
+                    xData.indexOf("-") === -1 &&
+                    yData.indexOf("-") === -1 &&
+                    !isNaN(parseFloat(xData)) &&
+                    !isNaN(parseFloat(yData));
+                if (dir == "asc") {
+                    if ((isNumeric && parseFloat(xData) > parseFloat(yData)) ||
+                        (!isNumeric && xData.toLowerCase() > yData.toLowerCase())) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if ((isNumeric && parseFloat(xData) < parseFloat(yData)) ||
+                        (!isNumeric && xData.toLowerCase() < yData.toLowerCase())) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("expInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("expTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            td2 = tr[i].getElementsByTagName("td")[1];
+            td3 = tr[i].getElementsByTagName("td")[2];
+
+
+            if (td || td2 || td3) {
+                txtValue = td.textContent || td.innerText;
+                txtValue2 = td2.textContent || td2.innerText;
+                txtValue3 = td3.textContent || td3.innerText;
+
+
+                if (txtValue.toUpperCase().indexOf(filter) > -1 || txtValue2.toUpperCase().indexOf(filter) > -1 || txtValue3.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+

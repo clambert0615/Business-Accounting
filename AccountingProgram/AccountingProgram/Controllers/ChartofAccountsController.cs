@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -101,6 +101,7 @@ namespace AccountingProgram.Controllers
                 landbal += land;
             }
             bs.Land = landbal;
+
             List<LongTermLiabilities> ltlList = _context.LongTermLiabilities.ToList();
             var loanList = ltlList.Where(s => s.Ltldescription == "Loan Payable").Select(s => s.Ltlbalance).ToList();
             decimal loanbal = 0;
@@ -109,6 +110,7 @@ namespace AccountingProgram.Controllers
                 loanbal += loan;
             }
             bs.LoanBalance = loanbal;
+            
 
             bs.MarketableSecurities = GetSTAssetBalance("Marketable Securities");
             bs.PrepaidInsurance = GetSTAssetBalance("Prepaid Insurance");
@@ -147,7 +149,7 @@ namespace AccountingProgram.Controllers
                 salebal += (s.Subtotal ?? 0);
             }
             inc.Sales.Subtotal = salebal;
-            //still need to add other revenue and then a total revenue
+           
             inc.TotalRevenue = salebal;
 
             List<Inventory> invList = _context.Inventory.ToList();
@@ -162,7 +164,17 @@ namespace AccountingProgram.Controllers
             inc.CostofGoodsSold = beginningInv + purchases - endingInv;
             inc.GrossProfit = inc.TotalRevenue - inc.CostofGoodsSold;
 
-            
+            List<LongTermAssets> ltaList = _context.LongTermAssets.ToList();
+            decimal gainBalance = 0;
+            decimal lossBalance = 0;
+            foreach (LongTermAssets lta in ltaList)
+            {
+                gainBalance += (lta.Gain ?? 0);
+                lossBalance += (lta.Loss ?? 0);
+            }
+            inc.LTAGain = gainBalance;
+            inc.LTALoss = lossBalance;
+
             inc.Advertising = GetExpenseBalance("Advertising");
             inc.Depreciation = GetExpenseBalance("Depreciation");
             inc.EmployeeBenefits = GetExpenseBalance("Employee Benefits");

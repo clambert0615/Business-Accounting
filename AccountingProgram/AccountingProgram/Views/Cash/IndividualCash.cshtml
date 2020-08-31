@@ -2,25 +2,25 @@
 
 @model Cash
 
-<h1 style="text-align:center">Cash Transaction Details</h1>
+    <h1 style="text-align:center; border-bottom-style:solid;border-bottom-color:aqua;border-bottom-width:thick">Cash Transaction Details</h1>
 <br />
 <h3>Cash Id: @Model.Id</h3>
-<h3>Transaction Date: @Model.TransDate.ToString("yyyy-MM-dd")</h3>
+<h5>Transaction Date: @Model.TransDate.ToString("yyyy-MM-dd")</h5>
 @if (Model.Deposit != null)
 {
-<h3>Deposit: $@Model.Deposit</h3>
+<h5>Deposit: $@Model.Deposit</h5>
 }
 @if(Model.Withdrawl != null)
 {
-    <h3>Withdrawl: $@Model.Withdrawl</h3>
+    <h5>Withdrawl: $@Model.Withdrawl</h5>
 }
 @if(Model.SalesId != null)
 {
-    <h3>Sales Id: <a href="/Sales/IndividualSale?id=@Model.SalesId">@Model.SalesId</a> </h3>
+    <h5>Sales Id: <a href="/Sales/IndividualSale?id=@Model.SalesId">@Model.SalesId</a> </h5>
 }
 @if(Model.ExpenseId != null)
 {
-    <h3>Expense Id: <a href="/Expenses/IndividualExpense?id=@Model.ExpenseId">@Model.ExpenseId</a></h3>
+    <h5>Expense Id: <a href="/Expenses/IndividualExpense?id=@Model.ExpenseId">@Model.ExpenseId</a></h5>
 }
 <br />
 <button onclick="location.href='/Cash/UpdateCash?id=@Model.Id'">Update Cash Item</button>
